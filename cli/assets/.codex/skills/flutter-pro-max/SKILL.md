@@ -25,26 +25,26 @@ pip install rank-bm25
 ### Step 2: Search (14 Sources)
 
 ```bash
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "<keyword>" --top 5
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "<keyword>" --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
 
 **Examples:**
 ```bash
 # Widgets
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "ListView pagination" --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "ListView pagination" --top 5
 
 # Charts
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "chart bar" --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "chart bar" --top 5
 
 # Typography
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "font modern SaaS" --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "font modern SaaS" --top 5
 
 # Colors
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "fintech crypto" --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "fintech crypto" --top 5
 
 # UX Guidelines  
-python3 .codex/skills/flutter-pro-max/scripts/flutter_search.py "touch accessibility" --top 5
+python3 .codex/skills/flutter-pro-max/scripts/search.py "touch accessibility" --top 5
 ```
 
 ### Step 3: Apply Standards

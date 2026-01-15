@@ -15,23 +15,23 @@ pip install rank-bm25
 ## Search (14 Sources)
 
 ```bash
-python3 .codebuddy/commands/scripts/flutter_search.py "<keyword>" --top 5
-python3 .codebuddy/commands/scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+python3 .codebuddy/commands/scripts/search.py "<keyword>" --top 5
+python3 .codebuddy/commands/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
 
 **Examples:**
 ```bash
 # Widgets
-python3 .codebuddy/commands/scripts/flutter_search.py "ListView" --top 5
+python3 .codebuddy/commands/scripts/search.py "ListView" --top 5
 
 # Charts
-python3 .codebuddy/commands/scripts/flutter_search.py "chart bar" --top 5
+python3 .codebuddy/commands/scripts/search.py "chart bar" --top 5
 
 # Typography
-python3 .codebuddy/commands/scripts/flutter_search.py "font modern" --top 5
+python3 .codebuddy/commands/scripts/search.py "font modern" --top 5
 
 # UX
-python3 .codebuddy/commands/scripts/flutter_search.py "touch accessibility" --top 5
+python3 .codebuddy/commands/scripts/search.py "touch accessibility" --top 5
 ```
 
 ## Data Sources (14 files)

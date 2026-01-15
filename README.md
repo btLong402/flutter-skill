@@ -68,16 +68,13 @@ Copy các folders tương ứng vào project của bạn:
 | Qoder | `.qoder/rules/` |
 | CodeBuddy | `.codebuddy/commands/` |
 
-**Lưu ý:** Cần copy thêm `.shared/flutter-pro-max/` cho data.
+**Lưu ý:** Cần copy thêm `.shared/` cho data và scripts.
 
 ## Prerequisites
 
 ```bash
-# Kiểm tra Python
+# Chỉ cần Python (không cần pip install)
 python3 --version
-
-# Cài đặt dependency
-pip install rank-bm25
 ```
 
 ## Usage
@@ -101,37 +98,43 @@ Sử dụng slash command:
 ### Search Examples
 
 ```bash
-# Widget search
-python3 scripts/flutter_search.py "ListView pagination" --top 5
+# Auto-detect domain
+python3 scripts/search.py "ListView pagination" --top 5
 
-# Chart search
-python3 scripts/flutter_search.py "chart bar comparison" --top 5
+# Specific domain
+python3 scripts/search.py "chart bar comparison" --domain chart --top 5
 
 # Typography search
-python3 scripts/flutter_search.py "font modern SaaS" --top 5
+python3 scripts/search.py "font modern SaaS" --domain typography --top 5
 
 # Color search
-python3 scripts/flutter_search.py "fintech crypto dark" --top 5
+python3 scripts/search.py "fintech crypto dark" --domain color --top 5
 
 # UX Guidelines
-python3 scripts/flutter_search.py "touch target accessibility" --top 5
+python3 scripts/search.py "touch target accessibility" --domain ux --top 5
 
 # With stack filter (exclude conflicting packages)
-python3 scripts/flutter_search.py "state management" --stack riverpod --top 5
+python3 scripts/search.py "state management" --stack riverpod --top 5
+
+# JSON output
+python3 scripts/search.py "login" --json --top 3
 ```
 
 ## Features
 
-### 1. BM25 Semantic Search
-Tìm kiếm ngữ nghĩa với thư viện `rank_bm25`.
+### 1. Zero Dependencies BM25 Search
+Self-contained BM25 search engine - không cần `pip install`.
 
-### 2. Widget Weight Boosting
+### 2. Auto-detect Domain
+Tự động phát hiện domain từ query keywords.
+
+### 3. Widget Weight Boosting
 Score x2 khi query khớp tên widget.
 
-### 3. Package Category Filtering
+### 4. Package Category Filtering
 Score x1.5 cho packages trong category phù hợp.
 
-### 4. Stack Exclusion
+### 5. Stack Exclusion
 Loại bỏ packages xung đột với stack đang dùng:
 - `--stack riverpod`: Loại bỏ bloc, provider
 - `--stack bloc`: Loại bỏ riverpod, provider

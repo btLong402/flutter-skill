@@ -9,16 +9,10 @@ Searchable database của Flutter widgets, packages, design patterns, architectu
 
 ## Prerequisites
 
-Kiểm tra Python đã cài đặt:
+Chỉ cần Python (không cần pip install):
 
 ```bash
 python3 --version || python --version
-```
-
-Cài đặt dependency:
-
-```bash
-pip install rank-bm25
 ```
 
 ---
@@ -38,41 +32,49 @@ Trích xuất thông tin từ request:
 
 ### Step 2: Search Relevant Data
 
-Sử dụng `flutter_search.py` để tìm kiếm trong **14 data sources**:
+Sử dụng `search.py` để tìm kiếm trong **14 data sources** (auto-detect domain):
 
 ```bash
-python3 scripts/flutter_search.py "<keyword>" --top 5
+python3 scripts/search.py "<keyword>" --top 5
+```
+
+**Với domain cụ thể:**
+```bash
+python3 scripts/search.py "<keyword>" --domain widget --top 5
+python3 scripts/search.py "<keyword>" --domain package --top 5
 ```
 
 **Với stack filter (loại bỏ conflicts):**
 ```bash
-python3 scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+python3 scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
+
+**Available domains:** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`
 
 **Available stacks:** `riverpod`, `bloc`, `provider`
 
 **Search Examples:**
 ```bash
 # Flutter Widgets
-python3 scripts/flutter_search.py "ListView pagination" --top 5
+python3 scripts/search.py "ListView pagination" --top 5
 
 # Design Patterns
-python3 scripts/flutter_search.py "authentication login" --top 5
+python3 scripts/search.py "authentication login" --domain pattern --top 5
 
 # Charts
-python3 scripts/flutter_search.py "chart bar comparison" --top 5
+python3 scripts/search.py "chart bar comparison" --domain chart --top 5
 
 # Typography
-python3 scripts/flutter_search.py "font modern SaaS" --top 5
+python3 scripts/search.py "font modern SaaS" --domain typography --top 5
 
 # Colors by Product
-python3 scripts/flutter_search.py "fintech crypto dark" --top 5
+python3 scripts/search.py "fintech crypto dark" --domain color --top 5
 
 # UX Guidelines
-python3 scripts/flutter_search.py "touch target accessibility" --top 5
+python3 scripts/search.py "touch target accessibility" --domain ux --top 5
 
 # UI Styles
-python3 scripts/flutter_search.py "glassmorphism neumorphism" --top 5
+python3 scripts/search.py "glassmorphism neumorphism" --domain style --top 5
 ```
 
 ### Step 3: Apply Technical Standards
@@ -132,22 +134,22 @@ String getMessage(UIState state) => switch (state) {
 
 1. **Search widgets:**
    ```bash
-   python3 scripts/flutter_search.py "form input text field" --top 5
+   python3 scripts/search.py "form input text field" --domain widget --top 5
    ```
 
 2. **Search patterns:**
    ```bash
-   python3 scripts/flutter_search.py "authentication login" --top 5
+   python3 scripts/search.py "authentication login" --domain pattern --top 5
    ```
 
 3. **Search packages:**
    ```bash
-   python3 scripts/flutter_search.py "validation form" --stack riverpod --top 5
+   python3 scripts/search.py "validation form" --domain package --stack riverpod --top 5
    ```
 
 4. **Search colors:**
    ```bash
-   python3 scripts/flutter_search.py "saas professional" --top 3
+   python3 scripts/search.py "saas professional" --domain color --top 3
    ```
 
 5. **Apply results** to generate code với Riverpod state management

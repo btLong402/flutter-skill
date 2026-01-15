@@ -15,23 +15,23 @@ pip install rank-bm25
 ## Search (14 Sources)
 
 ```bash
-python3 .kiro/steering/scripts/flutter_search.py "<keyword>" --top 5
-python3 .kiro/steering/scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+python3 .kiro/steering/scripts/search.py "<keyword>" --top 5
+python3 .kiro/steering/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
 
 **Examples:**
 ```bash
 # Widgets
-python3 .kiro/steering/scripts/flutter_search.py "ListView" --top 5
+python3 .kiro/steering/scripts/search.py "ListView" --top 5
 
 # Charts
-python3 .kiro/steering/scripts/flutter_search.py "chart bar" --top 5
+python3 .kiro/steering/scripts/search.py "chart bar" --top 5
 
 # Typography
-python3 .kiro/steering/scripts/flutter_search.py "font modern" --top 5
+python3 .kiro/steering/scripts/search.py "font modern" --top 5
 
 # UX
-python3 .kiro/steering/scripts/flutter_search.py "touch accessibility" --top 5
+python3 .kiro/steering/scripts/search.py "touch accessibility" --top 5
 ```
 
 ## Data Sources (14 files)

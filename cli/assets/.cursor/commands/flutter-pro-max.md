@@ -31,8 +31,8 @@ Trích xuất thông tin từ request:
 ### Step 2: Search Relevant Data (14 Sources)
 
 ```bash
-python3 .cursor/commands/scripts/flutter_search.py "<keyword>" --top 5
-python3 .cursor/commands/scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+python3 .cursor/commands/scripts/search.py "<keyword>" --top 5
+python3 .cursor/commands/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
 
 **Available stacks:** `riverpod`, `bloc`, `provider`
@@ -40,25 +40,25 @@ python3 .cursor/commands/scripts/flutter_search.py "<keyword>" --stack riverpod 
 **Search Examples by Domain:**
 ```bash
 # Flutter Widgets
-python3 .cursor/commands/scripts/flutter_search.py "ListView pagination" --top 5
+python3 .cursor/commands/scripts/search.py "ListView pagination" --top 5
 
 # Design Patterns
-python3 .cursor/commands/scripts/flutter_search.py "authentication login" --top 5
+python3 .cursor/commands/scripts/search.py "authentication login" --top 5
 
 # Charts
-python3 .cursor/commands/scripts/flutter_search.py "chart bar comparison" --top 5
+python3 .cursor/commands/scripts/search.py "chart bar comparison" --top 5
 
 # Typography
-python3 .cursor/commands/scripts/flutter_search.py "font modern SaaS" --top 5
+python3 .cursor/commands/scripts/search.py "font modern SaaS" --top 5
 
 # Colors by Product
-python3 .cursor/commands/scripts/flutter_search.py "fintech crypto dark" --top 5
+python3 .cursor/commands/scripts/search.py "fintech crypto dark" --top 5
 
 # UX Guidelines
-python3 .cursor/commands/scripts/flutter_search.py "touch target accessibility" --top 5
+python3 .cursor/commands/scripts/search.py "touch target accessibility" --top 5
 
 # UI Styles
-python3 .cursor/commands/scripts/flutter_search.py "glassmorphism neumorphism" --top 5
+python3 .cursor/commands/scripts/search.py "glassmorphism neumorphism" --top 5
 ```
 
 ### Step 3: Apply Technical Standards
@@ -116,17 +116,17 @@ String getMessage(UIState state) => switch (state) {
 
 1. **Search widgets:**
    ```bash
-   python3 .cursor/commands/scripts/flutter_search.py "form input text field" --top 5
+   python3 .cursor/commands/scripts/search.py "form input text field" --top 5
    ```
 
 2. **Search patterns:**
    ```bash
-   python3 .cursor/commands/scripts/flutter_search.py "authentication login" --top 5
+   python3 .cursor/commands/scripts/search.py "authentication login" --top 5
    ```
 
 3. **Search packages:**
    ```bash
-   python3 .cursor/commands/scripts/flutter_search.py "validation form" --stack riverpod --top 5
+   python3 .cursor/commands/scripts/search.py "validation form" --stack riverpod --top 5
    ```
 
 4. **Apply results** to generate code với Riverpod state management

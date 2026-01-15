@@ -28,34 +28,35 @@ Flutter Pro Max là AI Skill cung cấp kiến thức Flutter chuyên sâu.
 ```
 .
 ├── .claude/skills/flutter-pro-max/   # Claude skill
-├── .shared/flutter-pro-max/          # Shared data & scripts
+├── .shared/                          # Shared resources
 │   ├── data/                         # 14 CSV knowledge base files
-│   └── scripts/                      # Python search script
-├── SKILL.md                          # Main skill documentation
+│   └── flutter-pro-max/scripts/      # Python search scripts (core.py, search.py)
+├── scripts/                          # Root scripts (source)
+│   ├── core.py                       # BM25 search engine
+│   └── search.py                     # CLI entry point
 └── README.md                         # Installation guide
 ```
 
 ## Key Commands
 
 ```bash
-# Search widgets/packages/patterns
-python3 .claude/skills/flutter-pro-max/scripts/flutter_search.py "<query>" --top 5
+# Auto-detect domain search
+python3 scripts/search.py "<query>" --top 5
 
-# Search charts
-python3 .claude/skills/flutter-pro-max/scripts/flutter_search.py "chart bar" --top 5
-
-# Search typography
-python3 .claude/skills/flutter-pro-max/scripts/flutter_search.py "font Inter" --top 5
-
-# Search UX guidelines
-python3 .claude/skills/flutter-pro-max/scripts/flutter_search.py "touch accessibility" --top 5
+# Specific domain
+python3 scripts/search.py "ListView" --domain widget --top 5
+python3 scripts/search.py "dio http" --domain package --top 5
 
 # With stack filter
-python3 .claude/skills/flutter-pro-max/scripts/flutter_search.py "<query>" --stack riverpod
+python3 scripts/search.py "<query>" --stack riverpod --top 5
 
 # JSON output
-python3 .claude/skills/flutter-pro-max/scripts/flutter_search.py "<query>" --json
+python3 scripts/search.py "<query>" --json --top 5
 ```
+
+**Available domains:** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`
+
+**Available stacks:** `riverpod`, `bloc`, `provider`
 
 ## Technical Standards
 

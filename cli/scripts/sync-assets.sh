@@ -12,6 +12,9 @@ ASSETS_DIR="$CLI_DIR/assets"
 
 echo "🔄 Syncing assets from root to cli/assets..."
 
+# First, sync scripts to hidden tool folders
+bash "$SCRIPT_DIR/sync-tool-scripts.sh"
+
 # List of directories to sync
 DIRS=(
     ".agent"

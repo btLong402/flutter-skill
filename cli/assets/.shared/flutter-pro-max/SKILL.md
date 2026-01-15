@@ -9,16 +9,10 @@ Searchable database của Flutter widgets, packages, design patterns, architectu
 
 ## Prerequisites
 
-Kiểm tra Python đã cài đặt:
+Chỉ cần Python (không cần pip install):
 
 ```bash
 python3 --version || python --version
-```
-
-Cài đặt dependency:
-
-```bash
-pip install rank-bm25
 ```
 
 ---
@@ -37,16 +31,24 @@ Trích xuất thông tin từ request:
 
 ### Step 2: Search Relevant Data
 
-Sử dụng `flutter_search.py` để tìm kiếm:
+Sử dụng `search.py` để tìm kiếm (auto-detect domain):
 
 ```bash
-python3 .shared/flutter-pro-max/scripts/flutter_search.py "<keyword>" --top 5
+python3 .shared/flutter-pro-max/scripts/search.py "<keyword>" --top 5
+```
+
+**Với domain cụ thể:**
+```bash
+python3 .shared/flutter-pro-max/scripts/search.py "<keyword>" --domain widget --top 5
+python3 .shared/flutter-pro-max/scripts/search.py "<keyword>" --domain package --top 5
 ```
 
 **Với stack filter (loại bỏ conflicts):**
 ```bash
-python3 .shared/flutter-pro-max/scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+python3 .shared/flutter-pro-max/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
+
+**Available domains:** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`
 
 **Available stacks:** `riverpod`, `bloc`, `provider`
 
@@ -102,14 +104,17 @@ String getMessage(UIState state) => switch (state) {
 ### Search Examples
 
 ```bash
-# Widget search (auto-boosted)
-python3 .shared/flutter-pro-max/scripts/flutter_search.py "ListView" --top 5
+# Auto-detect domain
+python3 .shared/flutter-pro-max/scripts/search.py "ListView" --top 5
 
-# Package by category (auto-filtered)
-python3 .shared/flutter-pro-max/scripts/flutter_search.py "Network HTTP" --top 5
+# Specific domain
+python3 .shared/flutter-pro-max/scripts/search.py "network http" --domain package --top 5
 
-# State management with stack filter
-python3 .shared/flutter-pro-max/scripts/flutter_search.py "state" --stack riverpod --top 5
+# Stack filter
+python3 .shared/flutter-pro-max/scripts/search.py "state" --stack riverpod --top 5
+
+# JSON output
+python3 .shared/flutter-pro-max/scripts/search.py "login" --json --top 3
 ```
 
 ---
@@ -120,17 +125,17 @@ python3 .shared/flutter-pro-max/scripts/flutter_search.py "state" --stack riverp
 
 1. **Search widgets:**
    ```bash
-   python3 .shared/flutter-pro-max/scripts/flutter_search.py "form input" --top 5
+   python3 .shared/flutter-pro-max/scripts/search.py "form input" --domain widget --top 5
    ```
 
 2. **Search patterns:**
    ```bash
-   python3 .shared/flutter-pro-max/scripts/flutter_search.py "authentication login" --top 5
+   python3 .shared/flutter-pro-max/scripts/search.py "authentication login" --domain pattern --top 5
    ```
 
 3. **Search packages:**
    ```bash
-   python3 .shared/flutter-pro-max/scripts/flutter_search.py "validation form" --stack riverpod --top 5
+   python3 .shared/flutter-pro-max/scripts/search.py "validation" --domain package --stack riverpod --top 5
    ```
 
 4. **Apply results** to generate code với Riverpod state management
