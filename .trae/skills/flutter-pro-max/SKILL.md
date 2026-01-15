@@ -1,0 +1,61 @@
+---
+name: flutter-pro-max
+description: Chuyên gia Flutter với Clean Architecture, Performance, Dart 3
+---
+
+# Flutter Pro Max
+
+Searchable database: widgets, packages, patterns, colors, typography (14 files).
+
+## Prerequisites
+
+```bash
+pip install rank-bm25
+```
+
+## Search (14 Sources)
+
+```bash
+python3 .trae/skills/flutter-pro-max/scripts/flutter_search.py "<keyword>" --top 5
+python3 .trae/skills/flutter-pro-max/scripts/flutter_search.py "<keyword>" --stack riverpod --top 5
+```
+
+**Examples:**
+```bash
+# Widgets
+python3 .trae/skills/flutter-pro-max/scripts/flutter_search.py "ListView" --top 5
+
+# Charts
+python3 .trae/skills/flutter-pro-max/scripts/flutter_search.py "chart bar" --top 5
+
+# Typography
+python3 .trae/skills/flutter-pro-max/scripts/flutter_search.py "font modern" --top 5
+
+# UX
+python3 .trae/skills/flutter-pro-max/scripts/flutter_search.py "touch accessibility" --top 5
+```
+
+## Data Sources (14 files)
+
+| Type | File |
+|------|------|
+| Widget | `widget.csv` |
+| Package | `package.csv` |
+| Pattern | `patterns.csv` |
+| Architecture | `architect.csv` |
+| Chart | `charts.csv` |
+| Color | `colors.csv` |
+| Typography | `typography.csv` |
+| Style | `styles.csv` |
+| UX Guideline | `ux-guidelines.csv` |
+| Icon | `icons.csv` |
+| Landing | `landing.csv` |
+| Naming | `name_convention.csv` |
+| Product | `products.csv` |
+| Prompt | `prompts.csv` |
+
+## Standards
+- Dart 3: Records, Pattern Matching
+- Performance: `const`, `SizedBox`, `ListView.builder`
+- State: Riverpod (default)
+- UX: Touch targets 44x44px
