@@ -20,6 +20,8 @@ def _get_data_dir():
         script_dir.parent / ".shared" / "data",
         # When running from .shared/flutter-pro-max/scripts/
         script_dir.parent.parent / "data",
+        # When running from .codebuddy/commands/scripts/ (nested 3 levels deep)
+        script_dir.parent.parent.parent / ".shared" / "data",
         # Fallback: cwd
         Path.cwd() / ".shared" / "data",
     ]
