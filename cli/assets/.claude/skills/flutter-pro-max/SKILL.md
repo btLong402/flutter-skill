@@ -9,16 +9,10 @@ Searchable database của Flutter widgets, packages, design patterns, architectu
 
 ## Prerequisites
 
-Kiểm tra Python đã cài đặt:
+Chỉ cần Python (không cần pip install):
 
 ```bash
 python3 --version || python --version
-```
-
-Cài đặt dependency:
-
-```bash
-pip install rank-bm25
 ```
 
 ---
@@ -33,15 +27,20 @@ Trích xuất thông tin từ request:
 - **Architecture**: Clean Architecture, Feature-First, DDD
 - **State Management**: Riverpod (default), Bloc, Provider
 - **UI Components**: Widgets, Layouts, Animations
-- **Design**: Colors, Typography, Styles
 - **Package needs**: Networking, Database, Security, etc.
 
 ### Step 2: Search Relevant Data
 
-Sử dụng `search.py` để tìm kiếm trong **14 data sources**:
+Sử dụng `search.py` để tìm kiếm (auto-detect domain):
 
 ```bash
 python3 .claude/skills/flutter-pro-max/scripts/search.py "<keyword>" --top 5
+```
+
+**Với domain cụ thể:**
+```bash
+python3 .claude/skills/flutter-pro-max/scripts/search.py "<keyword>" --domain widget --top 5
+python3 .claude/skills/flutter-pro-max/scripts/search.py "<keyword>" --domain package --top 5
 ```
 
 **Với stack filter (loại bỏ conflicts):**
@@ -49,31 +48,9 @@ python3 .claude/skills/flutter-pro-max/scripts/search.py "<keyword>" --top 5
 python3 .claude/skills/flutter-pro-max/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
 
+**Available domains:** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`
+
 **Available stacks:** `riverpod`, `bloc`, `provider`
-
-**Search Examples by Domain:**
-```bash
-# Flutter Widgets
-python3 scripts/search.py "ListView pagination" --top 5
-
-# Design Patterns
-python3 scripts/search.py "authentication login" --top 5
-
-# Charts
-python3 scripts/search.py "chart bar comparison" --top 5
-
-# Typography
-python3 scripts/search.py "font modern SaaS" --top 5
-
-# Colors by Product
-python3 scripts/search.py "fintech crypto dark" --top 5
-
-# UX Guidelines
-python3 scripts/search.py "touch target accessibility" --top 5
-
-# UI Styles
-python3 scripts/search.py "glassmorphism neumorphism" --top 5
-```
 
 ### Step 3: Apply Technical Standards
 
@@ -105,24 +82,40 @@ String getMessage(UIState state) => switch (state) {
 
 ## Search Reference
 
-### Available Data Sources (14 files)
+### Available Data
 
-| Type | File | Content |
-|------|------|---------|
-| Widget | `widget.csv` | 65+ Flutter widgets với pro-tips |
-| Package | `package.csv` | 100+ packages với best practices |
-| Pattern | `patterns.csv` | 100+ design patterns với code snippets |
+| Domain | File | Content |
+|--------|------|---------|
+| Widgets | `widget.csv` | 65+ Flutter widgets với pro-tips |
+| Packages | `package.csv` | 100+ packages với best practices |
+| Patterns | `patterns.csv` | 100+ design patterns với code snippets |
 | Architecture | `architect.csv` | Clean Architecture layer paths |
-| Chart | `charts.csv` | Chart type recommendations by data |
-| Color | `colors.csv` | Color palettes by product type |
-| Typography | `typography.csv` | Font pairings với Google Fonts |
-| Style | `styles.csv` | UI style guidelines (Glass, Neubrutalism...) |
-| UX Guideline | `ux-guidelines.csv` | UX best practices (Do/Don't) |
-| Icon | `icons.csv` | Icon recommendations |
-| Landing | `landing.csv` | Landing page section patterns |
-| Naming | `name_convention.csv` | Dart/Flutter naming conventions |
-| Product | `products.csv` | Product type styling recommendations |
-| Prompt | `prompts.csv` | AI prompt templates |
+| Charts | `charts.csv` | Chart type recommendations |
+| Colors | `colors.csv` | Color palettes by product type |
+| Typography | `typography.csv` | Font pairings |
+| Styles | `styles.csv` | UI style guidelines |
+| UX Guidelines | `ux-guidelines.csv` | UX best practices |
+| Icons | `icons.csv` | Icon recommendations |
+| Landing | `landing.csv` | Landing page patterns |
+| Naming | `name_convention.csv` | Naming conventions |
+| Products | `products.csv` | Product type styling |
+| Prompts | `prompts.csv` | AI prompt templates |
+
+### Search Examples
+
+```bash
+# Auto-detect domain
+python3 .claude/skills/flutter-pro-max/scripts/search.py "ListView" --top 5
+
+# Specific domain
+python3 .claude/skills/flutter-pro-max/scripts/search.py "network http" --domain package --top 5
+
+# Stack filter
+python3 .claude/skills/flutter-pro-max/scripts/search.py "state" --stack riverpod --top 5
+
+# JSON output
+python3 .claude/skills/flutter-pro-max/scripts/search.py "login" --json --top 3
+```
 
 ---
 
@@ -132,25 +125,20 @@ String getMessage(UIState state) => switch (state) {
 
 1. **Search widgets:**
    ```bash
-   python3 scripts/search.py "form input text field" --top 5
+   python3 .claude/skills/flutter-pro-max/scripts/search.py "form input" --domain widget --top 5
    ```
 
 2. **Search patterns:**
    ```bash
-   python3 scripts/search.py "authentication login" --top 5
+   python3 .claude/skills/flutter-pro-max/scripts/search.py "authentication login" --domain pattern --top 5
    ```
 
 3. **Search packages:**
    ```bash
-   python3 scripts/search.py "validation form" --stack riverpod --top 5
+   python3 .claude/skills/flutter-pro-max/scripts/search.py "validation" --domain package --stack riverpod --top 5
    ```
 
-4. **Search colors:**
-   ```bash
-   python3 scripts/search.py "saas professional" --top 3
-   ```
-
-5. **Apply results** to generate code với Riverpod state management
+4. **Apply results** to generate code với Riverpod state management
 
 ---
 
@@ -175,8 +163,3 @@ String getMessage(UIState state) => switch (state) {
 - [ ] Riverpod providers được tổ chức hợp lý
 - [ ] Không leak state giữa các features
 - [ ] Error handling với AsyncValue
-
-### UX/UI
-- [ ] Touch targets tối thiểu 44x44px
-- [ ] Colors đúng với product type
-- [ ] Typography phù hợp với brand

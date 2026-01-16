@@ -1,60 +1,67 @@
 ---
 name: flutter-pro-max
-description: Chuyên gia Flutter với Clean Architecture, Performance, Dart 3
+description: Chuyên gia Flutter với kiến thức sâu về Clean Architecture, Performance và Modern Dart 3
 ---
 
 # Flutter Pro Max - Flutter Design Intelligence
 
-Searchable database của Flutter widgets, packages, design patterns, colors, typography, và best practices.
+Searchable database của Flutter widgets, packages, design patterns, architecture guidelines, và best practices.
 
 ## Prerequisites
 
+Chỉ cần Python (không cần pip install):
+
 ```bash
-pip install rank-bm25
+python3 --version || python --version
 ```
 
 ---
 
-## How to Use
+## How to Use This Skill
 
-### Step 1: Analyze Requirements
-- **Architecture**: Clean Architecture, Feature-First
-- **State**: Riverpod (default), Bloc
-- **UI**: Widgets, Colors, Typography
+Khi user yêu cầu Flutter work (design, build, create, implement, review, fix, improve), follow workflow này:
 
-### Step 2: Search (14 Sources)
+### Step 1: Analyze User Requirements
+
+Trích xuất thông tin từ request:
+- **Architecture**: Clean Architecture, Feature-First, DDD
+- **State Management**: Riverpod (default), Bloc, Provider
+- **UI Components**: Widgets, Layouts, Animations
+- **Package needs**: Networking, Database, Security, etc.
+
+### Step 2: Search Relevant Data
+
+Sử dụng `search.py` để tìm kiếm (auto-detect domain):
 
 ```bash
 python3 .gemini/skills/flutter-pro-max/scripts/search.py "<keyword>" --top 5
+```
+
+**Với domain cụ thể:**
+```bash
+python3 .gemini/skills/flutter-pro-max/scripts/search.py "<keyword>" --domain widget --top 5
+python3 .gemini/skills/flutter-pro-max/scripts/search.py "<keyword>" --domain package --top 5
+```
+
+**Với stack filter (loại bỏ conflicts):**
+```bash
 python3 .gemini/skills/flutter-pro-max/scripts/search.py "<keyword>" --stack riverpod --top 5
 ```
 
-**Examples:**
-```bash
-# Widgets
-python3 .gemini/skills/flutter-pro-max/scripts/search.py "ListView pagination" --top 5
+**Available domains:** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`
 
-# Charts
-python3 .gemini/skills/flutter-pro-max/scripts/search.py "chart bar" --top 5
+**Available stacks:** `riverpod`, `bloc`, `provider`
 
-# Typography
-python3 .gemini/skills/flutter-pro-max/scripts/search.py "font modern SaaS" --top 5
+### Step 3: Apply Technical Standards
 
-# Colors
-python3 .gemini/skills/flutter-pro-max/scripts/search.py "fintech crypto" --top 5
+Luôn tuân thủ các tiêu chuẩn:
 
-# UX Guidelines  
-python3 .gemini/skills/flutter-pro-max/scripts/search.py "touch accessibility" --top 5
-```
-
-### Step 3: Apply Standards
-
-#### Dart 3
+#### Dart 3 Modern Syntax
 ```dart
-// Records
+// ✅ Records
 (String name, int age) getUserInfo() => ('John', 25);
 
-// Pattern Matching
+// ✅ Pattern Matching
 String getMessage(UIState state) => switch (state) {
   LoadingState() => 'Loading...',
   DataState(data: var d) => 'Data: $d',
@@ -62,39 +69,97 @@ String getMessage(UIState state) => switch (state) {
 };
 ```
 
-#### Performance
-- `const` constructors
-- `SizedBox` > `Container` for spacing
-- `ListView.builder` for lists
+#### Performance Rules
+- Luôn dùng `const` constructor khi có thể
+- Ưu tiên `SizedBox` hơn `Container` cho spacing
+- Dùng `ListView.builder` thay vì `ListView` + `children`
+
+#### State Management
+- **Default**: Riverpod với `riverpod_generator`
+- **Alternative**: Bloc (khi user yêu cầu)
 
 ---
 
-## Data Sources (14 files)
+## Search Reference
 
-| Type | File | Content |
-|------|------|---------|
-| Widget | `widget.csv` | 65+ widgets |
-| Package | `package.csv` | 100+ packages |
-| Pattern | `patterns.csv` | 100+ patterns |
-| Architecture | `architect.csv` | Clean Architecture |
-| Chart | `charts.csv` | Chart recommendations |
-| Color | `colors.csv` | Color palettes |
+### Available Data
+
+| Domain | File | Content |
+|--------|------|---------|
+| Widgets | `widget.csv` | 65+ Flutter widgets với pro-tips |
+| Packages | `package.csv` | 100+ packages với best practices |
+| Patterns | `patterns.csv` | 100+ design patterns với code snippets |
+| Architecture | `architect.csv` | Clean Architecture layer paths |
+| Charts | `charts.csv` | Chart type recommendations |
+| Colors | `colors.csv` | Color palettes by product type |
 | Typography | `typography.csv` | Font pairings |
-| Style | `styles.csv` | UI styles |
-| UX Guideline | `ux-guidelines.csv` | UX best practices |
-| Icon | `icons.csv` | Icons |
-| Landing | `landing.csv` | Landing patterns |
+| Styles | `styles.csv` | UI style guidelines |
+| UX Guidelines | `ux-guidelines.csv` | UX best practices |
+| Icons | `icons.csv` | Icon recommendations |
+| Landing | `landing.csv` | Landing page patterns |
 | Naming | `name_convention.csv` | Naming conventions |
-| Product | `products.csv` | Product styling |
-| Prompt | `prompts.csv` | AI prompts |
+| Products | `products.csv` | Product type styling |
+| Prompts | `prompts.csv` | AI prompt templates |
+
+### Search Examples
+
+```bash
+# Auto-detect domain
+python3 .gemini/skills/flutter-pro-max/scripts/search.py "ListView" --top 5
+
+# Specific domain
+python3 .gemini/skills/flutter-pro-max/scripts/search.py "network http" --domain package --top 5
+
+# Stack filter
+python3 .gemini/skills/flutter-pro-max/scripts/search.py "state" --stack riverpod --top 5
+
+# JSON output
+python3 .gemini/skills/flutter-pro-max/scripts/search.py "login" --json --top 3
+```
+
+---
+
+## Example Workflow
+
+**User Request:** "Tạo màn hình đăng nhập với Riverpod"
+
+1. **Search widgets:**
+   ```bash
+   python3 .gemini/skills/flutter-pro-max/scripts/search.py "form input" --domain widget --top 5
+   ```
+
+2. **Search patterns:**
+   ```bash
+   python3 .gemini/skills/flutter-pro-max/scripts/search.py "authentication login" --domain pattern --top 5
+   ```
+
+3. **Search packages:**
+   ```bash
+   python3 .gemini/skills/flutter-pro-max/scripts/search.py "validation" --domain package --stack riverpod --top 5
+   ```
+
+4. **Apply results** to generate code với Riverpod state management
 
 ---
 
 ## Pre-Delivery Checklist
 
-- [ ] `const` constructors
-- [ ] Sound Null Safety
-- [ ] Dart 3 syntax
-- [ ] Clean Architecture
-- [ ] Touch targets 44x44px
-- [ ] WCAG contrast
+### Code Quality
+- [ ] Sử dụng `const` constructors
+- [ ] Sound Null Safety (không dùng `!` bừa bãi)
+- [ ] Dart 3 syntax (Records, Pattern Matching)
+
+### Performance
+- [ ] `ListView.builder` cho lists dài
+- [ ] `SizedBox` thay vì `Container` cho spacing
+- [ ] `const` widgets được đánh dấu
+
+### Architecture
+- [ ] Tuân thủ Clean Architecture layers
+- [ ] Dependency Injection đúng cách
+- [ ] Repository pattern cho data access
+
+### State Management
+- [ ] Riverpod providers được tổ chức hợp lý
+- [ ] Không leak state giữa các features
+- [ ] Error handling với AsyncValue
