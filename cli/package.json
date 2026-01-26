@@ -1,6 +1,6 @@
 {
     "name": "flutter-pro-max-cli",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "description": "CLI to install Flutter Pro Max skill for AI coding assistants",
     "type": "module",
     "bin": {
@@ -12,9 +12,8 @@
         "LICENSE"
     ],
     "scripts": {
-        "sync:assets": "bash scripts/sync-assets.sh",
-        "build": "npm run sync:assets && tsc",
-        "build:bun": "npm run sync:assets && bun build src/index.ts --outdir dist --target node",
+        "build": "tsc",
+        "build:bun": "bun build src/index.ts --outdir dist --target node",
         "dev": "npx ts-node --esm src/index.ts",
         "prepublishOnly": "npm run build"
     },
@@ -32,6 +31,11 @@
         "roocode",
         "codex",
         "qoder",
+        "gemini",
+        "opencode",
+        "continue",
+        "codebuddy",
+        "trae",
         "ai",
         "skill"
     ],

@@ -47,12 +47,14 @@ AI được trang bị skill này sẽ hoạt động với tư cách **"The Pra
 
 ## 🚀 Features
 
-Hệ thống kiến thức được xây dựng trên dữ liệu có cấu trúc bao quát hơn **100+ thành phần**:
+Hệ thống kiến thức được xây dựng trên dữ liệu có cấu trúc bao quát hơn **150+ thành phần**:
 
 - **🏗️ Architecture Excellence**: Clean Architecture, Feature-First, DDD, Repository Pattern, và Modular Design.
 - **📱 Premium UI/UX Patterns**: 100+ design patterns có sẵn code snippets cho Glassmorphism, Neumorphism, Modern SaaS, và eCommerce.
 - **📦 Smart Package Selection**: Hướng dẫn sử dụng 100+ packages phổ biến (Dio, Riverpod, Drift, Isar) với best practices và tránh xung đột stack.
-- **⚡ Performance & Optimization**: Quy tắc tối ưu hóa render, memory management, và Dart 3 modern syntax (Records, Pattern Matching).
+- **⚡ Performance Optimization**: 35+ patterns tối ưu render, memory, isolate, animation với code examples.
+- **♿ Mobile Accessibility**: 35+ patterns cho semantics, touch targets, contrast, focus management.
+- **🧠 UI Reasoning**: 35+ app categories với decision rules cho style, color, typography phù hợp.
 - **🛡️ Security & Integrity**: Tiêu chuẩn bảo mật API, lưu trữ dữ liệu an toàn và xử lý Null Safety triệt để.
 - **🎨 Design System Integration**: Tích hợp sẵn bảng màu (Color Palettes), Typography pairings và bộ Icon phù hợp cho từng loại sản phẩm.
 - **📏 Standards & Conventions**: Pre-defined naming conventions cho project lớn và cách tổ chức folder chuẩn mực.
@@ -79,6 +81,21 @@ npm install -g flutter-pro-max-cli
 
 # Khởi tạo trong bất kỳ project nào
 flutter-pro-max init
+
+# Cài đặt cho AI assistant cụ thể
+flutter-pro-max init --ai claude
+flutter-pro-max init --ai cursor
+flutter-pro-max init --ai antigravity
+```
+
+### Other Commands
+
+```bash
+# Xem các phiên bản có sẵn
+flutter-pro-max versions
+
+# Cập nhật lên phiên bản mới nhất
+flutter-pro-max update
 ```
 
 ---
@@ -87,50 +104,114 @@ flutter-pro-max init
 
 Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của bạn:
 
-| Assistant | Integration Method | Purpose |
-|-----------|---------------------|---------|
-| **Claude Code** | `.claude/skills/` | Chạy skill trực tiếp & inject môi trường |
-| **Cursor** | `.cursor/commands/` | Custom terminal commands & context indexing |
-| **Windsurf** | `.windsurf/workflows/` | Agentic workflow automation |
-| **Antigravity** | `.agent/workflows/` | Advanced multi-step architecture design |
-| **Gemini CLI** | `.gemini/skills/` | Google Gemini native skill extensions |
-| **GitHub Copilot** | `.github/prompts/` | Custom prompt templates |
-| **Trae** | `.trae/skills/` | ByteDance Trae native skill extensions |
-| **RooCode** | `.roo/commands/` | Specialized custom command integration |
+| Assistant | Install Type | Structure |
+|-----------|--------------|-----------|
+| **Claude Code** | Full | `.claude/skills/flutter-pro-max/` |
+| **Codex CLI** | Full | `.codex/skills/flutter-pro-max/` |
+| **Continue** | Full | `.continue/skills/flutter-pro-max/` |
+| **Antigravity** | Full | `.agent/skills/flutter-pro-max/` |
+| **Cursor** | Reference | `.cursor/commands/` + `.shared/` |
+| **Windsurf** | Reference | `.windsurf/workflows/` + `.shared/` |
+| **GitHub Copilot** | Reference | `.github/prompts/` + `.shared/` |
+| **Kiro** | Reference | `.kiro/skills/` + `.shared/` |
+| **RooCode** | Reference | `.roo/commands/` + `.shared/` |
+| **Qodo/Qoder** | Reference | `.qodo/skills/` + `.shared/` |
+| **Gemini CLI** | Reference | `.gemini/skills/` + `.shared/` |
+| **Trae** | Reference | `.trae/skills/` + `.shared/` |
+| **CodeBuddy** | Reference | `.codebuddy/skills/` + `.shared/` |
+| **OpenCode** | Reference | `.opencode/skills/` + `.shared/` |
+
+**Install Types:**
+- **Full**: Data và scripts nằm trong skill folder (standalone)
+- **Reference**: Skill file trỏ đến `.shared/` folder chung (tiết kiệm dung lượng)
 
 ---
 
 ## 🛠️ Usage
 
-### Workflow-Based (Cursor, Windsurf, Antigravity)
+### Workflow-Based (Cursor, Windsurf)
 Sử dụng slash command hoặc workflow runner:
 ```
 /flutter-pro-max Tạo màn hình Dashboard với Clean Architecture và Riverpod
 ```
 
-### Skill-Based (Claude Code, Gemini CLI)
-Skill tự động kích hoạt khi bạn yêu cầu các task liên quan đến Flutter. Bạn cũng có thể gọi trực tiếp:
+### Skill-Based (Claude Code, Codex, Antigravity)
+Skill tự động kích hoạt khi bạn yêu cầu các task liên quan đến Flutter. Bạn cũng có thể gọi search script trực tiếp:
+
 ```bash
-# Tìm kiếm widget/package/pattern (Auto-detect domain)
+# Auto-detect domain
 python3 scripts/search.py "ListView pagination" --top 5
 
-# Tìm kiếm theo stack cụ thể (Loại bỏ các package xung đột)
+# Tìm theo domain cụ thể
+python3 scripts/search.py "const rebuild" --domain performance --top 5
+python3 scripts/search.py "banking app" --domain ui-reasoning --top 3
+python3 scripts/search.py "touch target" --domain accessibility --top 3
+
+# Tìm kiếm theo stack (loại bỏ packages xung đột)
 python3 scripts/search.py "state management" --stack riverpod --top 5
 ```
+
+### Available Search Domains (17 total)
+
+| Domain | Description |
+|--------|-------------|
+| `widget` | Flutter widgets và usage |
+| `package` | Packages với best practices |
+| `pattern` | Design patterns và code snippets |
+| `architect` | Architecture layers và dependencies |
+| `chart` | Chart type recommendations |
+| `color` | Color palettes theo product type |
+| `typography` | Font pairings và styles |
+| `style` | UI styles (Glassmorphism, etc.) |
+| `ux` | UX guidelines |
+| `icon` | Icon libraries và usage |
+| `landing` | Landing page patterns |
+| `naming` | Naming conventions |
+| `product` | Product type recommendations |
+| `prompt` | AI prompt templates |
+| `performance` | Performance optimization patterns |
+| `ui-reasoning` | UI decisions theo app category |
+| `accessibility` | Mobile accessibility patterns |
 
 ### Example Prompts
 - *"Thiết kế kiến trúc thư mục cho một ứng dụng eCommerce lớn theo Feature-First."*
 - *"Tư vấn bảng màu và Typography cho một ứng dụng Fintech phong cách Dark Mode."*
 - *"Review code snippet này theo tiêu chuẩn Dart 3 và Performance rules."*
+- *"Tối ưu performance cho màn hình danh sách 1000+ items."*
+- *"Hướng dẫn accessibility cho app Healthcare."*
 
 ---
 
 ## 📖 How It Works
 
 1.  **Requirement Analysis**: AI phân tích yêu cầu, scale ứng dụng và tech stack bạn chọn (Riverpod, Bloc, etc.).
-2.  **Domain Searching**: Tìm kiếm trong 14+ kiến thức domain chuyên sâu (Architecture, UI, Performance) trong thư mục `.shared/`.
+2.  **Domain Searching**: Tìm kiếm trong 17 kiến thức domain chuyên sâu (Architecture, UI, Performance, Accessibility).
 3.  **Cross-Reference**: Đối chiếu với các pattern đã được thiết lập để đảm bảo không có xung đột giữa các thư viện.
 4.  **Actionable Output**: Trả về hướng dẫn triển khai cụ thể, code snippets thực tế và các lưu ý (pro-tips).
+
+---
+
+## 📊 Data Files
+
+| File | Records | Description |
+|------|---------|-------------|
+| widget.csv | 65 | Flutter widgets |
+| package.csv | 100+ | Packages với alternatives |
+| patterns.csv | 110 | Design patterns |
+| architect.csv | 20+ | Architecture layers |
+| flutter-performance.csv | 35 | Performance patterns |
+| mobile-accessibility.csv | 35 | Accessibility patterns |
+| ui-reasoning.csv | 35 | UI decision rules |
+| colors.csv | 50+ | Color palettes |
+| typography.csv | 40+ | Font pairings |
+| styles.csv | 60+ | UI styles |
+| ux-guidelines.csv | 50+ | UX rules |
+| icons.csv | 100+ | Icon recommendations |
+| landing.csv | 30+ | Landing patterns |
+| products.csv | 40+ | Product recommendations |
+| prompts.csv | 30+ | AI prompts |
+| charts.csv | 20+ | Chart types |
+| name_convention.csv | 10+ | Naming rules |
 
 ---
 

@@ -15,7 +15,7 @@ echo "🔄 Syncing assets from root to cli/assets..."
 # First, sync scripts to hidden tool folders
 bash "$SCRIPT_DIR/sync-tool-scripts.sh"
 
-# List of directories to sync
+# List of directories to sync from root
 DIRS=(
     ".agent"
     ".claude"
@@ -32,11 +32,15 @@ DIRS=(
     ".windsurf"
 )
 
-# Remove old assets and recreate
-rm -rf "$ASSETS_DIR"
+# Create assets directory if not exists
 mkdir -p "$ASSETS_DIR"
 
-# Copy each directory
+# Remove old AI tool folders (but keep templates, data, scripts)
+for dir in "${DIRS[@]}"; do
+    rm -rf "$ASSETS_DIR/$dir"
+done
+
+# Copy each directory from root
 for dir in "${DIRS[@]}"; do
     if [ -d "$ROOT_DIR/$dir" ]; then
         echo "  📁 Copying $dir..."
@@ -48,6 +52,13 @@ for dir in "${DIRS[@]}"; do
         echo "  ⚠️ Warning: $dir not found in root, skipping."
     fi
 done
+
+# Sync data and scripts for template system
+echo "🔄 Syncing data and scripts for template system..."
+mkdir -p "$ASSETS_DIR/data"
+mkdir -p "$ASSETS_DIR/scripts"
+cp -R "$ASSETS_DIR/.shared/data/." "$ASSETS_DIR/data/" 2>/dev/null || true
+cp -R "$ASSETS_DIR/.claude/skills/flutter-pro-max/scripts/." "$ASSETS_DIR/scripts/" 2>/dev/null || true
 
 # Remove any .git files/folders if exist
 echo "🧹 Cleaning up unwanted files..."

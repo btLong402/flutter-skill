@@ -46,6 +46,12 @@ export function detectAIType(cwd: string = process.cwd()): DetectionResult {
     if (existsSync(join(cwd, '.trae'))) {
         detected.push('trae');
     }
+    if (existsSync(join(cwd, '.opencode'))) {
+        detected.push('opencode');
+    }
+    if (existsSync(join(cwd, '.continue'))) {
+        detected.push('continue');
+    }
 
     // Suggest based on what's detected
     let suggested: AIType | null = null;
@@ -67,7 +73,7 @@ export function getAITypeDescription(aiType: AIType): string {
         case 'windsurf':
             return 'Windsurf (.windsurf/workflows/)';
         case 'antigravity':
-            return 'Antigravity (.agent/workflows/)';
+            return 'Antigravity / Generic Agent (.agent/skills/)';
         case 'copilot':
             return 'GitHub Copilot (.github/prompts/)';
         case 'kiro':
@@ -84,6 +90,10 @@ export function getAITypeDescription(aiType: AIType): string {
             return 'CodeBuddy (.codebuddy/commands/)';
         case 'trae':
             return 'Trae (.trae/skills/)';
+        case 'opencode':
+            return 'OpenCode (.opencode/skills/)';
+        case 'continue':
+            return 'Continue (.continue/skills/)';
         case 'all':
             return 'All AI assistants';
     }

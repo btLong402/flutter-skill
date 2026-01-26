@@ -1,0 +1,18 @@
+{
+  "platform": "roocode",
+  "displayName": "RooCode",
+  "installType": "reference",
+  "folderStructure": {
+    "root": ".roo",
+    "skillPath": "commands",
+    "filename": "flutter-pro-max.md"
+  },
+  "scriptPath": ".shared/flutter-pro-max/scripts",
+  "frontmatter": null,
+  "sections": {
+    "quickReference": true
+  },
+  "title": "Flutter Pro Max - Flutter Design Intelligence",
+  "description": "Searchable database của Flutter widgets, packages, design patterns, architecture guidelines, và best practices.",
+  "skillOrWorkflow": "Command"
+}

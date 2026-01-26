@@ -47,9 +47,21 @@ For CI/CD or automated setups, you can specify the assistant type directly:
 # Install for a specific assistant
 flutter-pro-max init --ai claude
 flutter-pro-max init --ai cursor
+flutter-pro-max init --ai antigravity
 
 # Install for all supported assistants
 flutter-pro-max init --ai all
+```
+
+### Other Commands
+
+```bash
+# List available versions from GitHub releases
+flutter-pro-max versions
+
+# Update to the latest version
+flutter-pro-max update
+flutter-pro-max update --ai claude
 ```
 
 ---
@@ -58,20 +70,55 @@ flutter-pro-max init --ai all
 
 This CLI bridges the gap between the Flutter Pro Max knowledge base and your development tools:
 
-| Assistant | Type Flag | Installation Path |
-|-----------|-----------|-------------------|
-| **Claude Code** | `claude` | `.claude/skills/` |
-| **Cursor** | `cursor` | `.cursor/commands/` |
-| **Windsurf** | `windsurf` | `.windsurf/workflows/` |
-| **Antigravity** | `antigravity` | `.agent/workflows/` |
-| **Trae** | `trae` | `.trae/skills/` |
-| **Gemini CLI** | `gemini` | `.gemini/skills/` |
-| **GitHub Copilot** | `copilot` | `.github/prompts/` |
-| **RooCode** | `roocode` | `.roo/commands/` |
-| **Kiro** | `kiro` | `.kiro/steering/` |
-| **Qoder** | `qoder` | `.qoder/rules/` |
-| **CodeBuddy** | `codebuddy` | `.codebuddy/commands/` |
-| **Codex** | `codex` | `.codex/skills/` |
+| Assistant | Type Flag | Install Type | Structure |
+|-----------|-----------|--------------|-----------|
+| **Claude Code** | `claude` | Full | `.claude/skills/flutter-pro-max/` |
+| **Codex CLI** | `codex` | Full | `.codex/skills/flutter-pro-max/` |
+| **Continue** | `continue` | Full | `.continue/skills/flutter-pro-max/` |
+| **Antigravity** | `antigravity` | Full | `.agent/skills/flutter-pro-max/` |
+| **Cursor** | `cursor` | Reference | `.cursor/commands/` + `.shared/` |
+| **Windsurf** | `windsurf` | Reference | `.windsurf/workflows/` + `.shared/` |
+| **GitHub Copilot** | `copilot` | Reference | `.github/prompts/` + `.shared/` |
+| **Kiro** | `kiro` | Reference | `.kiro/skills/` + `.shared/` |
+| **RooCode** | `roocode` | Reference | `.roo/commands/` + `.shared/` |
+| **Qodo/Qoder** | `qoder` | Reference | `.qodo/skills/` + `.shared/` |
+| **Gemini CLI** | `gemini` | Reference | `.gemini/skills/` + `.shared/` |
+| **Trae** | `trae` | Reference | `.trae/skills/` + `.shared/` |
+| **CodeBuddy** | `codebuddy` | Reference | `.codebuddy/skills/` + `.shared/` |
+| **OpenCode** | `opencode` | Reference | `.opencode/skills/` + `.shared/` |
+
+**Install Types:**
+- **Full**: Data và scripts nằm trong skill folder (standalone, ~500KB)
+- **Reference**: Skill file trỏ đến `.shared/` folder chung (tiết kiệm dung lượng khi dùng nhiều assistants)
+
+---
+
+## 📊 What Gets Installed
+
+### Data Files (17 domains)
+| Domain | File | Description |
+|--------|------|-------------|
+| Widgets | `widget.csv` | 65+ Flutter widgets |
+| Packages | `package.csv` | 100+ packages với alternatives |
+| Patterns | `patterns.csv` | 110+ design patterns |
+| Architecture | `architect.csv` | Architecture layers |
+| Performance | `flutter-performance.csv` | 35 optimization patterns |
+| Accessibility | `mobile-accessibility.csv` | 35 accessibility patterns |
+| UI Reasoning | `ui-reasoning.csv` | 35 app category decisions |
+| Colors | `colors.csv` | 50+ color palettes |
+| Typography | `typography.csv` | 40+ font pairings |
+| Styles | `styles.csv` | 60+ UI styles |
+| UX | `ux-guidelines.csv` | 50+ UX rules |
+| Icons | `icons.csv` | 100+ icon recommendations |
+| Landing | `landing.csv` | 30+ landing patterns |
+| Products | `products.csv` | 40+ product recommendations |
+| Prompts | `prompts.csv` | 30+ AI prompts |
+| Charts | `charts.csv` | 20+ chart types |
+| Naming | `name_convention.csv` | Naming conventions |
+
+### Search Scripts
+- `search.py` - BM25 search CLI
+- `core.py` - Search engine core
 
 ---
 
@@ -88,8 +135,42 @@ npm install
 # Build the project
 npm run build
 
-# Run locally in development mode
-npm run dev
+# Run locally
+node dist/index.js init --ai claude
+
+# Test search
+node dist/index.js init --ai claude
+cd .claude/skills/flutter-pro-max
+python3 scripts/search.py "ListView" --domain widget --top 3
+```
+
+---
+
+## 📁 Project Structure
+
+```
+cli/
+├── src/
+│   ├── index.ts              # CLI entry point
+│   ├── commands/
+│   │   ├── init.ts           # Install command
+│   │   ├── versions.ts       # List versions
+│   │   └── update.ts         # Update command
+│   ├── types/
+│   │   └── index.ts          # TypeScript types
+│   └── utils/
+│       ├── detect.ts         # AI type detection
+│       ├── github.ts         # GitHub API client
+│       ├── logger.ts         # Console logger
+│       └── template.ts       # Template renderer
+├── assets/
+│   ├── data/                 # 17 CSV knowledge files
+│   ├── scripts/              # Python search scripts
+│   └── templates/
+│       ├── base/             # Markdown templates
+│       └── platforms/        # 14 platform JSON configs
+├── package.json
+└── tsconfig.json
 ```
 
 ---

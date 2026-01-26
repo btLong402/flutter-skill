@@ -1,4 +1,6 @@
-export type AIType = 'claude' | 'cursor' | 'windsurf' | 'antigravity' | 'copilot' | 'kiro' | 'roocode' | 'codex' | 'qoder' | 'gemini' | 'codebuddy' | 'trae' | 'all';
+export type AIType = 'claude' | 'cursor' | 'windsurf' | 'antigravity' | 'copilot' | 'kiro' | 'roocode' | 'codex' | 'qoder' | 'gemini' | 'codebuddy' | 'trae' | 'opencode' | 'continue' | 'all';
+
+export type InstallType = 'full' | 'reference';
 
 export interface Release {
     tag_name: string;
@@ -20,8 +22,28 @@ export interface InstallConfig {
     force?: boolean;
 }
 
-export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'codebuddy', 'trae', 'all'];
+export interface PlatformConfig {
+    platform: string;
+    displayName: string;
+    installType: InstallType;
+    folderStructure: {
+        root: string;
+        skillPath: string;
+        filename: string;
+    };
+    scriptPath: string;
+    frontmatter: Record<string, string> | null;
+    sections: {
+        quickReference: boolean;
+    };
+    title: string;
+    description: string;
+    skillOrWorkflow: string;
+}
 
+export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'codebuddy', 'trae', 'opencode', 'continue', 'all'];
+
+// Legacy folder mapping for backward compatibility with ZIP-based installs
 export const AI_FOLDERS: Record<Exclude<AIType, 'all'>, string[]> = {
     claude: ['.claude', '.shared'],
     cursor: ['.cursor', '.shared'],
@@ -35,4 +57,6 @@ export const AI_FOLDERS: Record<Exclude<AIType, 'all'>, string[]> = {
     gemini: ['.gemini', '.shared'],
     codebuddy: ['.codebuddy', '.shared'],
     trae: ['.trae', '.shared'],
+    opencode: ['.opencode', '.shared'],
+    continue: ['.continue', '.shared'],
 };

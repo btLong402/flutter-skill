@@ -1,17 +1,13 @@
-import { join, dirname } from 'node:path';
+import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import chalk from 'chalk';
 import ora from 'ora';
 import prompts from 'prompts';
 import type { AIType } from '../types/index.js';
 import { AI_TYPES } from '../types/index.js';
-import { copyFolders } from '../utils/extract.js';
+import { generatePlatformFiles, generateAllPlatformFiles } from '../utils/template.js';
 import { detectAIType, getAITypeDescription } from '../utils/detect.js';
 import { logger } from '../utils/logger.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-// From dist/commands/init.js -> go up 2 levels to cli/, then assets/
-const ASSETS_DIR = join(__dirname, '..', '..', 'assets');
 
 interface InitOptions {
     ai?: AIType;
@@ -52,13 +48,19 @@ export async function initCommand(options: InitOptions): Promise<void> {
 
     logger.info(`Installing for: ${chalk.cyan(getAITypeDescription(aiType))}`);
 
-    const spinner = ora('Installing files...').start();
+    const spinner = ora('Generating skill files from templates...').start();
+    const cwd = process.cwd();
 
     try {
-        const cwd = process.cwd();
-        const copiedFolders = await copyFolders(ASSETS_DIR, cwd, aiType);
+        let copiedFolders: string[];
 
-        spinner.succeed('Installation complete!');
+        if (aiType === 'all') {
+            copiedFolders = await generateAllPlatformFiles(cwd);
+        } else {
+            copiedFolders = await generatePlatformFiles(cwd, aiType);
+        }
+
+        spinner.succeed('Generated from templates!');
 
         // Summary
         console.log();
@@ -73,9 +75,8 @@ export async function initCommand(options: InitOptions): Promise<void> {
         // Next steps
         console.log();
         console.log(chalk.bold('Next steps:'));
-        console.log(chalk.dim('  1. Install Python dependency: pip install rank-bm25'));
-        console.log(chalk.dim('  2. Restart your AI coding assistant'));
-        console.log(chalk.dim('  3. Try: "Tạo màn hình đăng nhập với Riverpod"'));
+        console.log(chalk.dim('  1. Restart your AI coding assistant'));
+        console.log(chalk.dim('  2. Try: "Tạo màn hình đăng nhập với Riverpod"'));
         console.log();
     } catch (error) {
         spinner.fail('Installation failed');
