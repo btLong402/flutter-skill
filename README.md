@@ -7,7 +7,7 @@
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?logo=flutter&logoColor=white)](https://flutter.dev)
 [![Dart](https://img.shields.io/badge/Dart_3-0175C2?logo=dart&logoColor=white)](https://dart.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Python 3.8+](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
 
 [Overview](#-overview) | [Features](#-features) | [Installation](#-installation) | [Usage](#-usage) | [Supported Assistants](#-supported-ai-assistants)
 
@@ -49,7 +49,8 @@ AI được trang bị skill này sẽ hoạt động với tư cách **"The Pra
 
 Hệ thống kiến thức được xây dựng trên dữ liệu có cấu trúc bao quát hơn **150+ thành phần**:
 
-- **🏗️ Architecture Excellence**: Clean Architecture, Feature-First, DDD, Repository Pattern, và Modular Design.
+- **� Intelligent Design System Generator** *(NEW)*: Tự động sinh complete design system (colors, typography, spacing, patterns) dựa trên app category với reasoning engine.
+- **�🏗️ Architecture Excellence**: Clean Architecture, Feature-First, DDD, Repository Pattern, và Modular Design.
 - **📱 Premium UI/UX Patterns**: 100+ design patterns có sẵn code snippets cho Glassmorphism, Neumorphism, Modern SaaS, và eCommerce.
 - **📦 Smart Package Selection**: Hướng dẫn sử dụng 100+ packages phổ biến (Dio, Riverpod, Drift, Isar) với best practices và tránh xung đột stack.
 - **⚡ Performance Optimization**: 35+ patterns tối ưu render, memory, isolate, animation với code examples.
@@ -102,24 +103,24 @@ flutter-pro-max update
 
 ## 🤖 Supported AI Assistants
 
-Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của bạn:
+Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của bạn (14 platforms):
 
 | Assistant | Install Type | Structure |
 |-----------|--------------|-----------|
 | **Claude Code** | Full | `.claude/skills/flutter-pro-max/` |
-| **Codex CLI** | Full | `.codex/skills/flutter-pro-max/` |
+| **Codex** | Full | `.codex/skills/flutter-pro-max/` |
 | **Continue** | Full | `.continue/skills/flutter-pro-max/` |
 | **Antigravity** | Full | `.agent/skills/flutter-pro-max/` |
+| **Gemini CLI** | Full | `.gemini/skills/flutter-pro-max/` |
+| **OpenCode** | Full | `.opencode/skills/flutter-pro-max/` |
+| **CodeBuddy** | Full | `.codebuddy/skills/flutter-pro-max/` |
+| **Trae** | Full | `.trae/skills/flutter-pro-max/` |
 | **Cursor** | Reference | `.cursor/commands/` + `.shared/` |
-| **Windsurf** | Reference | `.windsurf/workflows/` + `.shared/` |
+| **Windsurf** | Reference | `.windsurf/skills/` + `.shared/` |
 | **GitHub Copilot** | Reference | `.github/prompts/` + `.shared/` |
-| **Kiro** | Reference | `.kiro/skills/` + `.shared/` |
-| **RooCode** | Reference | `.roo/commands/` + `.shared/` |
-| **Qodo/Qoder** | Reference | `.qodo/skills/` + `.shared/` |
-| **Gemini CLI** | Reference | `.gemini/skills/` + `.shared/` |
-| **Trae** | Reference | `.trae/skills/` + `.shared/` |
-| **CodeBuddy** | Reference | `.codebuddy/skills/` + `.shared/` |
-| **OpenCode** | Reference | `.opencode/skills/` + `.shared/` |
+| **Kiro** | Reference | `.kiro/steering/` + `.shared/` |
+| **Qoder** | Reference | `.qoder/skills/` + `.shared/` |
+| **Roo Code** | Reference | `.roo/commands/` + `.shared/` |
 
 **Install Types:**
 - **Full**: Data và scripts nằm trong skill folder (standalone)
@@ -129,14 +130,31 @@ Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của b�
 
 ## 🛠️ Usage
 
-### Workflow-Based (Cursor, Windsurf)
-Sử dụng slash command hoặc workflow runner:
+### Skill Mode (Auto-activate)
+
+**Supported:** Claude Code, Codex, Continue, Antigravity, Gemini CLI, OpenCode, CodeBuddy, Trae
+
+Skill tự động kích hoạt khi bạn yêu cầu các task liên quan đến Flutter. Just chat naturally:
+
+```
+Tạo màn hình Dashboard với Clean Architecture và Riverpod
+```
+
+> **Trae**: Switch to **SOLO** mode first. The skill will activate for Flutter requests.
+
+### Workflow Mode (Slash Command)
+
+**Supported:** Cursor, Windsurf, GitHub Copilot, Kiro, Qoder, Roo Code
+
+Sử dụng slash command để gọi skill:
+
 ```
 /flutter-pro-max Tạo màn hình Dashboard với Clean Architecture và Riverpod
 ```
 
-### Skill-Based (Claude Code, Codex, Antigravity)
-Skill tự động kích hoạt khi bạn yêu cầu các task liên quan đến Flutter. Bạn cũng có thể gọi search script trực tiếp:
+### Search Script (Advanced)
+
+Bạn cũng có thể gọi search script trực tiếp:
 
 ```bash
 # Auto-detect domain
@@ -182,6 +200,86 @@ python3 scripts/search.py "state management" --stack riverpod --top 5
 
 ---
 
+## 🎯 Design System Generator (NEW)
+
+Tính năng flagship - tự động sinh **complete design system** cho Flutter app của bạn.
+
+### Generate Design System
+
+```bash
+# Generate design system với ASCII output
+python3 scripts/search.py "fintech banking app" --design-system -p "MyBank"
+
+# Generate với Markdown output
+python3 scripts/search.py "e-commerce fashion" --design-system -f markdown -p "StyleShop"
+```
+
+### Sample Output
+
+```
++-----------------------------------------------------------------------------------------+
+|  TARGET: MYBANK - FLUTTER DESIGN SYSTEM                                                 |
++-----------------------------------------------------------------------------------------+
+|                                                                                         |
+|  ARCHITECTURE: Clean Architecture + Security-First                                      |
+|     Structure: Feature-First / Clean Architecture                                       |
+|     State: Riverpod                                                                     |
+|     Patterns: Secure Form Pattern, Biometric Auth, Transaction List                     |
+|                                                                                         |
+|  UI STYLE: Minimalism & Swiss Style                                                     |
+|     Keywords: Clean, professional, trustworthy, secure                                  |
+|     Best For: Banking, fintech, enterprise apps                                         |
+|                                                                                         |
+|  COLOR PALETTE:                                                                         |
+|     Primary:    #1E3A5F (Deep Navy)                                                     |
+|     Secondary:  #2563EB (Trust Blue)                                                    |
+|     CTA:        #10B981 (Success Green)                                                 |
+|     Background: #FFFFFF                                                                 |
+|     Surface:    #F8FAFC                                                                 |
+|     Text:       #1E293B                                                                 |
+|                                                                                         |
+|  TYPOGRAPHY: Inter / Inter                                                              |
+|     Mood: Professional, clean, readable                                                 |
+|                                                                                         |
+|  AVOID (Anti-patterns):                                                                 |
+|     Bright neon colors + Playful animations + Casual fonts + AI purple gradients        |
+|                                                                                         |
+|  PRE-DELIVERY CHECKLIST:                                                                |
+|     [ ] const constructors for immutable widgets                                        |
+|     [ ] Accessibility: Semantics labels, touch targets >= 48px                          |
+|     [ ] Performance: ListView.builder for long lists                                    |
++-----------------------------------------------------------------------------------------+
+```
+
+### Persist Design System (Master + Overrides Pattern)
+
+Lưu design system vào files để **sử dụng nhất quán across sessions**:
+
+```bash
+# Generate và persist vào design-system/mybank/MASTER.md
+python3 scripts/search.py "fintech banking" --design-system --persist -p "MyBank"
+
+# Tạo thêm file override cho screen cụ thể
+python3 scripts/search.py "fintech banking" --design-system --persist -p "MyBank" --page "dashboard"
+```
+
+Tạo cấu trúc `design-system/`:
+
+```
+design-system/
+├── mybank/
+│   ├── MASTER.md           # Global Source of Truth (colors, typography, spacing)
+│   └── pages/
+│       └── dashboard.md    # Screen-specific overrides
+```
+
+**Cách sử dụng hierarchical retrieval:**
+1. Khi build một screen (e.g., "Checkout"), kiểm tra `design-system/mybank/pages/checkout.md` trước
+2. Nếu file tồn tại, rules trong đó **override** MASTER.md
+3. Nếu không, sử dụng `design-system/mybank/MASTER.md`
+
+---
+
 ## 📖 How It Works
 
 1.  **Requirement Analysis**: AI phân tích yêu cầu, scale ứng dụng và tech stack bạn chọn (Riverpod, Bloc, etc.).
@@ -218,6 +316,26 @@ python3 scripts/search.py "state management" --stack riverpod --top 5
 ## 📄 License
 
 Project này được cấp phép theo MIT License - xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+
+---
+
+## � Acknowledgements
+
+Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) by [@viettranx](https://github.com/viettranx). Kiến trúc, CLI design, và multi-platform skill system được adapt từ project tuyệt vời này.
+
+---
+
+## �📝 Changelog
+
+### v2.1.0 (2026-01-27)
+- **Type Safety**: Full Python type hints cho Pylance strict mode compatibility
+- **Python 3.10+**: Cập nhật minimum Python version (sử dụng modern union syntax `str | None`)
+- **Code Quality**: Xóa unused imports, fix tất cả linter warnings
+
+### v2.0.0
+- Phiên bản public đầu tiên với 14 AI assistant support
+- BM25-based semantic search engine
+- Design System Generator
 
 ---
 

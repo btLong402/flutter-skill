@@ -180,6 +180,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 📝 Changelog
+
+### v2.1.0 (2026-01-27)
+- **Type Safety**: Full Python type hints cho Pylance strict mode
+- **Python 3.10+**: Minimum Python version updated
+- **Code Quality**: Xóa unused imports, fix linter warnings
+
+### v2.0.0
+- Phiên bản đầu tiên với 14 AI assistant support
+
+---
+
 <div align="center">
 
 **Streamline your Flutter development with AI-powered architectural intelligence.**

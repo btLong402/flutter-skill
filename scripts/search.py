@@ -18,9 +18,10 @@ from core import (
     search, 
     search_with_stack
 )
+from typing import Any
 
 
-def format_output(result):
+def format_output(result: dict[str, Any]) -> str:
     """Format results for human-readable output (token-optimized for AI)"""
     if "error" in result:
         return f"❌ Error: {result['error']}"

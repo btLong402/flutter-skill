@@ -10,9 +10,10 @@ import re
 from pathlib import Path
 from math import log
 from collections import defaultdict
+from typing import Any
 
 # ============ CONFIGURATION ============
-def _get_data_dir():
+def _get_data_dir() -> Path:
     """Auto-detect data directory based on script location"""
     script_dir = Path(__file__).parent
     possible_paths = [
@@ -38,7 +39,7 @@ DATA_DIR = _get_data_dir()
 MAX_RESULTS = 5
 
 # Domain configuration: file, search columns, output columns
-CSV_CONFIG = {
+CSV_CONFIG: dict[str, dict[str, str | list[str]]] = {
     "widget": {
         "file": "widget.csv",
         "search_cols": ["Widget Name", "Category", "Description", "Key Properties", "Usage Context & Pro-Tips"],
@@ -141,49 +142,49 @@ AVAILABLE_STACKS = list(STACK_EXCLUSIONS.keys())
 class BM25:
     """BM25 ranking algorithm for text search - zero dependencies"""
 
-    def __init__(self, k1=1.5, b=0.75):
+    def __init__(self, k1: float = 1.5, b: float = 0.75) -> None:
         self.k1 = k1
         self.b = b
-        self.corpus = []
-        self.doc_lengths = []
-        self.avgdl = 0
-        self.idf = {}
-        self.doc_freqs = defaultdict(int)
-        self.N = 0
+        self.corpus: list[list[str]] = []
+        self.doc_lengths: list[int] = []
+        self.avgdl: float = 0
+        self.idf: dict[str, float] = {}
+        self.doc_freqs: defaultdict[str, int] = defaultdict(int)
+        self.n: int = 0
 
-    def tokenize(self, text):
+    def tokenize(self, text: str) -> list[str]:
         """Lowercase, split, remove punctuation, filter short words"""
         text = re.sub(r'[^\w\s]', ' ', str(text).lower())
         return [w for w in text.split() if len(w) > 1]
 
-    def fit(self, documents):
+    def fit(self, documents: list[str]) -> None:
         """Build BM25 index from documents"""
         self.corpus = [self.tokenize(doc) for doc in documents]
-        self.N = len(self.corpus)
-        if self.N == 0:
+        self.n = len(self.corpus)
+        if self.n == 0:
             return
         self.doc_lengths = [len(doc) for doc in self.corpus]
-        self.avgdl = sum(self.doc_lengths) / self.N
+        self.avgdl = sum(self.doc_lengths) / self.n
 
         for doc in self.corpus:
-            seen = set()
+            seen: set[str] = set()
             for word in doc:
                 if word not in seen:
                     self.doc_freqs[word] += 1
                     seen.add(word)
 
         for word, freq in self.doc_freqs.items():
-            self.idf[word] = log((self.N - freq + 0.5) / (freq + 0.5) + 1)
+            self.idf[word] = log((self.n - freq + 0.5) / (freq + 0.5) + 1)
 
-    def score(self, query):
+    def score(self, query: str) -> list[tuple[int, float]]:
         """Score all documents against query"""
         query_tokens = self.tokenize(query)
-        scores = []
+        scores: list[tuple[int, float]] = []
 
         for idx, doc in enumerate(self.corpus):
-            score = 0
+            score: float = 0.0
             doc_len = self.doc_lengths[idx]
-            term_freqs = defaultdict(int)
+            term_freqs: defaultdict[str, int] = defaultdict(int)
             for word in doc:
                 term_freqs[word] += 1
 
@@ -201,13 +202,13 @@ class BM25:
 
 
 # ============ HELPER FUNCTIONS ============
-def _load_csv(filepath):
+def _load_csv(filepath: Path) -> list[dict[str, str]]:
     """Load CSV and return list of dicts"""
     with open(filepath, 'r', encoding='utf-8') as f:
         return list(csv.DictReader(f))
 
 
-def _search_csv(filepath, search_cols, output_cols, query, max_results, boost_col=None, boost_query=None):
+def _search_csv(filepath: Path, search_cols: list[str], output_cols: list[str], query: str, max_results: int, boost_col: str | None = None, boost_query: str | None = None) -> list[dict[str, Any]]:
     """Core search function using BM25 with optional boosting"""
     if not filepath.exists():
         return []
@@ -225,28 +226,29 @@ def _search_csv(filepath, search_cols, output_cols, query, max_results, boost_co
     # Apply boosting if specified (widget name match, etc.)
     if boost_col and boost_query:
         boost_query_lower = boost_query.lower()
-        boosted = []
+        boosted: list[tuple[int, float]] = []
         for idx, score in ranked:
+            boosted_score = score
             if score > 0:
                 boost_value = str(data[idx].get(boost_col, "")).lower()
                 if boost_value in boost_query_lower or boost_query_lower in boost_value:
-                    score *= 2.0  # Double score for exact/partial match
-            boosted.append((idx, score))
+                    boosted_score = score * 2.0  # Double score for exact/partial match
+            boosted.append((idx, boosted_score))
         ranked = sorted(boosted, key=lambda x: x[1], reverse=True)
 
     # Get top results with score > 0
-    results = []
+    results: list[dict[str, Any]] = []
     for idx, score in ranked[:max_results]:
         if score > 0:
             row = data[idx]
-            result = {col: row.get(col, "") for col in output_cols if col in row}
+            result: dict[str, Any] = {col: row.get(col, "") for col in output_cols if col in row}
             result["_score"] = round(score, 4)
             results.append(result)
 
     return results
 
 
-def detect_domain(query):
+def detect_domain(query: str) -> str:
     """Auto-detect the most relevant domain from query keywords"""
     query_lower = query.lower()
 
@@ -267,13 +269,13 @@ def detect_domain(query):
         "prompt": ["prompt", "ai", "css", "tailwind", "implementation"],
     }
 
-    scores = {domain: sum(1 for kw in keywords if kw in query_lower) for domain, keywords in domain_keywords.items()}
-    best = max(scores, key=scores.get)
+    scores: dict[str, int] = {domain: sum(1 for kw in keywords if kw in query_lower) for domain, keywords in domain_keywords.items()}
+    best = max(scores, key=lambda k: scores[k])
     return best if scores[best] > 0 else "widget"
 
 
 # ============ MAIN SEARCH FUNCTIONS ============
-def search(query, domain=None, max_results=MAX_RESULTS):
+def search(query: str, domain: str | None = None, max_results: int = MAX_RESULTS) -> dict[str, Any]:
     """
     Main search function with auto-domain detection
     
@@ -292,7 +294,7 @@ def search(query, domain=None, max_results=MAX_RESULTS):
         return {"error": f"Unknown domain: {domain}. Available: {', '.join(AVAILABLE_DOMAINS)}"}
 
     config = CSV_CONFIG[domain]
-    filepath = DATA_DIR / config["file"]
+    filepath = DATA_DIR / str(config["file"])
 
     if not filepath.exists():
         return {"error": f"File not found: {filepath}", "domain": domain}
@@ -301,15 +303,20 @@ def search(query, domain=None, max_results=MAX_RESULTS):
     boost_col = "Widget Name" if domain == "widget" else None
     boost_query = query if domain == "widget" else None
 
-    results = _search_csv(
-        filepath, 
-        config["search_cols"], 
-        config["output_cols"], 
-        query, 
-        max_results,
-        boost_col=boost_col,
-        boost_query=boost_query
-    )
+    search_cols = config["search_cols"]
+    output_cols = config["output_cols"]
+    if isinstance(search_cols, list) and isinstance(output_cols, list):
+        results = _search_csv(
+            filepath, 
+            search_cols, 
+            output_cols, 
+            query, 
+            max_results,
+            boost_col=boost_col,
+            boost_query=boost_query
+        )
+    else:
+        results = []
 
     return {
         "domain": domain,
@@ -320,7 +327,7 @@ def search(query, domain=None, max_results=MAX_RESULTS):
     }
 
 
-def search_with_stack(query, stack, domain=None, max_results=MAX_RESULTS):
+def search_with_stack(query: str, stack: str, domain: str | None = None, max_results: int = MAX_RESULTS) -> dict[str, Any]:
     """
     Search with stack-specific filtering (excludes conflicting packages)
     
@@ -343,11 +350,11 @@ def search_with_stack(query, stack, domain=None, max_results=MAX_RESULTS):
 
     # Filter out conflicting packages
     excluded = STACK_EXCLUSIONS[stack]
-    filtered_results = []
+    filtered_results: list[dict[str, Any]] = []
     
     for item in result["results"]:
         # Check package name field
-        pkg_name = item.get("pkg_name", "").lower()
+        pkg_name = str(item.get("pkg_name", "")).lower()
         if pkg_name not in excluded:
             filtered_results.append(item)
         
