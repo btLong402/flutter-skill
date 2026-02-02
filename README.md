@@ -15,7 +15,7 @@
 
 ## 🌟 Overview
 
-**Flutter Pro Max** là một lớp AI Intelligence chuyên sâu dành cho phát triển Flutter hiện đại. Nó cung cấp cho các AI coding assistant một cơ sở kiến thức khổng lồ về các kiến trúc (Clean Architecture, BLoC, Riverpod), tối ưu hóa hiệu năng, tiêu chuẩn bảo mật và các patterns thiết kế UI/UX cao cấp.
+**Flutter Pro Max** là một lớp AI Intelligence chuyên sâu dành cho phát triển Flutter hiện đại, được xây dựng dựa trên [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules) chính thức. Nó cung cấp cho các AI coding assistant một cơ sở kiến thức khổng lồ về các kiến trúc (Clean Architecture, Feature-First), Native-First state management (ValueNotifier, ChangeNotifier), tối ưu hóa hiệu năng, tiêu chuẩn bảo mật và các patterns thiết kế UI/UX cao cấp.
 
 Dù bạn đang xây dựng một ứng dụng Fintech phức tạp, một sàn thương mại điện tử quy mô lớn hay một SaaS Dashboard, skill này đảm bảo AI partner của bạn sẽ đưa ra các khuyến nghị cấp độ chuyên gia dựa trên các tiêu chuẩn công nghiệp mới nhất.
 
@@ -42,6 +42,17 @@ AI được trang bị skill này sẽ hoạt động với tư cách **"The Pra
 2. **Block & Critique** - Cảnh báo vấn đề, giải thích Technical Debt
 3. **Refactor First** - Sửa kiến trúc trước khi fix bug
 4. **Explain** - Giải thích lý do mọi quyết định refactor
+
+### 🛠️ AI Tools Integration (Flutter Official)
+
+| Tool | Purpose | Usage |
+|------|---------|-------|
+| `dart_format` | Format code | ALWAYS run after changes |
+| `dart_fix` | Auto-fix errors | Run before commit |
+| `flutter analyze` | Lint with `flutter_lints` | Catch issues early |
+| `pub_dev_search` | Search packages | Discover dependencies |
+
+> 📖 **Reference:** [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)
 
 ---
 
@@ -325,7 +336,16 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 
 ---
 
-## �📝 Changelog
+## 📝 Changelog
+
+### v2.2.0 (2026-02-02)
+- **Flutter AI Rules**: Cập nhật theo [Flutter Official AI Rules](https://docs.flutter.dev/ai/ai-rules)
+- **Native-First State Management**: Mặc định ValueNotifier/ChangeNotifier thay vì Riverpod
+- **Platform Limits**: Tạo templates phù hợp với giới hạn từng platform (4k, 10k, full)
+- **New Platforms**: Thêm JetBrains AI (Junie), VS Code
+- **AI Tools Integration**: Thêm dart_format, dart_fix, analyze_files guidelines
+- **Material 3 Theming**: ThemeExtension, ColorScheme.fromSeed
+- **Documentation**: Dart 3 patterns, accessibility, testing standards
 
 ### v2.1.0 (2026-01-27)
 - **Type Safety**: Full Python type hints cho Pylance strict mode compatibility

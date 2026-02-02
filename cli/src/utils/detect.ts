@@ -94,6 +94,10 @@ export function getAITypeDescription(aiType: AIType): string {
             return 'OpenCode (.opencode/skills/)';
         case 'continue':
             return 'Continue (.continue/skills/)';
+        case 'junie':
+            return 'JetBrains AI / Junie (.junie/skills/)';
+        case 'vscode':
+            return 'VS Code (.vscode/instructions/)';
         case 'all':
             return 'All AI assistants';
     }

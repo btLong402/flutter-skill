@@ -1,4 +1,4 @@
-export type AIType = 'claude' | 'cursor' | 'windsurf' | 'antigravity' | 'copilot' | 'kiro' | 'roocode' | 'codex' | 'qoder' | 'gemini' | 'codebuddy' | 'trae' | 'opencode' | 'continue' | 'all';
+export type AIType = 'claude' | 'cursor' | 'windsurf' | 'antigravity' | 'copilot' | 'kiro' | 'roocode' | 'codex' | 'qoder' | 'gemini' | 'codebuddy' | 'trae' | 'opencode' | 'continue' | 'junie' | 'vscode' | 'all';
 
 export type InstallType = 'full' | 'reference';
 
@@ -36,12 +36,13 @@ export interface PlatformConfig {
     sections: {
         quickReference: boolean;
     };
+    template?: string;  // Optional: defaults to skill-content.md
     title: string;
     description: string;
     skillOrWorkflow: string;
 }
 
-export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'codebuddy', 'trae', 'opencode', 'continue', 'all'];
+export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'codebuddy', 'trae', 'opencode', 'continue', 'junie', 'vscode', 'all'];
 
 // Legacy folder mapping for backward compatibility with ZIP-based installs
 export const AI_FOLDERS: Record<Exclude<AIType, 'all'>, string[]> = {
@@ -59,4 +60,6 @@ export const AI_FOLDERS: Record<Exclude<AIType, 'all'>, string[]> = {
     trae: ['.trae', '.shared'],
     opencode: ['.opencode', '.shared'],
     continue: ['.continue', '.shared'],
+    junie: ['.junie', '.shared'],
+    vscode: ['.vscode', '.shared'],
 };

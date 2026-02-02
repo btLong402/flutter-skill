@@ -1,11 +1,11 @@
 {
-  "platform": "copilot",
-  "displayName": "GitHub Copilot",
+  "platform": "vscode",
+  "displayName": "VS Code",
   "installType": "reference",
   "folderStructure": {
-    "root": ".github",
-    "skillPath": "prompts",
-    "filename": "flutter-pro-max.prompt.md"
+    "root": ".vscode",
+    "skillPath": "instructions",
+    "filename": "flutter-pro-max.instructions.md"
   },
   "scriptPath": ".shared/flutter-pro-max/scripts/search.py",
   "frontmatter": null,
@@ -13,7 +13,7 @@
     "quickReference": false
   },
   "template": "skill-content-4k.md",
-  "title": "flutter-pro-max",
+  "title": "Flutter Pro Max",
   "description": "Flutter development guide with widgets, packages, patterns, architecture, performance, and UI/UX best practices.",
   "skillOrWorkflow": "Workflow"
 }

@@ -68,28 +68,35 @@ flutter-pro-max update --ai claude
 
 ## 🤖 Supported AI Assistants
 
-This CLI bridges the gap between the Flutter Pro Max knowledge base and your development tools:
+This CLI bridges the gap between the Flutter Pro Max knowledge base and your development tools (16 platforms):
 
-| Assistant | Type Flag | Install Type | Structure |
-|-----------|-----------|--------------|-----------|
-| **Claude Code** | `claude` | Full | `.claude/skills/flutter-pro-max/` |
-| **Codex CLI** | `codex` | Full | `.codex/skills/flutter-pro-max/` |
-| **Continue** | `continue` | Full | `.continue/skills/flutter-pro-max/` |
-| **Antigravity** | `antigravity` | Full | `.agent/skills/flutter-pro-max/` |
-| **Cursor** | `cursor` | Reference | `.cursor/commands/` + `.shared/` |
-| **Windsurf** | `windsurf` | Reference | `.windsurf/workflows/` + `.shared/` |
-| **GitHub Copilot** | `copilot` | Reference | `.github/prompts/` + `.shared/` |
-| **Kiro** | `kiro` | Reference | `.kiro/skills/` + `.shared/` |
-| **RooCode** | `roocode` | Reference | `.roo/commands/` + `.shared/` |
-| **Qodo/Qoder** | `qoder` | Reference | `.qodo/skills/` + `.shared/` |
-| **Gemini CLI** | `gemini` | Reference | `.gemini/skills/` + `.shared/` |
-| **Trae** | `trae` | Reference | `.trae/skills/` + `.shared/` |
-| **CodeBuddy** | `codebuddy` | Reference | `.codebuddy/skills/` + `.shared/` |
-| **OpenCode** | `opencode` | Reference | `.opencode/skills/` + `.shared/` |
+| Assistant | Type Flag | Install Type | Template | Limit |
+|-----------|-----------|--------------|----------|-------|
+| **Claude Code** | `claude` | Full | Full (~15KB) | No Limit |
+| **Codex CLI** | `codex` | Full | Full (~15KB) | No Limit |
+| **Continue** | `continue` | Full | Full (~15KB) | No Limit |
+| **JetBrains AI (Junie)** | `junie` | Full | Full (~15KB) | No Limit |
+| **Gemini CLI** | `gemini` | Full | Full (~15KB) | 1M+ Tokens |
+| **OpenCode** | `opencode` | Full | Full (~15KB) | No Limit |
+| **CodeBuddy** | `codebuddy` | Full | Full (~15KB) | No Limit |
+| **Trae** | `trae` | Full | Full (~15KB) | No Limit |
+| **Antigravity (Google)** | `antigravity` | Full | Compact (~5KB) | **12,000 chars** |
+| **Cursor** | `cursor` | Reference | Full (~13KB) | No Limit |
+| **Windsurf** | `windsurf` | Reference | Full (~13KB) | No Limit |
+| **GitHub Copilot** | `copilot` | Reference | Mini (~2KB) | **~4,000 chars** |
+| **VS Code** | `vscode` | Reference | Mini (~2KB) | Unknown |
+| **Kiro** | `kiro` | Reference | Full (~13KB) | No Limit |
+| **RooCode** | `roocode` | Reference | Full (~13KB) | No Limit |
+| **Qodo/Qoder** | `qoder` | Reference | Full (~13KB) | No Limit |
 
 **Install Types:**
 - **Full**: Data và scripts nằm trong skill folder (standalone, ~500KB)
 - **Reference**: Skill file trỏ đến `.shared/` folder chung (tiết kiệm dung lượng khi dùng nhiều assistants)
+
+**Templates (theo platform limits - dựa trên [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)):**
+- **Full (~15KB)**: Đầy đủ rules, code examples, Material 3 theming, accessibility
+- **Compact (~5KB)**: Core rules, essential patterns (Antigravity 12k limit)
+- **Mini (~2KB)**: Essential rules only (Copilot ~4k limit)
 
 ---
 
@@ -168,7 +175,11 @@ cli/
 │   ├── scripts/              # Python search scripts
 │   └── templates/
 │       ├── base/             # Markdown templates
-│       └── platforms/        # 14 platform JSON configs
+│       │   ├── skill-content.md      # Full template (~13KB)
+│       │   ├── skill-content-10k.md  # Compact (~5KB)
+│       │   ├── skill-content-4k.md   # Mini (~2KB)
+│       │   └── quick-reference.md    # Add-on (~2KB)
+│       └── platforms/        # 16 platform JSON configs
 ├── package.json
 └── tsconfig.json
 ```
@@ -181,6 +192,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## 📝 Changelog
+
+### v2.2.0 (2026-02-02)
+- **Flutter AI Rules**: Cập nhật theo [Flutter Official AI Rules](https://docs.flutter.dev/ai/ai-rules)
+- **Platform Limits**: Tạo templates phù hợp với giới hạn từng platform
+  - `skill-content.md` (~13KB) - Full template
+  - `skill-content-10k.md` (~5KB) - Compact (Antigravity)
+  - `skill-content-4k.md` (~2KB) - Mini (Copilot, VS Code)
+- **New Platforms**: JetBrains AI (Junie), VS Code
+- **Native-First State**: ValueNotifier/ChangeNotifier mặc định
 
 ### v2.1.0 (2026-01-27)
 - **Type Safety**: Full Python type hints cho Pylance strict mode

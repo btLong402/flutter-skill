@@ -15,7 +15,8 @@
   "sections": {
     "quickReference": false
   },
+  "template": "skill-content-10k.md",
   "title": "flutter-pro-max",
-  "description": "Comprehensive Flutter development guide with searchable database of widgets, packages, design patterns, architecture guidelines, performance optimization, accessibility, and UI/UX best practices.",
+  "description": "Flutter development guide with widgets, packages, patterns, architecture, performance, and UI/UX best practices.",
   "skillOrWorkflow": "Skill"
 }

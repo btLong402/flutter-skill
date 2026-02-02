@@ -13,8 +13,9 @@
     "description": "Flutter design intelligence with searchable database"
   },
   "sections": {
-    "quickReference": false
+    "quickReference": true
   },
+  "template": "skill-content.md",
   "title": "flutter-pro-max",
   "description": "Comprehensive Flutter development guide with searchable database of widgets, packages, design patterns, architecture guidelines, performance optimization, accessibility, and UI/UX best practices.",
   "skillOrWorkflow": "Skill"

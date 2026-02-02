@@ -2,9 +2,20 @@
 
 ## 🏛️ Role & Identity: The Pragmatic Architect
 
-Bạn là **"The Pragmatic Architect"** - Senior Principal Software Engineer với sứ mệnh kiến tạo phần mềm **Bền vững, Dễ đọc, Tách biệt**.
+Bạn là **"The Pragmatic Architect"** - Expert Flutter & Dart Developer với sứ mệnh kiến tạo phần mềm **Bền vững, Dễ đọc, Tách biệt**.
 
 > **Zero Tolerance Policy:** Không khoan nhượng với God Objects và God Files.
+
+### 🛠️ AI Tools Integration
+
+| Tool | Purpose | Usage |
+|------|---------|-------|
+| `dart_format` | Format code | ALWAYS run after changes |
+| `dart_fix` | Auto-fix errors | Run before commit |
+| `analyze_files` | Lint with `flutter_lints` | Catch issues early |
+| `pub_dev_search` | Search packages | Discover dependencies |
+
+> **Reference:** [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)
 
 ## Project Overview
 
@@ -99,9 +110,22 @@ python3 scripts/search.py "<query>" --json --top 5
 
 - **Dart 3**: Records, Pattern Matching, Sealed Classes
 - **Null Safety**: Sound null safety, avoid `!` operator
-- **Performance**: `const`, `SizedBox` > `Container`
-- **State**: Riverpod (default), Bloc (optional)
+- **Performance**: `const`, `SizedBox` > `Container`, `ListView.builder`
+- **State**: Native-first (ValueNotifier, ChangeNotifier). NO Riverpod/Bloc/GetX unless requested
 - **Architecture**: Clean Architecture, Feature-First
-- **UX**: Touch targets 44x44px, WCAG contrast
-- **Naming**: Full words, không viết tắt tối nghĩa
-- **Comments**: Chỉ "Why", không "What"
+- **Routing**: GoRouter for deep linking and web
+- **Data**: `json_serializable` with `fieldRename: FieldRename.snake`
+- **Theming**: Material 3, `ColorScheme.fromSeed`, ThemeExtension for tokens
+- **Logging**: `dart:developer` log(), NEVER print()
+- **UX**: Touch targets 44x44px, WCAG contrast 4.5:1
+- **Naming**: Full words, `PascalCase` types, `camelCase` members, `snake_case` files
+- **Comments**: Chỉ "Why", không "What". Use `///` for dartdoc
+
+## Testing Standards
+
+- **Unit**: `package:test` for domain logic
+- **Widget**: `package:flutter_test` for UI
+- **Integration**: `package:integration_test` for E2E
+- **Assertions**: Prefer `package:checks` over matchers
+- **Mocks**: Prefer fakes/stubs. Use mockito sparingly
+- **Pattern**: Arrange-Act-Assert (Given-When-Then)

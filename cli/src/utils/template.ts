@@ -23,6 +23,8 @@ const AI_TO_PLATFORM: Record<string, string> = {
     codebuddy: 'codebuddy',
     opencode: 'opencode',
     continue: 'continue',
+    junie: 'junie',
+    vscode: 'vscode',
 };
 
 async function exists(path: string): Promise<boolean> {
@@ -97,8 +99,9 @@ function renderFrontmatter(frontmatter: Record<string, string> | null): string {
  * Render skill file content from template
  */
 export async function renderSkillFile(config: PlatformConfig): Promise<string> {
-    // Load base template
-    let content = await loadTemplate('base/skill-content.md');
+    // Load base template (use config.template or default to skill-content.md)
+    const templateFile = config.template || 'skill-content.md';
+    let content = await loadTemplate(`base/${templateFile}`);
 
     // Load quick reference if needed
     let quickReferenceContent = '';
