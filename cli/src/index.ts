@@ -26,8 +26,6 @@ program
     .description('Install Flutter Pro Max skill to current project')
     .option('-a, --ai <type>', `AI assistant type (${AI_TYPES.join(', ')})`)
     .option('-f, --force', 'Overwrite existing files')
-    .option('-o, --offline', 'Skip GitHub download, use bundled assets only')
-    .option('-l, --legacy', 'Use legacy ZIP-based install instead of template generation')
     .action(async (options) => {
         if (options.ai && !AI_TYPES.includes(options.ai)) {
             console.error(`Invalid AI type: ${options.ai}`);
@@ -37,8 +35,6 @@ program
         await initCommand({
             ai: options.ai as AIType | undefined,
             force: options.force,
-            offline: options.offline,
-            legacy: options.legacy,
         });
     });
 
