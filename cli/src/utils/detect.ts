@@ -75,7 +75,7 @@ export function getAITypeDescription(aiType: AIType): string {
         case 'antigravity':
             return 'Antigravity / Generic Agent (.agent/skills/)';
         case 'copilot':
-            return 'GitHub Copilot (.github/prompts/)';
+            return 'GitHub Copilot (.github/skills/)';
         case 'kiro':
             return 'Kiro (.kiro/steering/)';
         case 'codex':
@@ -97,7 +97,7 @@ export function getAITypeDescription(aiType: AIType): string {
         case 'junie':
             return 'JetBrains AI / Junie (.junie/skills/)';
         case 'vscode':
-            return 'VS Code (.vscode/instructions/)';
+            return 'VS Code (.github/skills/)';
         case 'all':
             return 'All AI assistants';
     }

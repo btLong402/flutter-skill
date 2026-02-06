@@ -1,4 +1,3 @@
-````markdown
 # {{TITLE}}
 
 {{DESCRIPTION}}
@@ -107,4 +106,3 @@ class User {
 - [ ] `dart_format` applied
 - [ ] Tests written
 {{QUICK_REFERENCE}}
-````

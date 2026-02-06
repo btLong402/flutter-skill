@@ -1,19 +1,22 @@
 {
   "platform": "copilot",
   "displayName": "GitHub Copilot",
-  "installType": "reference",
+  "installType": "full",
   "folderStructure": {
     "root": ".github",
-    "skillPath": "prompts",
-    "filename": "flutter-pro-max.prompt.md"
+    "skillPath": "skills/flutter-pro-max",
+    "filename": "SKILL.md"
   },
-  "scriptPath": ".shared/flutter-pro-max/scripts/search.py",
-  "frontmatter": null,
+  "scriptPath": "skills/flutter-pro-max/scripts/search.py",
+  "frontmatter": {
+    "name": "flutter-pro-max",
+    "description": "Flutter design intelligence. Widgets, packages, patterns, architecture, performance optimization, accessibility, and UI/UX best practices."
+  },
   "sections": {
-    "quickReference": false
+    "quickReference": true
   },
-  "template": "skill-content-4k.md",
-  "title": "flutter-pro-max",
-  "description": "Flutter development guide with widgets, packages, patterns, architecture, performance, and UI/UX best practices.",
-  "skillOrWorkflow": "Workflow"
+  "template": "skill-content.md",
+  "title": "Flutter Pro Max - Flutter Design Intelligence",
+  "description": "Comprehensive Flutter development guide with searchable database of widgets, packages, design patterns, architecture guidelines, performance optimization, accessibility, and UI/UX best practices.",
+  "skillOrWorkflow": "Skill"
 }

@@ -13,7 +13,7 @@
     "description": "Flutter design intelligence. Widgets, packages, patterns, architecture, UI/UX best practices."
   },
   "sections": {
-    "quickReference": false
+    "quickReference": true
   },
   "template": "skill-content-10k.md",
   "title": "flutter-pro-max",

@@ -1,4 +1,3 @@
-````markdown
 # {{TITLE}}
 
 {{DESCRIPTION}}
@@ -217,4 +216,3 @@ Image.network(
 - [ ] Widget tests for UI
 - [ ] Integration tests for E2E
 {{QUICK_REFERENCE}}
-````

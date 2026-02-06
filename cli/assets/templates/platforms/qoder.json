@@ -13,7 +13,7 @@
     "description": "Flutter design intelligence with searchable database"
   },
   "sections": {
-    "quickReference": false
+    "quickReference": true
   },
   "template": "skill-content.md",
   "title": "flutter-pro-max",

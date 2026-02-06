@@ -1,6 +1,6 @@
 {
     "name": "flutter-pro-max-cli",
-    "version": "2.1.3",
+    "version": "2.3.0",
     "description": "CLI to install Flutter Pro Max skill for AI coding assistants",
     "type": "module",
     "bin": {

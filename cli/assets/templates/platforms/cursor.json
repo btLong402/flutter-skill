@@ -10,7 +10,7 @@
   "scriptPath": ".shared/flutter-pro-max/scripts/search.py",
   "frontmatter": null,
   "sections": {
-    "quickReference": false
+    "quickReference": true
   },
   "template": "skill-content.md",
   "title": "flutter-pro-max",

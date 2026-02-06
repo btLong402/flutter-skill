@@ -61,5 +61,5 @@ export const AI_FOLDERS: Record<Exclude<AIType, 'all'>, string[]> = {
     opencode: ['.opencode', '.shared'],
     continue: ['.continue', '.shared'],
     junie: ['.junie', '.shared'],
-    vscode: ['.vscode', '.shared'],
+    vscode: ['.github', '.shared'],
 };

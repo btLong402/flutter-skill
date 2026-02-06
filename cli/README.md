@@ -83,8 +83,8 @@ This CLI bridges the gap between the Flutter Pro Max knowledge base and your dev
 | **Antigravity (Google)** | `antigravity` | Full | Compact (~5KB) | **12,000 chars** |
 | **Cursor** | `cursor` | Reference | Full (~13KB) | No Limit |
 | **Windsurf** | `windsurf` | Reference | Full (~13KB) | No Limit |
-| **GitHub Copilot** | `copilot` | Reference | Mini (~2KB) | **~4,000 chars** |
-| **VS Code** | `vscode` | Reference | Mini (~2KB) | Unknown |
+| **GitHub Copilot** | `copilot` | Full | Full (~15KB) | No Limit |
+| **VS Code** | `vscode` | Full | Full (~15KB) | No Limit |
 | **Kiro** | `kiro` | Reference | Full (~13KB) | No Limit |
 | **RooCode** | `roocode` | Reference | Full (~13KB) | No Limit |
 | **Qodo/Qoder** | `qoder` | Reference | Full (~13KB) | No Limit |
@@ -192,6 +192,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 ## 📝 Changelog
+
+### v2.3.0 (2026-02-06)
+- **VS Code 1.109 Support**: GitHub Copilot và VS Code sử dụng `.github/skills/` format
+- **Breaking Change**: Copilot/VS Code chuyển từ prompts/instructions sang Skills
+- **Full Install**: Copilot và VS Code nay sử dụng full template (~15KB) thay vì mini
 
 ### v2.2.0 (2026-02-02)
 - **Flutter AI Rules**: Cập nhật theo [Flutter Official AI Rules](https://docs.flutter.dev/ai/ai-rules)
