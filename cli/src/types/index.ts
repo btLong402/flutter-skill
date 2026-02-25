@@ -40,6 +40,10 @@ export interface PlatformConfig {
     title: string;
     description: string;
     skillOrWorkflow: string;
+    rulesFile?: {
+        path: string;
+        mode: 'create' | 'append';
+    };
 }
 
 export const AI_TYPES: AIType[] = ['claude', 'cursor', 'windsurf', 'antigravity', 'copilot', 'roocode', 'kiro', 'codex', 'qoder', 'gemini', 'codebuddy', 'trae', 'opencode', 'continue', 'junie', 'vscode', 'all'];

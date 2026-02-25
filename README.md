@@ -169,15 +169,15 @@ Bạn cũng có thể gọi search script trực tiếp:
 
 ```bash
 # Auto-detect domain
-python3 scripts/search.py "ListView pagination" --top 5
+python3 src/flutter-pro-max/scripts/search.py "ListView pagination" --top 5
 
 # Tìm theo domain cụ thể
-python3 scripts/search.py "const rebuild" --domain performance --top 5
-python3 scripts/search.py "banking app" --domain ui-reasoning --top 3
-python3 scripts/search.py "touch target" --domain accessibility --top 3
+python3 src/flutter-pro-max/scripts/search.py "const rebuild" --domain performance --top 5
+python3 src/flutter-pro-max/scripts/search.py "banking app" --domain ui-reasoning --top 3
+python3 src/flutter-pro-max/scripts/search.py "touch target" --domain accessibility --top 3
 
 # Tìm kiếm theo stack (loại bỏ packages xung đột)
-python3 scripts/search.py "state management" --stack riverpod --top 5
+python3 src/flutter-pro-max/scripts/search.py "state management" --stack riverpod --top 5
 ```
 
 ### Available Search Domains (17 total)
@@ -219,10 +219,10 @@ Tính năng flagship - tự động sinh **complete design system** cho Flutter 
 
 ```bash
 # Generate design system với ASCII output
-python3 scripts/search.py "fintech banking app" --design-system -p "MyBank"
+python3 src/flutter-pro-max/scripts/search.py "fintech banking app" --design-system -p "MyBank"
 
 # Generate với Markdown output
-python3 scripts/search.py "e-commerce fashion" --design-system -f markdown -p "StyleShop"
+python3 src/flutter-pro-max/scripts/search.py "e-commerce fashion" --design-system -f markdown -p "StyleShop"
 ```
 
 ### Sample Output
@@ -268,10 +268,10 @@ Lưu design system vào files để **sử dụng nhất quán across sessions**
 
 ```bash
 # Generate và persist vào design-system/mybank/MASTER.md
-python3 scripts/search.py "fintech banking" --design-system --persist -p "MyBank"
+python3 src/flutter-pro-max/scripts/search.py "fintech banking" --design-system --persist -p "MyBank"
 
 # Tạo thêm file override cho screen cụ thể
-python3 scripts/search.py "fintech banking" --design-system --persist -p "MyBank" --page "dashboard"
+python3 src/flutter-pro-max/scripts/search.py "fintech banking" --design-system --persist -p "MyBank" --page "dashboard"
 ```
 
 Tạo cấu trúc `design-system/`:

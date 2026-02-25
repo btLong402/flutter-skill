@@ -25,17 +25,17 @@ Flutter Pro Max là AI Skill cung cấp kiến thức Flutter chuyên sâu.
 
 ```bash
 # Auto-detect domain search
-python3 scripts/search.py "<query>" --top 5
+python3 src/flutter-pro-max/scripts/search.py "<query>" --top 5
 
 # Specific domain
-python3 scripts/search.py "ListView" --domain widget --top 5
-python3 scripts/search.py "dio http" --domain package --top 5
+python3 src/flutter-pro-max/scripts/search.py "ListView" --domain widget --top 5
+python3 src/flutter-pro-max/scripts/search.py "dio http" --domain package --top 5
 
 # With stack filter
-python3 scripts/search.py "<query>" --stack riverpod --top 5
+python3 src/flutter-pro-max/scripts/search.py "<query>" --stack riverpod --top 5
 
 # JSON output
-python3 scripts/search.py "<query>" --json --top 5
+python3 src/flutter-pro-max/scripts/search.py "<query>" --json --top 5
 ```
 
 **Available domains (17):** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`, `performance`, `ui-reasoning`, `accessibility`
@@ -76,9 +76,7 @@ src/flutter-pro-max/                # Source of Truth
     ├── base/                       # Base templates (skill-content.md, quick-reference.md)
     └── platforms/                  # Platform configs (claude.json, cursor.json, ...)
 
-scripts/                            # Symlink → src/flutter-pro-max/scripts/
 .shared/
-├── data/                           # Symlink → src/flutter-pro-max/data/
 └── flutter-pro-max/                # Symlink → src/flutter-pro-max/
 
 cli/                                # CLI installer (flutter-pro-max-cli on npm)

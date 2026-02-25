@@ -18,5 +18,9 @@
   "template": "skill-content-10k.md",
   "title": "flutter-pro-max",
   "description": "Flutter development guide with widgets, packages, patterns, architecture, performance, and UI/UX best practices.",
-  "skillOrWorkflow": "Skill"
+  "skillOrWorkflow": "Skill",
+  "rulesFile": {
+    "path": ".agent/rules/flutter-pro-max.md",
+    "mode": "create"
+  }
 }

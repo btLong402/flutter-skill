@@ -216,7 +216,7 @@ python3 {{SCRIPT_PATH}}/search.py "<keyword>" --domain package --top 5
 python3 {{SCRIPT_PATH}}/search.py "<keyword>" --stack riverpod --top 5
 ```
 
-**Available domains:** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`
+**Available domains (17):** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`, `performance`, `ui-reasoning`, `accessibility`
 
 **Available stacks:** `riverpod`, `bloc`, `provider`
 
@@ -230,6 +230,9 @@ python3 {{SCRIPT_PATH}}/search.py "<keyword>" --stack riverpod --top 5
 | Packages | `package.csv` | 100+ packages |
 | Patterns | `patterns.csv` | 100+ design patterns |
 | Architecture | `architect.csv` | Clean Architecture layers |
+| Performance | `flutter-performance.csv` | 35+ performance patterns |
+| Accessibility | `mobile-accessibility.csv` | 35+ accessibility patterns |
+| UI Reasoning | `ui-reasoning.csv` | 35+ UI decision rules |
 | Charts | `charts.csv` | Chart recommendations |
 | Colors | `colors.csv` | Color palettes |
 | Typography | `typography.csv` | Font pairings |

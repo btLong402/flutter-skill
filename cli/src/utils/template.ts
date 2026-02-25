@@ -167,6 +167,42 @@ async function ensureSharedExists(targetDir: string): Promise<boolean> {
 }
 
 /**
+ * Generate rules file for a platform
+ */
+async function generateRulesFile(
+    targetDir: string,
+    config: PlatformConfig
+): Promise<void> {
+    if (!config.rulesFile) return;
+
+    // Load rules template
+    const rulesContent = await loadTemplate('base/rules.md');
+
+    const rulesFilePath = join(targetDir, config.rulesFile.path);
+    const rulesDir = dirname(rulesFilePath);
+
+    // Create directory structure
+    await mkdir(rulesDir, { recursive: true });
+
+    if (config.rulesFile.mode === 'append') {
+        // Append mode: add to existing file (e.g. CLAUDE.md, copilot-instructions.md)
+        let existing = '';
+        if (await exists(rulesFilePath)) {
+            existing = await readFile(rulesFilePath, 'utf-8');
+            // Check if rules already appended
+            if (existing.includes('Flutter Pro Max — Agent Rules')) {
+                return; // Already has rules
+            }
+            existing += '\n\n';
+        }
+        await writeFile(rulesFilePath, existing + rulesContent, 'utf-8');
+    } else {
+        // Create mode: write new file
+        await writeFile(rulesFilePath, rulesContent, 'utf-8');
+    }
+}
+
+/**
  * Generate platform files for a specific AI type
  */
 export async function generatePlatformFiles(
@@ -203,6 +239,9 @@ export async function generatePlatformFiles(
             createdFolders.push('.shared');
         }
     }
+
+    // Generate rules file (standalone, separate from skill)
+    await generateRulesFile(targetDir, config);
 
     return createdFolders;
 }
