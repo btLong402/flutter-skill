@@ -39,7 +39,7 @@ DATA_DIR = _get_data_dir()
 MAX_RESULTS = 5
 
 # Domain configuration: file, search columns, output columns
-CSV_CONFIG = {
+CSV_CONFIG: dict[str, dict[str, str | list[str]]] = {
     "widget": {
         "file": "widget.csv",
         "search_cols": ["Widget Name", "Category", "Description", "Key Properties", "Usage Context & Pro-Tips"],
@@ -150,7 +150,7 @@ class BM25:
         self.avgdl: float = 0
         self.idf: dict[str, float] = {}
         self.doc_freqs: defaultdict[str, int] = defaultdict(int)
-        self.N: int = 0
+        self.n: int = 0
 
     def tokenize(self, text: str) -> list[str]:
         """Lowercase, split, remove punctuation, filter short words"""
@@ -160,21 +160,21 @@ class BM25:
     def fit(self, documents: list[str]) -> None:
         """Build BM25 index from documents"""
         self.corpus = [self.tokenize(doc) for doc in documents]
-        self.N = len(self.corpus)
-        if self.N == 0:
+        self.n = len(self.corpus)
+        if self.n == 0:
             return
         self.doc_lengths = [len(doc) for doc in self.corpus]
-        self.avgdl = sum(self.doc_lengths) / self.N
+        self.avgdl = sum(self.doc_lengths) / self.n
 
         for doc in self.corpus:
-            seen = set()
+            seen: set[str] = set()
             for word in doc:
                 if word not in seen:
                     self.doc_freqs[word] += 1
                     seen.add(word)
 
         for word, freq in self.doc_freqs.items():
-            self.idf[word] = log((self.N - freq + 0.5) / (freq + 0.5) + 1)
+            self.idf[word] = log((self.n - freq + 0.5) / (freq + 0.5) + 1)
 
     def score(self, query: str) -> list[tuple[int, float]]:
         """Score all documents against query"""
@@ -182,9 +182,9 @@ class BM25:
         scores: list[tuple[int, float]] = []
 
         for idx, doc in enumerate(self.corpus):
-            score = 0
+            score: float = 0.0
             doc_len = self.doc_lengths[idx]
-            term_freqs = defaultdict(int)
+            term_freqs: defaultdict[str, int] = defaultdict(int)
             for word in doc:
                 term_freqs[word] += 1
 
@@ -226,21 +226,22 @@ def _search_csv(filepath: Path, search_cols: list[str], output_cols: list[str], 
     # Apply boosting if specified (widget name match, etc.)
     if boost_col and boost_query:
         boost_query_lower = boost_query.lower()
-        boosted = []
+        boosted: list[tuple[int, float]] = []
         for idx, score in ranked:
+            boosted_score = score
             if score > 0:
                 boost_value = str(data[idx].get(boost_col, "")).lower()
                 if boost_value in boost_query_lower or boost_query_lower in boost_value:
-                    score *= 2.0  # Double score for exact/partial match
-            boosted.append((idx, score))
+                    boosted_score = score * 2.0  # Double score for exact/partial match
+            boosted.append((idx, boosted_score))
         ranked = sorted(boosted, key=lambda x: x[1], reverse=True)
 
     # Get top results with score > 0
-    results = []
+    results: list[dict[str, Any]] = []
     for idx, score in ranked[:max_results]:
         if score > 0:
             row = data[idx]
-            result = {col: row.get(col, "") for col in output_cols if col in row}
+            result: dict[str, Any] = {col: row.get(col, "") for col in output_cols if col in row}
             result["_score"] = round(score, 4)
             results.append(result)
 
@@ -268,8 +269,8 @@ def detect_domain(query: str) -> str:
         "prompt": ["prompt", "ai", "css", "tailwind", "implementation"],
     }
 
-    scores = {domain: sum(1 for kw in keywords if kw in query_lower) for domain, keywords in domain_keywords.items()}
-    best = max(scores, key=scores.get)
+    scores: dict[str, int] = {domain: sum(1 for kw in keywords if kw in query_lower) for domain, keywords in domain_keywords.items()}
+    best = max(scores, key=lambda k: scores[k])
     return best if scores[best] > 0 else "widget"
 
 
@@ -293,7 +294,7 @@ def search(query: str, domain: str | None = None, max_results: int = MAX_RESULTS
         return {"error": f"Unknown domain: {domain}. Available: {', '.join(AVAILABLE_DOMAINS)}"}
 
     config = CSV_CONFIG[domain]
-    filepath = DATA_DIR / config["file"]
+    filepath = DATA_DIR / str(config["file"])
 
     if not filepath.exists():
         return {"error": f"File not found: {filepath}", "domain": domain}
@@ -302,15 +303,20 @@ def search(query: str, domain: str | None = None, max_results: int = MAX_RESULTS
     boost_col = "Widget Name" if domain == "widget" else None
     boost_query = query if domain == "widget" else None
 
-    results = _search_csv(
-        filepath, 
-        config["search_cols"], 
-        config["output_cols"], 
-        query, 
-        max_results,
-        boost_col=boost_col,
-        boost_query=boost_query
-    )
+    search_cols = config["search_cols"]
+    output_cols = config["output_cols"]
+    if isinstance(search_cols, list) and isinstance(output_cols, list):
+        results = _search_csv(
+            filepath, 
+            search_cols, 
+            output_cols, 
+            query, 
+            max_results,
+            boost_col=boost_col,
+            boost_query=boost_query
+        )
+    else:
+        results = []
 
     return {
         "domain": domain,
@@ -344,11 +350,11 @@ def search_with_stack(query: str, stack: str, domain: str | None = None, max_res
 
     # Filter out conflicting packages
     excluded = STACK_EXCLUSIONS[stack]
-    filtered_results = []
+    filtered_results: list[dict[str, Any]] = []
     
     for item in result["results"]:
         # Check package name field
-        pkg_name = item.get("pkg_name", "").lower()
+        pkg_name = str(item.get("pkg_name", "")).lower()
         if pkg_name not in excluded:
             filtered_results.append(item)
         

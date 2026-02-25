@@ -1,0 +1,22 @@
+{
+  "platform": "antigravity",
+  "displayName": "Antigravity / Generic Agent",
+  "installType": "full",
+  "folderStructure": {
+    "root": ".agent",
+    "skillPath": "skills/flutter-pro-max",
+    "filename": "SKILL.md"
+  },
+  "scriptPath": "skills/flutter-pro-max/scripts/search.py",
+  "frontmatter": {
+    "name": "flutter-pro-max",
+    "description": "Flutter design intelligence. Widgets, packages, patterns, architecture, UI/UX best practices."
+  },
+  "sections": {
+    "quickReference": true
+  },
+  "template": "skill-content-10k.md",
+  "title": "flutter-pro-max",
+  "description": "Flutter development guide with widgets, packages, patterns, architecture, performance, and UI/UX best practices.",
+  "skillOrWorkflow": "Skill"
+}

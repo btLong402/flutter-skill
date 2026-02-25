@@ -1,0 +1,19 @@
+{
+  "platform": "junie",
+  "displayName": "JetBrains AI (Junie)",
+  "installType": "full",
+  "folderStructure": {
+    "root": ".junie",
+    "skillPath": "skills/flutter-pro-max",
+    "filename": "guidelines.md"
+  },
+  "scriptPath": "skills/flutter-pro-max/scripts/search.py",
+  "frontmatter": null,
+  "sections": {
+    "quickReference": true
+  },
+  "template": "skill-content.md",
+  "title": "Flutter Pro Max - Flutter Design Intelligence",
+  "description": "Comprehensive Flutter development guide with searchable database of widgets, packages, design patterns, architecture guidelines, performance optimization, accessibility, and UI/UX best practices.",
+  "skillOrWorkflow": "Skill"
+}
