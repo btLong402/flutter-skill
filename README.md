@@ -21,36 +21,33 @@ Dù bạn đang xây dựng một ứng dụng Fintech phức tạp, một sàn 
 
 ---
 
-## 🏛️ The Pragmatic Architect
+## 🧠 Architecture: Rules (Brain) + Skill (Hands)
 
-AI được trang bị skill này sẽ hoạt động với tư cách **"The Pragmatic Architect"** - Senior Principal Software Engineer với sứ mệnh kiến tạo phần mềm **Bền vững, Dễ đọc, Tách biệt**.
+Flutter Pro Max tách biệt hoàn toàn **logic ra quyết định** và **công cụ thực thi**:
 
-### 🚫 Zero Tolerance Policy
-- **No God Classes**: Từ chối viết class > 10 public methods hoặc > 200 dòng logic
-- **No God Files**: Cảnh báo file > 300 dòng, đề xuất split strategy
-- **No Logic Leakage**: Business logic không được nằm trong UI/Widget
+| Layer | Vai trò | Nội dung |
+|-------|---------|----------|
+| **🧠 Rules (Brain)** | System prompt, persona, constraints | 11 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
+| **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 17 domain data files, design system generator |
 
-### 📐 Core Principles
-| Principle | Enforcement |
-|-----------|-------------|
-| **SOLID** | Bắt buộc tuân thủ, đặc biệt SRP và DIP |
-| **DRY/KISS/YAGNI** | Không code thừa, không logic lặp |
-| **Boy Scout Rule** | Dọn dẹp code rác ngay khi phát hiện |
+### 🧠 11 Modular Rules
 
-### 🔄 Interaction Flow (ABCR)
-1. **Audit** - Quét code smells, kiểm tra violations
-2. **Block & Critique** - Cảnh báo vấn đề, giải thích Technical Debt
-3. **Refactor First** - Sửa kiến trúc trước khi fix bug
-4. **Explain** - Giải thích lý do mọi quyết định refactor
+```
+rules/
+├── 01_skill_usage          # Tự động search skill trước khi code
+├── 02_code_quality         # Think-before-code, God file prevention
+├── 03_interaction_flow     # ABCR workflow
+├── 04_app_consistency      # Design tokens, widget patterns
+├── 05_error_handling       # Try-catch patterns, logging
+├── 06_testing              # Test requirements, Arrange-Act-Assert
+├── 07_performance          # const, ListView.builder, isolates
+├── 08_security             # API keys, auth, data protection
+├── 09_state_management     # Native-first hierarchy
+├── 10_naming_conventions   # File/class naming, git commits
+└── 11_accessibility        # Semantics, contrast, touch targets
+```
 
-### 🛠️ AI Tools Integration (Flutter Official)
-
-| Tool | Purpose | Usage |
-|------|---------|-------|
-| `dart_format` | Format code | ALWAYS run after changes |
-| `dart_fix` | Auto-fix errors | Run before commit |
-| `flutter analyze` | Lint with `flutter_lints` | Catch issues early |
-| `pub_dev_search` | Search packages | Discover dependencies |
+Rules được gen **modular** — mỗi file tách biệt theo concern, chỉ kích hoạt khi cần, tránh loãng context window.
 
 > 📖 **Reference:** [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)
 
@@ -114,28 +111,31 @@ flutter-pro-max update
 
 ## 🤖 Supported AI Assistants
 
-Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của bạn (14 platforms):
+Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của bạn (16 platforms):
 
-| Assistant | Install Type | Structure |
-|-----------|--------------|-----------|
-| **Claude Code** | Full | `.claude/skills/flutter-pro-max/` |
-| **Codex** | Full | `.codex/skills/flutter-pro-max/` |
-| **Continue** | Full | `.continue/skills/flutter-pro-max/` |
-| **Antigravity** | Full | `.agent/skills/flutter-pro-max/` |
-| **Gemini CLI** | Full | `.gemini/skills/flutter-pro-max/` |
-| **OpenCode** | Full | `.opencode/skills/flutter-pro-max/` |
-| **CodeBuddy** | Full | `.codebuddy/skills/flutter-pro-max/` |
-| **Trae** | Full | `.trae/skills/flutter-pro-max/` |
-| **Cursor** | Reference | `.cursor/commands/` + `.shared/` |
-| **Windsurf** | Reference | `.windsurf/skills/` + `.shared/` |
-| **GitHub Copilot** | Reference | `.github/prompts/` + `.shared/` |
-| **Kiro** | Reference | `.kiro/steering/` + `.shared/` |
-| **Qoder** | Reference | `.qoder/skills/` + `.shared/` |
-| **Roo Code** | Reference | `.roo/commands/` + `.shared/` |
+| Assistant | Install Type | Structure | Rules File |
+|-----------|--------------|-----------|------------|
+| **Claude Code** | Full | `.claude/skills/flutter-pro-max/` | `CLAUDE.md` (append) |
+| **Codex** | Full | `.codex/skills/flutter-pro-max/` | `.codex/rules/` |
+| **Continue** | Full | `.continue/skills/flutter-pro-max/` | `.continue/rules/` |
+| **Antigravity** | Full | `.agent/skills/flutter-pro-max/` | `.agent/rules/` |
+| **Gemini CLI** | Full | `.gemini/skills/flutter-pro-max/` | `.gemini/rules/` |
+| **OpenCode** | Full | `.opencode/skills/flutter-pro-max/` | `.opencode/rules/` |
+| **CodeBuddy** | Full | `.codebuddy/skills/flutter-pro-max/` | `.codebuddy/rules/` |
+| **Trae** | Full | `.trae/skills/flutter-pro-max/` | `.trae/rules/` |
+| **Junie** | Full | `.junie/skills/flutter-pro-max/` | `.junie/rules/` |
+| **VS Code** | Full | `.vscode/skills/flutter-pro-max/` | `.vscode/rules/` |
+| **Cursor** | Reference | `.cursor/commands/` + `.shared/` | `.cursor/rules/` |
+| **Windsurf** | Reference | `.windsurf/skills/` + `.shared/` | `.windsurf/rules/` |
+| **GitHub Copilot** | Reference | `.github/prompts/` + `.shared/` | `copilot-instructions.md` (append) |
+| **Kiro** | Reference | `.kiro/steering/` + `.shared/` | `.kiro/rules/` |
+| **Qoder** | Reference | `.qoder/skills/` + `.shared/` | `.qoder/rules/` |
+| **Roo Code** | Reference | `.roo/commands/` + `.shared/` | `.roo/rules/` |
 
 **Install Types:**
 - **Full**: Data và scripts nằm trong skill folder (standalone)
 - **Reference**: Skill file trỏ đến `.shared/` folder chung (tiết kiệm dung lượng)
+- **Rules File**: Agent behavior rules được generate **tách biệt** khỏi skill content
 
 ---
 
@@ -337,6 +337,20 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 ---
 
 ## 📝 Changelog
+
+### v2.3.2 (2026-02-25)
+- **🧠 Rules/Skill Separation**: Tách hoàn toàn Brain (Rules) và Hands (Skill)
+- **📦 11 Modular Rules**: Skill usage, Code quality, ABCR, Consistency, Error handling, Testing, Performance, Security, State management, Naming, Accessibility
+- **🤲 Skill Tools-Only**: Skill content chỉ còn search commands + data reference (giảm 447 → 105 dòng)
+- **📂 Modular Generation**: Platforms create-mode gen 11 files riêng, append-mode gộp vào 1 file
+
+### v2.3.1 (2026-02-25)
+- **🤖 Standalone Rules Generation**: CLI tự động gen rules file riêng biệt khỏi skill
+- **📁 Source of Truth**: Restructure `src/flutter-pro-max/` làm canonical source
+- **🧹 Cleanup**: Xóa files thừa, giảm từ 118 → 99 tracked files
+- **🆕 3 New Domains**: `performance`, `accessibility`, `ui-reasoning`
+- **🔧 CLI Enhancements**: Thêm `extract.ts`, `.gitignore`, `.npmignore`
+- **16 Platforms**: Tất cả platforms đều hỗ trợ rules file generation
 
 ### v2.2.0 (2026-02-02)
 - **Flutter AI Rules**: Cập nhật theo [Flutter Official AI Rules](https://docs.flutter.dev/ai/ai-rules)

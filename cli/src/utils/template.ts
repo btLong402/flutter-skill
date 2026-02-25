@@ -167,7 +167,7 @@ async function ensureSharedExists(targetDir: string): Promise<boolean> {
 }
 
 /**
- * Generate rules file for a platform
+ * Generate modular rules files for a platform
  */
 async function generateRulesFile(
     targetDir: string,
@@ -175,30 +175,49 @@ async function generateRulesFile(
 ): Promise<void> {
     if (!config.rulesFile) return;
 
-    // Load rules template
-    const rulesContent = await loadTemplate('base/rules.md');
+    // Load all rule files from templates/base/rules/
+    const rulesDir = join(ASSETS_DIR, 'templates', 'base', 'rules');
+    if (!await exists(rulesDir)) return;
 
-    const rulesFilePath = join(targetDir, config.rulesFile.path);
-    const rulesDir = dirname(rulesFilePath);
+    const ruleFiles = (await readdir(rulesDir))
+        .filter(f => f.endsWith('.md'))
+        .sort();
 
-    // Create directory structure
-    await mkdir(rulesDir, { recursive: true });
+    if (ruleFiles.length === 0) return;
 
     if (config.rulesFile.mode === 'append') {
-        // Append mode: add to existing file (e.g. CLAUDE.md, copilot-instructions.md)
+        // Append mode: concatenate all rules into target file (e.g. CLAUDE.md)
+        const rulesFilePath = join(targetDir, config.rulesFile.path);
+        const rulesFileDir = dirname(rulesFilePath);
+        await mkdir(rulesFileDir, { recursive: true });
+
         let existing = '';
         if (await exists(rulesFilePath)) {
             existing = await readFile(rulesFilePath, 'utf-8');
-            // Check if rules already appended
             if (existing.includes('Flutter Pro Max — Agent Rules')) {
                 return; // Already has rules
             }
             existing += '\n\n';
         }
-        await writeFile(rulesFilePath, existing + rulesContent, 'utf-8');
+
+        // Concatenate all rule files
+        const allRules: string[] = ['# Flutter Pro Max — Agent Rules\n'];
+        for (const file of ruleFiles) {
+            const content = await readFile(join(rulesDir, file), 'utf-8');
+            allRules.push(content);
+        }
+
+        await writeFile(rulesFilePath, existing + allRules.join('\n---\n\n'), 'utf-8');
     } else {
-        // Create mode: write new file
-        await writeFile(rulesFilePath, rulesContent, 'utf-8');
+        // Create mode: generate separate files in rules directory
+        const rulesTargetDir = dirname(join(targetDir, config.rulesFile.path));
+        await mkdir(rulesTargetDir, { recursive: true });
+
+        for (const file of ruleFiles) {
+            const content = await readFile(join(rulesDir, file), 'utf-8');
+            const targetPath = join(rulesTargetDir, file);
+            await writeFile(targetPath, content, 'utf-8');
+        }
     }
 }
 
