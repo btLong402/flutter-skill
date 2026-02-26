@@ -1,3 +1,8 @@
+---
+description: Viết Unit Test, Widget Test, Integration Test
+globs: test/**/*.dart, lib/**/*.dart
+---
+
 # Rule: Testing
 
 > Kích hoạt: Khi tạo feature mới, fix bug, hoặc refactor logic

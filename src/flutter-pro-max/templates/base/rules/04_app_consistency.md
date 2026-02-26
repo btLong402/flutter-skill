@@ -1,3 +1,8 @@
+---
+description: Đảm bảo tính nhất quán (Consistency) của UI, Design Tokens, Widget Patterns
+globs: lib/presentation/**/*.dart, lib/ui/**/*.dart, lib/widgets/**/*.dart
+---
+
 # Rule: App Consistency
 
 > Kích hoạt: Khi tạo UI, thêm screen, hoặc chỉnh sửa widget

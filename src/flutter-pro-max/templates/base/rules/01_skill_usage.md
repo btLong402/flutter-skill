@@ -1,3 +1,8 @@
+---
+description: Tự động sử dụng skill search trước khi viết code Flutter
+globs: *
+---
+
 # Rule: Tự động sử dụng Skill
 
 > Kích hoạt: Khi làm việc với Flutter/Dart files

@@ -1,3 +1,8 @@
+---
+description: Tiêu chuẩn tiếp cận (Accessibility), Semantics, Contrast
+globs: lib/presentation/**/*.dart, lib/widgets/**/*.dart
+---
+
 # Rule: Accessibility
 
 > Kích hoạt: Khi tạo UI, interactive elements, hoặc form inputs

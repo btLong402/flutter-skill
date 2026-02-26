@@ -1,3 +1,8 @@
+---
+description: Tiêu chuẩn Code Quality, Think-Before-Code, Hard Constraints
+globs: lib/**/*.dart
+---
+
 # Rule: Code Quality & Hard Constraints
 
 > Kích hoạt: Khi tạo/chỉnh sửa files `.dart`

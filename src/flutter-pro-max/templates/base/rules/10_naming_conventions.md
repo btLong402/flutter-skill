@@ -1,3 +1,8 @@
+---
+description: Quy tắc đặt tên (Naming), Cấu trúc thư mục (Folder Structure), Git Commit
+globs: lib/**/*.dart, test/**/*.dart
+---
+
 # Rule: Naming & Conventions
 
 > Kích hoạt: Khi tạo files, classes, functions, hoặc variables

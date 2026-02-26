@@ -200,11 +200,16 @@ async function generateRulesFile(
             existing += '\n\n';
         }
 
+        // Helper to strip YAML frontmatter for appended files
+        const stripFrontmatter = (content: string) => {
+            return content.replace(/^---\n[\s\S]*?\n---\n+/, '');
+        };
+
         // Concatenate all rule files
         const allRules: string[] = ['# Flutter Pro Max — Agent Rules\n'];
         for (const file of ruleFiles) {
             const content = await readFile(join(rulesDir, file), 'utf-8');
-            allRules.push(content);
+            allRules.push(stripFrontmatter(content));
         }
 
         await writeFile(rulesFilePath, existing + allRules.join('\n---\n\n'), 'utf-8');
@@ -213,9 +218,14 @@ async function generateRulesFile(
         const rulesTargetDir = dirname(join(targetDir, config.rulesFile.path));
         await mkdir(rulesTargetDir, { recursive: true });
 
+        // If rulesFile.path ends with .mdc, we use .mdc extension for files
+        const useMdc = config.rulesFile.path.endsWith('.mdc');
+
         for (const file of ruleFiles) {
             const content = await readFile(join(rulesDir, file), 'utf-8');
-            const targetPath = join(rulesTargetDir, file);
+            const targetExt = useMdc ? '.mdc' : '.md';
+            const targetPath = join(rulesTargetDir, file.replace(/\.md$/, targetExt));
+            
             await writeFile(targetPath, content, 'utf-8');
         }
     }

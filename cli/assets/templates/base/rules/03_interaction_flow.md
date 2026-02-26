@@ -1,3 +1,8 @@
+---
+description: Quy trình làm việc ABCR (Audit-Block-Critique-Refactor) khi nhận request
+globs: *
+---
+
 # Rule: Interaction Flow (ABCR)
 
 > Kích hoạt: Khi review, refactor, hoặc fix bugs

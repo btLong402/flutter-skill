@@ -30,24 +30,30 @@ Flutter Pro Max tách biệt hoàn toàn **logic ra quyết định** và **côn
 | **🧠 Rules (Brain)** | System prompt, persona, constraints | 11 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
 | **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 17 domain data files, design system generator |
 
-### 🧠 11 Modular Rules
+### 🧠 15 Modular Rules
+
+Hệ thống được thiết kế với **15 module rules** chuyên biệt, bao quát mọi khía cạnh của Software Engineering. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
 
 ```
 rules/
-├── 01_skill_usage          # Tự động search skill trước khi code
-├── 02_code_quality         # Think-before-code, God file prevention
-├── 03_interaction_flow     # ABCR workflow
-├── 04_app_consistency      # Design tokens, widget patterns
-├── 05_error_handling       # Try-catch patterns, logging
-├── 06_testing              # Test requirements, Arrange-Act-Assert
-├── 07_performance          # const, ListView.builder, isolates
-├── 08_security             # API keys, auth, data protection
-├── 09_state_management     # Native-first hierarchy
-├── 10_naming_conventions   # File/class naming, git commits
-└── 11_accessibility        # Semantics, contrast, touch targets
+├── 01_skill_usage                # Bắt buộc: Tự động filter & áp dụng skill
+├── 02_code_quality               # Tiêu chuẩn God files & logic leakage
+├── 03_interaction_flow           # Luồng Tương tác "ABCR"
+├── 04_app_consistency            # Design tokens & UX consistency
+├── 05_error_handling             # Result pattern & Try-Catch
+├── 06_testing                    # Mocking, Unit & Widget test
+├── 07_performance                # const, ListView.builder, OOM prevention
+├── 08_security                   # Storage, Interceptor, APIs
+├── 09_state_management           # Native-first hierarchy
+├── 10_naming_conventions         # Conventions, directory structure
+├── 11_accessibility              # Contrast, sematics & usability
+├── 12_network_resiliency         # Exponential Backoff, Circuit Breaker
+├── 13_offline_first              # Caching strategies
+├── 14_ui_graceful_degradation    # Fallbacks UI
+└── 15_state_lifecycle            # Orientation change, memory warning
 ```
 
-Rules được gen **modular** — mỗi file tách biệt theo concern, chỉ kích hoạt khi cần, tránh loãng context window.
+**🔥 Đột phá cho người dùng Cursor:** Khi khởi tạo tại Cursor, CLI tự động xuất sang định dạng `.mdc`. AI của bạn giờ đây có thể tự động đọc YAML frontmatter từ file `.mdc` để biết chính xác lúc nào nên nạp rule nào vào buffer (dựa trên tên file/context).
 
 > 📖 **Reference:** [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)
 
@@ -338,9 +344,13 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 
 ## 📝 Changelog
 
+### v2.3.3 (2026-02-26)
+- **🧠 15 Modular Rules**: Bổ sung các chuẩn mực từ Software Engineering (Resiliency, Offline-First, Graceful Degradation)
+- **⚡ Cursor MDC Support**: Tự động sinh XML/YAML frontmatter và format `.mdc` khi sử dụng nền tảng Cursor. AI giờ đây tự động load đúng rule theo glob pattern thay vì ôm toàn bộ context.
+
 ### v2.3.2 (2026-02-25)
 - **🧠 Rules/Skill Separation**: Tách hoàn toàn Brain (Rules) và Hands (Skill)
-- **📦 11 Modular Rules**: Skill usage, Code quality, ABCR, Consistency, Error handling, Testing, Performance, Security, State management, Naming, Accessibility
+- **📦 11 Modular Rules**: Modular Generation ra file riêng lẻ từng logic.
 - **🤲 Skill Tools-Only**: Skill content chỉ còn search commands + data reference (giảm 447 → 105 dòng)
 - **📂 Modular Generation**: Platforms create-mode gen 11 files riêng, append-mode gộp vào 1 file
 

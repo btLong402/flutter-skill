@@ -1,3 +1,8 @@
+---
+description: Bảo mật, API Keys, Authentication, Data Protection
+globs: lib/data/**/*.dart, lib/services/**/*.dart, lib/core/env/*.dart
+---
+
 # Rule: Security
 
 > Kích hoạt: Khi xử lý authentication, API keys, user data, hoặc storage

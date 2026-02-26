@@ -1,3 +1,8 @@
+---
+description: Xử lý lỗi, Try-catch, Result pattern, Không fail im lặng
+globs: lib/data/**/*.dart, lib/services/**/*.dart, lib/repositories/**/*.dart, lib/domain/**/*.dart
+---
+
 # Rule: Error Handling
 
 > Kích hoạt: Khi viết logic xử lý dữ liệu, API calls, hoặc async operations

@@ -1,3 +1,8 @@
+---
+description: Quản lý state theo cấp độ (Native-first), ValueNotifier
+globs: lib/presentation/**/*.dart, lib/ui/**/*.dart
+---
+
 # Rule: State Management
 
 > Kích hoạt: Khi quản lý state trong widget, screen, hoặc app-level
