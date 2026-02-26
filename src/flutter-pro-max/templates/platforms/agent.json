@@ -3,7 +3,7 @@
   "displayName": "Antigravity / Generic Agent",
   "installType": "full",
   "folderStructure": {
-    "root": ".agent",
+    "root": ".agents",
     "skillPath": "skills/flutter-pro-max",
     "filename": "SKILL.md"
   },
@@ -20,7 +20,7 @@
   "description": "Flutter development guide with widgets, packages, patterns, architecture, performance, and UI/UX best practices.",
   "skillOrWorkflow": "Skill",
   "rulesFile": {
-    "path": ".agent/rules/flutter-pro-max.md",
+    "path": ".agents/rules/flutter-pro-max.md",
     "mode": "create"
   }
 }

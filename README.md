@@ -118,7 +118,7 @@ Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của b�
 | **Claude Code** | Full | `.claude/skills/flutter-pro-max/` | `CLAUDE.md` (append) |
 | **Codex** | Full | `.codex/skills/flutter-pro-max/` | `.codex/rules/` |
 | **Continue** | Full | `.continue/skills/flutter-pro-max/` | `.continue/rules/` |
-| **Antigravity** | Full | `.agent/skills/flutter-pro-max/` | `.agent/rules/` |
+| **Antigravity** | Full | `.agents/skills/flutter-pro-max/` | `.agents/rules/` |
 | **Gemini CLI** | Full | `.gemini/skills/flutter-pro-max/` | `.gemini/rules/` |
 | **OpenCode** | Full | `.opencode/skills/flutter-pro-max/` | `.opencode/rules/` |
 | **CodeBuddy** | Full | `.codebuddy/skills/flutter-pro-max/` | `.codebuddy/rules/` |

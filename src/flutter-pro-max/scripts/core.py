@@ -23,7 +23,7 @@ def _get_data_dir() -> Path:
         script_dir.parent.parent / "data",
         # When running from root/scripts/
         script_dir.parent / ".shared" / "data",
-        # When running from .agent/workflows/scripts/ (nested 3 levels deep)
+        # When running from .agents/workflows/scripts/ (nested 3 levels deep)
         script_dir.parent.parent.parent / ".shared" / "data",
         # When running from .claude/skills/flutter-pro-max/scripts/ (reference mode)
         script_dir.parent.parent.parent.parent / ".shared" / "data",
