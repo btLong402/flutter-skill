@@ -110,6 +110,11 @@ CSV_CONFIG: dict[str, dict[str, str | list[str]]] = {
         "search_cols": ["Style Category", "AI Prompt Keywords (Copy-Paste Ready)", "CSS/Technical Keywords"],
         "output_cols": ["Style Category", "AI Prompt Keywords (Copy-Paste Ready)", "CSS/Technical Keywords", "Implementation Checklist"]
     },
+    "play-store": {
+        "file": "play-store.csv",
+        "search_cols": ["Stage", "Goal", "Prompt Template", "Output Schema", "Required Inputs", "Length/Limit", "Quality Gate", "Notes"],
+        "output_cols": ["Stage", "Goal", "Prompt Template", "Output Schema", "Required Inputs", "Length/Limit", "Quality Gate", "Notes"]
+    },
     "performance": {
         "file": "flutter-performance.csv",
         "search_cols": ["Category", "Issue", "Keywords", "Description", "Do", "Don't"],
@@ -267,6 +272,11 @@ def detect_domain(query: str) -> str:
         "naming": ["naming", "convention", "file name", "class name", "snake_case", "PascalCase"],
         "product": ["saas", "ecommerce", "fintech", "healthcare", "education", "food", "travel"],
         "prompt": ["prompt", "ai", "css", "tailwind", "implementation"],
+        "play-store": [
+            "play store", "google play", "play console", "aso", "app store optimization",
+            "data safety", "content rating", "privacy policy", "app listing", "store listing",
+            "app name", "short description", "full description", "screenshot", "feature graphic"
+        ],
     }
 
     scores: dict[str, int] = {domain: sum(1 for kw in keywords if kw in query_lower) for domain, keywords in domain_keywords.items()}

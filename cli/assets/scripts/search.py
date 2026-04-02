@@ -3,10 +3,10 @@
 """
 Flutter Pro Max Search - CLI for Flutter knowledge base search
 Usage: python search.py "<query>" [--domain <domain>] [--stack <stack>] [--top 5]
-       python search.py "<query>" --design-system [-p "Project Name"]
-       python search.py "<query>" --design-system --persist [-p "Project Name"] [--page "dashboard"]
+    python search.py "<query>" --design-system [-p "Project Name"]
+    python search.py "<query>" --design-system --persist [-p "Project Name"] [--page "dashboard"]
 
-Domains: widget, package, pattern, architect, chart, color, typography, style, ux, icon, landing, naming, product, prompt, performance, ui-reasoning, accessibility
+Domains: widget, package, pattern, architect, chart, color, typography, style, ux, icon, landing, naming, product, prompt, play-store, performance, ui-reasoning, accessibility
 Stacks: riverpod, bloc, provider
 
 Persistence (Master + Overrides pattern):
@@ -68,6 +68,7 @@ Examples:
   python search.py "ListView pagination" --top 3
   python search.py "network http" --domain package
   python search.py "state management" --stack riverpod
+    python search.py "google play store listing" --domain play-store
   python search.py "login" --json
         """
     )

@@ -43,7 +43,7 @@ python3 {{SCRIPT_PATH}}/search.py "<keyword>" --stack riverpod --top 5
 python3 {{SCRIPT_PATH}}/search.py "<keyword>" --json --top 5
 ```
 
-**Available domains (17):** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`, `performance`, `ui-reasoning`, `accessibility`
+**Available domains (18):** `widget`, `package`, `pattern`, `architect`, `chart`, `color`, `typography`, `style`, `ux`, `icon`, `landing`, `naming`, `product`, `prompt`, `play-store`, `performance`, `ui-reasoning`, `accessibility`
 
 **Available stacks:** `riverpod`, `bloc`, `provider`
 
@@ -74,8 +74,37 @@ python3 {{SCRIPT_PATH}}/search.py "<keyword>" --json --top 5
 | Naming | `name_convention.csv` | Naming conventions |
 | Products | `products.csv` | Product type styling |
 | Prompts | `prompts.csv` | AI prompt templates |
+| Play Store | `play-store.csv` | ASO, store listing, compliance, privacy |
 
 ---
+
+## Google Play Console Workflow
+
+Use the `play-store` domain when the user asks for ASO, app listing copy, content rating, data safety, screenshots, privacy policy, or Play Console export.
+
+### Suggested Flow
+
+1. Analyze the app input and extract USP, persona, keywords, category, and tags.
+2. Generate store text assets with strict length limits.
+3. Validate compliance details for content rating, data safety, and privacy.
+4. Produce screenshot and feature graphic guidance.
+5. Export the result as Markdown and JSON when needed.
+
+### Example Queries
+
+```bash
+python3 {{SCRIPT_PATH}}/search.py "google play store listing" --domain play-store --top 5
+python3 {{SCRIPT_PATH}}/search.py "content rating data safety" --domain play-store --top 5
+python3 {{SCRIPT_PATH}}/search.py "app name short description" --domain play-store --json --top 5
+```
+
+### Output Targets
+
+- App Name: max 30 characters, brand + core keyword
+- Short Description: max 80 characters, concise value proposition
+- Full Description: max 4000 characters, structured and policy-safe
+- Compliance Pack: content rating answers, data safety table, privacy notes
+- Visual Pack: first screenshot guidance, feature graphic, icon rules
 
 ## Example Workflow
 

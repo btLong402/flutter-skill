@@ -102,13 +102,14 @@ export async function renderSkillFile(config: PlatformConfig): Promise<string> {
     // Load base template (use config.template or default to skill-content.md)
     const templateFile = config.template || 'skill-content.md';
     let content = await loadTemplate(`base/${templateFile}`);
+    const scriptDir = dirname(config.scriptPath);
 
     // Load quick reference if needed
     let quickReferenceContent = '';
     if (config.sections.quickReference) {
         quickReferenceContent = await loadTemplate('base/quick-reference.md');
         // Replace script path in quick reference
-        quickReferenceContent = quickReferenceContent.replace(/\{\{SCRIPT_PATH\}\}/g, config.scriptPath);
+        quickReferenceContent = quickReferenceContent.replace(/\{\{SCRIPT_PATH\}\}/g, scriptDir);
     }
 
     // Build the final content
@@ -120,7 +121,7 @@ export async function renderSkillFile(config: PlatformConfig): Promise<string> {
     content = content
         .replace(/\{\{TITLE\}\}/g, config.title)
         .replace(/\{\{DESCRIPTION\}\}/g, config.description)
-        .replace(/\{\{SCRIPT_PATH\}\}/g, config.scriptPath)
+        .replace(/\{\{SCRIPT_PATH\}\}/g, scriptDir)
         .replace(/\{\{SKILL_OR_WORKFLOW\}\}/g, config.skillOrWorkflow)
         .replace(/\{\{QUICK_REFERENCE\}\}/g, quickRefWithNewline);
 
