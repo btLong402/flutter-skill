@@ -64,6 +64,15 @@ flutter-pro-max update
 flutter-pro-max update --ai claude
 ```
 
+### npm Publish
+
+The CLI can be published automatically from GitHub Actions via [.github/workflows/npm-publish.yml](../.github/workflows/npm-publish.yml).
+
+Requirements:
+- Add `NPM_TOKEN` to repository secrets
+- Bump `cli/package.json` version before pushing to `main`
+- The workflow skips publish if that exact version already exists on npm
+
 ---
 
 ## 🤖 Supported AI Assistants
