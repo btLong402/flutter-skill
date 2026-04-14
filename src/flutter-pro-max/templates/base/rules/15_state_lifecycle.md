@@ -1,11 +1,11 @@
 ---
 description: Xử lý Vòng đời thiêt bị (Lifecycle), Orientation Change, Background State
-globs: lib/presentation/**/*.dart, lib/logic/**/*.dart, lib/providers/**/*.dart
+globs: lib/**/*.dart
 ---
 
 # Rule: State & Lifecycle Resilience
 
-> Kích hoạt: Khi quản lý State (Bloc/Provider/Riverpod), xử lý orientation, handle app background state
+> Kích hoạt: Khi quản lý state bat ky kien truc (Clean/MVC/MVVM/Provider/Bloc), xử lý orientation, handle app background state
 
 ## Nguyên tắc: Chống hao pin & lag vô ích
 
@@ -15,7 +15,7 @@ Quản lý vòng đời (lifecycle) kém sẽ làm máy nóng, lag và hao pin n
 
 1. **Xoay màn hình (Orientation Change):** 
    - Việc xoay dọc/ngang không được làm trigger lại các API requests. 
-   - State phải được giữ nguyên bằng cơ chế State Management chuyên biệt, widget chỉ rebuild UI Layout.
+   - State phải được giữ nguyên bằng cơ chế state management dang dung cua module (notifier/controller/viewmodel), widget chỉ rebuild UI Layout.
 
 2. **App chuyển vào nền (Backgrounded):**
    - Lập tức ngắt (Pause/Cancel) các Streams liên tục (như vị trí GPS, socket).
@@ -28,3 +28,9 @@ Quản lý vòng đời (lifecycle) kém sẽ làm máy nóng, lag và hao pin n
 ### Rò rỉ bộ nhớ (Memory Leaks)
 - Luôn gọi `dispose()` trên các Controller (AnimationController, ScrollController, TextEditingController).
 - Đảm bảo huỷ (cancel) StreamSubscription khi Widget bị huỷ.
+
+### Mapping theo kien truc
+
+- **Clean:** quan ly lifecycle trong presentation/controller layer va service can thiet.
+- **MVC:** controller chiu trach nhiem pause/resume stream, timer, subscription.
+- **MVVM:** view model chiu trach nhiem cleanup stateful resources.

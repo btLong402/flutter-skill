@@ -7,6 +7,12 @@ globs: lib/**/*.dart
 
 > Kích hoạt: Khi tạo/chỉnh sửa files `.dart`
 
+## Architecture Policy
+
+- **Mac dinh:** Code moi follow **Clean Architecture** (UI/Presentation -> Domain -> Data).
+- **Maintenance du an cu:** Follow kien truc dang co (MVC/MVVM/Layered), khong ep doi framework state/architecture neu user khong yeu cau.
+- **Nguyen tac bat bien:** Khong tron concerns, khong logic leakage, refactor tang dan theo tung feature.
+
 ## Think-Before-Code Protocol
 
 **TRƯỚC KHI tạo file mới hoặc viết widget**, bạn PHẢI trả lời 5 câu hỏi:
@@ -36,11 +42,11 @@ globs: lib/**/*.dart
 
 ### 🚫 NO LOGIC LEAKAGE
 
-| Violation | Correct Layer |
-|-----------|---------------|
-| Business Logic trong Widget | ➜ Move to `UseCase` / `Service` |
-| SQL/Query trong Controller | ➜ Move to `Repository` |
-| API calls trong UI | ➜ Move to `DataSource` |
+| Violation | Clean (mac dinh) | Legacy-compatible |
+|-----------|------------------|-------------------|
+| Business Logic trong Widget/View | ➜ Move to `UseCase` / `Service` | ➜ Move to `Controller` / `Service` |
+| SQL/Query trong Controller | ➜ Move to `Repository` | ➜ Move to data layer hien huu (`Repository` / `Dao` / `DataSource`) |
+| API calls trong UI | ➜ Move to `DataSource` | ➜ Move to `Controller` / `Service` / data layer theo project |
 
 ## Nguyên tắc cứng
 
@@ -50,6 +56,6 @@ globs: lib/**/*.dart
 | Screen 500+ dòng | Tách thành `_HeaderSection`, `_ContentBody`, `_ActionBar` |
 | 3 screens cùng copy-paste search bar | Tạo `SearchableScaffold` dùng chung |
 | Hardcode colors, padding, font sizes | Dùng `Theme.of(context)`, design tokens, constants |
-| Business logic trong Widget `build()` | Tách vào UseCase / Service / Provider |
+| Business logic trong Widget `build()` | Tách vao UseCase/Service (Clean) hoac Controller/Service (legacy) |
 
 > 🔴 **REUSE > CREATE.** Không bao giờ tạo file mới mà không kiểm tra codebase hiện tại trước.

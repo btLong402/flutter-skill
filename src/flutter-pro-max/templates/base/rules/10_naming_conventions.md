@@ -9,6 +9,12 @@ globs: lib/**/*.dart, test/**/*.dart
 
 ## Nguyên tắc: Tên phải tự giải thích, cấu trúc phải nhất quán
 
+## Architecture Policy
+
+- **Mac dinh:** Folder + naming cho code moi follow Clean Architecture.
+- **Maintenance du an cu:** Giu convention dang dung trong feature do (MVC/MVVM/Layered), khong force rename hang loat.
+- **Refactor tang dan:** Chi chuan hoa file moi/cham toi trong pham vi task.
+
 ### Naming Convention
 
 | Element | Convention | Ví dụ |
@@ -33,7 +39,17 @@ globs: lib/**/*.dart, test/**/*.dart
 | Provider/Notifier | `*_provider.dart` / `*_notifier.dart` | `cart_notifier.dart` |
 | Extension | `*_extension.dart` | `string_extension.dart` |
 
+### Mapping ten file cho legacy architecture
+
+| Kien truc | Naming goi y |
+|----------|---------------|
+| MVC | `*_controller.dart`, `*_view.dart`, `*_model.dart` |
+| MVVM | `*_view_model.dart`, `*_view.dart`, `*_model.dart` |
+| Layered cu | Giu pattern hien huu cua project, chi bo sung hau to ro nghia |
+
 ### Folder Structure
+
+#### Mac dinh (Clean Architecture)
 
 ```
 lib/
@@ -50,6 +66,12 @@ lib/
 │   └── home/
 └── main.dart
 ```
+
+#### Maintenance mode (du an cu)
+
+- Giu folder structure hien huu cua project/module.
+- Khong doi tree toan bo chi de "chuan hoa".
+- Neu them module moi va du an cho phep: uu tien ap dung structure Clean cho module moi.
 
 ### Git Commit Convention
 

@@ -9,6 +9,12 @@ globs: lib/presentation/**/*.dart, lib/ui/**/*.dart
 
 ## Nguyên tắc: Native-First, Escalate khi cần
 
+## Architecture-Aware Policy
+
+1. **Mac dinh (code moi):** Follow Clean Architecture, state dat o presentation layer (notifier/view model/controller presentation).
+2. **Maintenance du an cu:** Giu nguyen state stack hien co cua module (MVC Controller, MVVM ViewModel, Bloc, Provider...), khong ep migrate neu khong co yeu cau ro rang.
+3. **Feature moi trong module cu:** Uu tien giong pattern state cua module do de giam chi phi maintain.
+
 ### Hierarchy (Ưu tiên từ trên xuống)
 
 | Level | Giải pháp | Khi nào dùng |
@@ -18,6 +24,15 @@ globs: lib/presentation/**/*.dart, lib/ui/**/*.dart
 | 3️⃣ | `ChangeNotifier` + `ListenableBuilder` | State phức tạp có nhiều fields (form, cart) |
 | 4️⃣ | `InheritedWidget` / `Provider` | Shared state giữa nhiều widgets |
 | 5️⃣ | Riverpod / Bloc | **CHỈ KHI user yêu cầu rõ ràng** |
+
+### Mapping theo kien truc
+
+| Kien truc | State owner uu tien |
+|----------|-----------------------|
+| Clean Architecture | Presentation Notifier / ViewModel |
+| MVC | Controller |
+| MVVM | ViewModel |
+| Legacy setState app | Local state scoped widget/screen |
 
 ### Quy tắc cứng
 
@@ -56,4 +71,4 @@ class CartNotifier extends ChangeNotifier {
 }
 ```
 
-> ⚠️ **KHÔNG tự ý thêm Riverpod/Bloc/GetX.** Hỏi user trước nếu cần escalate.
+> ⚠️ **Khong tu y thay state framework cua du an cu.** Chi escalate (Riverpod/Bloc/GetX hoac migrate) khi user yeu cau ro rang.
