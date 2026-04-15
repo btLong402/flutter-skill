@@ -109,10 +109,16 @@ When modifying files:
 
 3. **CLI Assets** - Run sync before publishing:
    ```bash
+   # Sync all assets from source to CLI
    cp -r src/flutter-pro-max/data/* cli/assets/data/
    cp -r src/flutter-pro-max/scripts/* cli/assets/scripts/
    cp -r src/flutter-pro-max/templates/* cli/assets/templates/
+   
+   # Specifically for rules (when adding/updating rules):
+   cp -r src/flutter-pro-max/templates/base/rules/* cli/assets/templates/base/rules/
    ```
+
+   > ⚠️ **IMPORTANT:** Rules MUST be synced before publishing the CLI. Without this sync, users will not get the latest rules when they run `flutter-pro-max init`.
 
 4. **Reference Folders** - No manual sync needed. The CLI generates these from templates during `flutter-pro-max init`.
 
@@ -205,3 +211,86 @@ Never push directly to `main`. Always:
 2. Commit changes
 3. Push branch: `git push -u origin <branch>`
 4. Create PR: `gh pr create`
+
+---
+
+## 📋 19 RULES — Comprehensive Guidebook
+
+Tất cả 19 rules được lưu trong `src/flutter-pro-max/templates/base/rules/`:
+
+### Tier 1: Foundation Rules (Bắt buộc)
+
+| # | Rule | Tệp | Mục đích |
+|---|------|-----|---------|
+| 1️⃣ | **Skill Usage** | `01_skill_usage.md` | Tự động tìm kiếm knowledge trước khi viết code |
+| 2️⃣ | **Code Quality & Hard Constraints** | `02_code_quality.md` | Ngăn God Classes, God Files, Logic Leakage |
+| 3️⃣ | **Interaction Flow (ABCR)** | `03_interaction_flow.md` | Quy trình Audit-Block-Refactor-Explain |
+| 4️⃣ | **App Consistency** | `04_app_consistency.md` | Design Tokens, Widget Patterns, Spacing |
+| 5️⃣ | **Error Handling** | `05_error_handling.md` | Try-catch bắt buộc, Log lỗi, Không fail im lặng |
+
+### Tier 2: Code Quality Rules
+
+| # | Rule | Tệp | Mục đích |
+|---|------|-----|---------|
+| 6️⃣ | **Testing** | `06_testing.md` | Unit/Widget/Integration Tests |
+| 7️⃣ | **Performance** | `07_performance.md` | const, ListView.builder, Debounce, OOM handling |
+| 8️⃣ | **Security** | `08_security.md` | API Keys, Auth, Data Protection, HTTPS |
+| 9️⃣ | **State Management** | `09_state_management.md` | Native-first, ValueNotifier, Architecture-aware |
+| 🔟 | **Naming & Conventions** | `10_naming_conventions.md` | PascalCase, camelCase, snake_case, Folder Structure |
+
+### Tier 3: UX & Resilience Rules
+
+| # | Rule | Tệp | Mục đích |
+|---|------|-----|---------|
+| 1️⃣1️⃣ | **Accessibility** | `11_accessibility.md` | Semantics, Contrast 4.5:1, Touch targets 48x48px |
+| 1️⃣2️⃣ | **Network Resiliency** | `12_network_resiliency.md` | Exponential Backoff, Circuit Breaker, API resilience |
+| 1️⃣3️⃣ | **Offline-First** | `13_offline_first.md` | Local cache, Background sync, Offline state UI |
+| 1️⃣4️⃣ | **Graceful Degradation** | `14_ui_graceful_degradation.md` | Image fallback, Error item widgets, No crash UX |
+| 1️⃣5️⃣ | **State Lifecycle** | `15_state_lifecycle.md` | Orientation, Background pause, Memory warnings |
+
+### Tier 4: App Store & Product Rules
+
+| # | Rule | Tệp | Mục đích |
+|---|------|-----|---------|
+| 1️⃣6️⃣ | **Google Play ASO** | `16_google_play_aso.md` | Store listing, Keywords, App name optimization |
+| 1️⃣7️⃣ | **Google Play Compliance** | `17_google_play_compliance.md` | Content rating, Data safety, Privacy policy |
+| 1️⃣8️⃣ | **Google Play Visuals** | `18_google_play_visuals.md` | Screenshots, Feature graphics, Icon guidance |
+| 1️⃣9️⃣ | **Architecture Decision Matrix** | `19_architecture_decision_matrix.md` | Greenfield vs Brownfield strategies |
+
+### 🔗 How to Use Rules
+
+Mỗi rule file có cấu trúc tương tự:
+
+```yaml
+---
+description: Tóm tắt ngắn
+globs: lib/**/*.dart  # Áp dụng cho files nào
+---
+
+# Rule: Tiêu đề
+
+> Kích hoạt: Khi nào dùng
+
+[Nội dung chi tiết]
+```
+
+**Quy trình sử dụng:**
+1. Xác định loại task (Greenfield/Brownfield) theo Rule 19
+2. Tìm rules liên quan theo `globs` patterns
+3. Tuân thủ bắt buộc trong từng rule
+4. Áp dụng output sau khi hoàn thành
+
+### ⚡ Quick Reference - Khi nào dùng Rule nào
+
+| Tình huống | Rules cần check |
+|-----------|-----------------|
+| Viết code Flutter mới | 1, 2, 3, 9, 10, 19 |
+| Tạo UI/Screen | 1, 4, 7, 11, 14 |
+| Viết API/Data layer | 5, 8, 12, 13, 15 |
+| Fix bug | 2, 3, 5, 6, 7, 14 |
+| Refactor code lớn | 2, 3, 9, 10, 19 |
+| Release app | 16, 17, 18 |
+| Performance tuning | 7, 11, 12, 13, 15 |
+| Xử lý data nhạy cảm | 5, 8, 11 |
+
+> **Important:** Các rules được tự động kích hoạt khi tạo projects với CLI. Lúc đó toàn bộ 19 rules sẽ được copy vào `.instructions.md` của project.

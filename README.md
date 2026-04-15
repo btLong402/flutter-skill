@@ -30,30 +30,46 @@ Flutter Pro Max tách biệt hoàn toàn **logic ra quyết định** và **côn
 | **🧠 Rules (Brain)** | System prompt, persona, constraints | 11 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
 | **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 17 domain data files, design system generator |
 
-### 🧠 15 Modular Rules
+### 🧠 19 Modular Rules — Comprehensive Guidebook
 
-Hệ thống được thiết kế với **15 module rules** chuyên biệt, bao quát mọi khía cạnh của Software Engineering. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
+Hệ thống được thiết kế với **19 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
 
+**Tier 1: Foundation Rules (Bắt buộc)**
 ```
-rules/
 ├── 01_skill_usage                # Bắt buộc: Tự động filter & áp dụng skill
 ├── 02_code_quality               # Tiêu chuẩn God files & logic leakage
 ├── 03_interaction_flow           # Luồng Tương tác "ABCR"
 ├── 04_app_consistency            # Design tokens & UX consistency
-├── 05_error_handling             # Result pattern & Try-Catch
-├── 06_testing                    # Mocking, Unit & Widget test
-├── 07_performance                # const, ListView.builder, OOM prevention
-├── 08_security                   # Storage, Interceptor, APIs
-├── 09_state_management           # Native-first hierarchy
-├── 10_naming_conventions         # Conventions, directory structure
-├── 11_accessibility              # Contrast, sematics & usability
-├── 12_network_resiliency         # Exponential Backoff, Circuit Breaker
-├── 13_offline_first              # Caching strategies
-├── 14_ui_graceful_degradation    # Fallbacks UI
-└── 15_state_lifecycle            # Orientation change, memory warning
+└── 05_error_handling             # Result pattern & Try-Catch
 ```
 
-**🔥 Đột phá cho người dùng Cursor:** Khi khởi tạo tại Cursor, CLI tự động xuất sang định dạng `.mdc`. AI của bạn giờ đây có thể tự động đọc YAML frontmatter từ file `.mdc` để biết chính xác lúc nào nên nạp rule nào vào buffer (dựa trên tên file/context).
+**Tier 2: Code Quality Rules**
+```
+├── 06_testing                    # Mocking, Unit & Widget test
+├── 07_performance                # const, ListView.builder, OOM prevention
+├── 08_security                   # Storage, Interceptor, APIs, Data Protection
+├── 09_state_management           # Native-first hierarchy, Architecture-aware
+└── 10_naming_conventions         # Conventions, directory structure
+```
+
+**Tier 3: UX & Resilience Rules**
+```
+├── 11_accessibility              # Contrast 4.5:1, Semantics, Touch targets 48x48px
+├── 12_network_resiliency         # Exponential Backoff, Circuit Breaker
+├── 13_offline_first              # Caching strategies, Background sync
+├── 14_ui_graceful_degradation    # Fallbacks UI, Image error handling
+└── 15_state_lifecycle            # Orientation change, Memory warning
+```
+
+**Tier 4: App Store & Product Rules**
+```
+├── 16_google_play_aso            # ASO: Store listing, Keywords optimization
+├── 17_google_play_compliance     # Content rating, Data safety, Privacy policy
+├── 18_google_play_visuals        # Screenshots, Feature graphics, Icon guidance
+└── 19_architecture_decision_matrix # Greenfield vs Brownfield strategies
+```
+
+**🔥 Đột phá cho người dùng Cursor/Windsurf:** Khi khởi tạo, CLI tự động xuất sang định dạng `.mdc`. AI của bạn giờ đây có thể tự động đọc YAML frontmatter từ file `.mdc` để biết chính xác lúc nào nên nạp rule nào vào buffer (dựa trên tên file/context).
 
 > 📖 **Reference:** [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)
 
@@ -145,7 +161,50 @@ Triển khai **Flutter Pro Max** vào toàn bộ workflow phát triển của b�
 
 ---
 
-## 🛠️ Usage
+## � Development & CLI Sync
+
+### When Adding/Updating Rules
+
+Khi bạn thêm hoặc cập nhật rules, **cần sync từ source đến CLI assets**:
+
+**Source of Truth:** `src/flutter-pro-max/templates/base/rules/` ← Chỉnh sửa ở đây
+
+**Steps:**
+
+1. **Tạo/sửa rule file** trong `src/flutter-pro-max/templates/base/rules/`:
+   ```bash
+   # Ví dụ: Thêm rule mới
+   vim src/flutter-pro-max/templates/base/rules/20_new_rule.md
+   ```
+
+2. **Sync ngay vào CLI assets** (bắt buộc trước khi commit):
+   ```bash
+   # Sync chỉ rules
+   cp -r src/flutter-pro-max/templates/base/rules/* cli/assets/templates/base/rules/
+   
+   # Hoặc sync toàn bộ assets (data + scripts + templates)
+   cp -r src/flutter-pro-max/data/* cli/assets/data/
+   cp -r src/flutter-pro-max/scripts/* cli/assets/scripts/
+   cp -r src/flutter-pro-max/templates/* cli/assets/templates/
+   ```
+
+3. **Commit & Push**:
+   ```bash
+   git add src/flutter-pro-max/templates/base/rules/
+   git add cli/assets/templates/base/rules/
+   git commit -m "feat: add rule 20 - [description]"
+   ```
+
+4. **Before Publishing CLI** (trong workflow npm publish):
+   - Verify tất cả 19 rules đã sync vào `cli/assets/templates/base/rules/`
+   - Bump version trong `cli/package.json`
+   - Workflow tự động publish
+
+> ⚠️ **CRITICAL:** Nếu không sync CLI assets, users sẽ không nhận được rules mới khi chạy `flutter-pro-max init`
+
+---
+
+## �🛠️ Usage
 
 ### Skill Mode (Auto-activate)
 

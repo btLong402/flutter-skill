@@ -111,6 +111,18 @@ This CLI bridges the gap between the Flutter Pro Max knowledge base and your dev
 
 ## 📊 What Gets Installed
 
+### Rules Files (19 modules)
+| Tier | Rules | Description |
+|------|-------|-------------|
+| **Foundation (5)** | 01-05 | Skill usage, Code quality, Interaction flow, Consistency, Error handling |
+| **Code Quality (5)** | 06-10 | Testing, Performance, Security, State Management, Naming |
+| **UX & Resilience (5)** | 11-15 | Accessibility, Network resilience, Offline-first, Graceful degradation, Lifecycle |
+| **Product (4)** | 16-19 | Google Play ASO, Compliance, Visuals, Architecture decisions |
+
+**Rules are automatically generated** into platform-specific locations:
+- **Append mode** (Claude, Copilot): Rules concatenated into existing file
+- **Create mode** (Cursor, Windsurf, others): Separate `.mdc` or `.md` files in rules folder
+
 ### Data Files (17 domains)
 | Domain | File | Description |
 |--------|------|-------------|
@@ -159,6 +171,50 @@ node dist/index.js init --ai claude
 cd .claude/skills/flutter-pro-max
 python3 scripts/search.py "ListView" --domain widget --top 3
 ```
+
+---
+
+## 🔄 Syncing Assets (Rules & Data)
+
+When you update rules or data files in the source directory, you must sync them to CLI assets before publishing.
+
+### Sync Rules Only
+After adding/updating rules in `src/flutter-pro-max/templates/base/rules/`:
+
+```bash
+# Copy all rules to CLI
+cp -r src/flutter-pro-max/templates/base/rules/* cli/assets/templates/base/rules/
+
+# Verify sync
+ls cli/assets/templates/base/rules/ | wc -l  # Should show 19 files
+```
+
+### Sync All Assets (Complete)
+Before publishing to npm:
+
+```bash
+# Sync data files (17 domains)
+cp -r src/flutter-pro-max/data/* cli/assets/data/
+
+# Sync scripts
+cp -r src/flutter-pro-max/scripts/* cli/assets/scripts/
+
+# Sync templates (skills + rules + platforms)
+cp -r src/flutter-pro-max/templates/* cli/assets/templates/
+
+# Verify
+cd cli/assets
+find . -type f | wc -l  # Should show significantly more files
+```
+
+### Pre-Publish Checklist
+- [ ] All 19 rules present in `cli/assets/templates/base/rules/`
+- [ ] All 17 data files present in `cli/assets/data/`
+- [ ] All scripts present in `cli/assets/scripts/`
+- [ ] Version bumped in `cli/package.json`
+- [ ] No uncommitted changes in CLI files
+
+> ⚠️ **CRITICAL:** Without syncing, users will not receive the latest rules/data when they run `flutter-pro-max-cli`
 
 ---
 
