@@ -13,6 +13,8 @@ Usage:
     result = generate_design_system("fintech banking app", "MyApp", persist=True, page="dashboard")
 """
 
+from __future__ import annotations
+
 import csv
 import json
 from datetime import datetime

@@ -5,6 +5,8 @@ Flutter Pro Max Core - BM25 search engine for Flutter knowledge base
 Zero dependencies - self-contained BM25 implementation
 """
 
+from __future__ import annotations
+
 import csv
 import re
 from pathlib import Path
