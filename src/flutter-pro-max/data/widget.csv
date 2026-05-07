@@ -63,3 +63,43 @@ Semantics,A11y,Thêm ngữ nghĩa cho Screen Reader.,"label, hint, onTap","Dùng
 InteractiveViewer,Interaction,Cho phép pan/zoom/scale nội dung.,"minScale, maxScale, boundaryMargin","Dùng cho xem ảnh chi tiết, bản đồ."
 WillPopScope,Interaction,Chặn nút Back hệ thống.,onWillPop,"Đã bị deprecated (2025). Dùng PopScope thay thế."
 PopScope,Interaction,Kiểm soát việc thoát màn hình.,"canPop, onPopInvoked","Thay thế WillPopScope trong Android 14+."
+Center,Layout,Căn giữa widget con.,child,"Pro-Tip: Thay vì dùng Container với alignment: Alignment.center, dùng Center cho code gọn hơn."
+Padding,Layout,Thêm khoảng cách xung quanh widget con.,"padding, child",Pro-Tip: Ưu tiên dùng Padding thay vì Container chỉ để set padding để tối ưu hiệu năng.
+Align,Layout,Căn chỉnh widget con trong widget cha.,"alignment, child","Sử dụng các hằng số như Alignment.topRight hoặc Alignment(x, y) để tùy chỉnh."
+AspectRatio,Layout,Cố định tỷ lệ khung hình cho widget con.,"aspectRatio, child",Hữu ích khi hiển thị ảnh hoặc video cần giữ đúng tỷ lệ 16/9 hoặc 4/3.
+ConstrainedBox,Layout,Áp đặt các ràng buộc kích thước bổ sung cho widget con.,"constraints, child","Dùng BoxConstraints(minWidth, maxWidth, ...) để kiểm soát kích thước linh hoạt."
+Visibility,Layout,Ẩn hoặc hiện widget con.,"visible, child, replacement",Pro-Tip: Set maintainState: true nếu muốn giữ trạng thái của widget khi bị ẩn.
+Opacity,Styling,Làm mờ widget con.,"opacity, child",Cảnh báo: Dùng Opacity quá nhiều có thể ảnh hưởng đến hiệu năng render. Cân nhắc dùng Transparent màu nếu được.
+ClipRRect,Styling,Cắt widget con theo hình chữ nhật bo góc.,"borderRadius, child",Thường dùng để bo góc ảnh hoặc container chứa nội dung.
+DecoratedBox,Styling,Vẽ trang trí xung quanh widget con.,"decoration, child",Pro-Tip: Nhẹ hơn Container khi bạn chỉ cần vẽ BoxDecoration mà không cần căn lề/padding.
+PopupMenuButton,Input,Hiển thị menu khi nhấn vào.,"itemBuilder, onSelected",Thường đặt ở AppBar để cung cấp các lựa chọn phụ như 'Cài đặt' hoặc 'Đăng xuất'.
+DropdownButton,Input,Nút chọn giá trị từ danh sách thả xuống.,"items, value, onChanged",Đảm bảo giá trị 'value' luôn tồn tại trong danh sách 'items' để tránh lỗi.
+BottomNavigationBar,Navigation,Thanh điều hướng nằm ở dưới cùng màn hình.,"items, currentIndex, onTap",Pro-Tip: Thường dùng kết hợp với IndexedStack để chuyển đổi tab mà không mất trạng thái.
+Drawer,Navigation,Menu trượt từ cạnh màn hình.,"child, elevation",Sử dụng Scaffold.drawer để tự động kích hoạt tính năng vuốt từ cạnh.
+TabBar,Navigation,Thanh hiển thị các tab ngang.,"tabs, controller",Phải dùng kèm với TabController hoặc DefaultTabController bọc bên ngoài.
+Tooltip,Utility,Hiển thị chú thích khi nhấn giữ hoặc di chuột qua.,"message, child",Rất quan trọng cho Accessibility (khả năng tiếp cận) trên ứng dụng di động.
+DataTable,Data,Hiển thị dữ liệu dưới dạng bảng.,"columns, rows",Thích hợp cho admin dashboard hoặc các ứng dụng quản lý dữ liệu lớn.
+AbsorbPointer,Interactivity,Ngăn chặn tương tác người dùng vào cây widget con.,"absorbing, child","Khác với IgnorePointer, AbsorbPointer vẫn nhận sự kiện nhưng không truyền xuống con."
+IgnorePointer,Interactivity,"Bỏ qua các tương tác người dùng, cho phép nhấn xuyên qua.","ignoring, child",Dùng khi bạn muốn hiển thị một lớp overlay nhưng không muốn nó chặn thao tác bên dưới.
+Table,Layout,Sắp xếp widget theo cấu trúc bảng (table).,"children, columnWidths","Khác với DataTable, Table dùng cho layout tĩnh và hiệu năng tốt hơn cho cấu trúc đơn giản."
+PhysicalModel,Styling,Tạo hiệu ứng đổ bóng và cắt theo hình dạng (shape).,"elevation, color, shape",Dùng để tạo chiều sâu vật lý cho widget giống như Material Design.
+OverflowBox,Layout,Cho phép widget con có kích thước lớn hơn widget cha.,"alignment, minWidth, maxWidth, minHeight, maxHeight","Dùng khi bạn muốn nội dung 'tràn' ra ngoài khung chứa mà không bị lỗi layout."
+Offstage,Layout,Ẩn widget con khỏi màn hình nhưng vẫn giữ trạng thái và không chiếm không gian.,"offstage, child",Dùng để đo đạc kích thước widget con trước khi hiển thị hoặc giữ trạng thái form khi chuyển tab.
+ColoredBox,Styling,Widget chỉ dùng để tô màu nền cho vùng chứa.,"color, child",Pro-Tip: Nhẹ hơn Container với decoration chỉ có màu. Dùng để tối ưu hiệu năng render màu nền đơn giản.
+NavigationRail,Navigation,Thanh điều hướng dọc đặt ở bên trái hoặc phải màn hình.,"destinations, selectedIndex, onDestinationSelected",Thích hợp cho các ứng dụng chạy trên Tablet hoặc Desktop có màn hình rộng.
+SlideTransition,Animation,Di chuyển vị trí của widget con theo một hiệu ứng trượt.,"position (Animation<Offset>), child",Thường dùng kết hợp với AnimationController để tạo hiệu ứng trượt màn hình vào/ra.
+ScaleTransition,Animation,Phóng to hoặc thu nhỏ widget con.,"scale (Animation<double>), child",Tạo hiệu ứng nhấn nút hoặc xuất hiện widget một cách sinh động.
+RotationTransition,Animation,Xoay widget con quanh một trục.,"turns (Animation<double>), child",Dùng để tạo các icon loading xoay tròn hoặc hiệu ứng kim đồng hồ.
+FadeTransition,Animation,Làm mờ dần widget con.,"opacity (Animation<double>), child",Khác với AnimatedOpacity vì yêu cầu một Animation object để kiểm soát chi tiết hơn.
+SizeTransition,Animation,Thay đổi kích thước widget con (thu hẹp hoặc mở rộng).,"sizeFactor, axis, child",Hữu ích cho các danh sách có thể mở rộng (Expandable List) hoặc menu thả xuống.
+CupertinoActivityIndicator,Display,Vòng quay loading theo phong cách iOS (Cupertino).,"radius, animating",Dùng khi bạn muốn giao diện ứng dụng trông giống hệt ứng dụng gốc của Apple.
+CupertinoButton,Input,Nút bấm theo phong cách iOS.,"child, onPressed, borderRadius",Cung cấp cảm giác nhấn và giao diện đặc trưng của hệ điều hành iOS.
+Form,Input,Bọc các trường nhập liệu để quản lý trạng thái chung.,"key, child, onChanged",Sử dụng FormState (thông qua GlobalKey) để thực hiện validate() hoặc save() toàn bộ form cùng lúc.
+AutofillGroup,Input,Gộp nhóm các trường nhập liệu để hỗ trợ tự động điền (autofill).,"child, onDisposeAction",Giúp trình duyệt hoặc hệ điều hành nhận diện được form đăng nhập/đăng ký để gợi ý mật khẩu.
+LongPressDraggable,Interaction,Widget có thể kéo thả nhưng chỉ sau khi nhấn giữ một lúc.,"data, child, feedback",Thường dùng trong các danh sách sắp xếp lại để tránh nhầm lẫn với thao tác cuộn.
+Listener,Interactivity,"Lắng nghe các sự kiện con trỏ ở mức độ thấp (down, move, up).","onPointerDown, onPointerMove, child",Dùng khi GestureDetector không đáp ứng được các yêu cầu xử lý tương tác vật lý phức tạp.
+Focus,Utility,Quản lý khả năng nhận tiêu điểm của widget.,"onFocusChange, focusNode, child",Quan trọng khi phát triển ứng dụng cho Desktop hoặc Web sử dụng phím Tab để di chuyển.
+AnnotatedRegion,Utility,"Thiết lập các thuộc tính lớp phủ hệ thống (như màu thanh trạng thái).","value, child",Dùng để đổi màu chữ trên StatusBar thành đen hoặc trắng tùy theo màu nền của ứng dụng.
+PhysicalShape,Styling,Cắt widget theo một hình dạng tùy chỉnh và tạo hiệu ứng đổ bóng vật lý.,"clipper, color, elevation",Cung cấp độ bóng thực tế hơn so với việc chỉ dùng BoxDecoration.
+VerticalDivider,Display,Đường kẻ dọc để phân cách các phần tử.,"width, thickness, color","Lưu ý: Phải đặt trong widget có chiều cao xác định (như Row bọc bởi IntrinsicHeight)."
+PreferredSize,Utility,Widget cho phép bạn xác định kích thước lý tưởng cho con của nó.,"preferredSize, child",Thường dùng để tạo các AppBar tùy chỉnh (Custom AppBar) có chiều cao khác với mặc định.</Offset>

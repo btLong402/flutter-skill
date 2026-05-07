@@ -14,3 +14,65 @@ Widget,noun_widget.dart,NounWidget,primary_button.dart,PrimaryButton,Reusable wi
 Page/Screen,noun_page.dart,NounPage,login_page.dart,LoginPage,Màn hình chính
 Barrel File,package_name.dart,N/A,auth_repository.dart,N/A,Dùng để export public API của package
 Test File,original_name_test.dart,N/A,login_bloc_test.dart,N/A,Luôn có hậu tố _test
+Service,noun_service.dart,NounService,api_service.dart,ApiService,Xử lý các logic dịch vụ bên thứ ba hoặc hệ thống
+Cubit,noun_cubit.dart,NounCubit,theme_cubit.dart,ThemeCubit,Giải pháp quản lý state nhẹ hơn BLoC
+Extension,noun_extension.dart,NounExtension,string_extension.dart,StringExtension,Mở rộng tính năng cho các class có sẵn
+Utility/Helper,noun_utils.dart / noun_helper.dart,NounUtils / NounHelper,date_helper.dart,DateHelper,Các hàm tiện ích dùng chung toàn dự án
+Constants,app_constants.dart / noun_constants.dart,NounConstants,app_colors.dart,AppColors,"Lưu trữ các giá trị hằng số, config"
+Mapper,noun_mapper.dart,NounMapper,user_mapper.dart,UserMapper,Chuyển đổi giữa Model (Data) và Entity (Domain)
+Usecase Params,noun_params.dart,NounParams,login_params.dart,LoginParams,Input data cho các Use Case phức tạp
+Exception/Failure,noun_failure.dart,NounFailure,server_failure.dart,ServerFailure,Định nghĩa các lỗi tùy chỉnh trong hệ thống
+Routes,app_routes.dart,AppRoutes,app_routes.dart,AppRoutes,Quản lý định tuyến và tên các màn hình
+Theme,noun_theme.dart,NounTheme,app_theme.dart,AppTheme,Cấu hình ThemeData và Style cho ứng dụng
+Enum,noun_type.dart,NounType,order_status.dart,OrderStatus,Các kiểu liệt kê dữ liệu
+Middleware,noun_middleware.dart,NounMiddleware,auth_middleware.dart,AuthMiddleware,Xử lý logic giữa các layer hoặc route transitions
+Dialog,noun_dialog.dart,NounDialog,confirm_delete_dialog.dart,ConfirmDeleteDialog,Các hộp thoại thông báo hoặc xác nhận
+Bottom Sheet,noun_bottom_sheet.dart,NounBottomSheet,user_options_bottom_sheet.dart,UserOptionsBottomSheet,Bảng điều khiển từ cạnh dưới màn hình
+SnackBar,noun_snackbar.dart,NounSnackBar,success_snackbar.dart,SuccessSnackBar,Thông báo nhanh biến mất sau vài giây
+Interceptor,noun_interceptor.dart,NounInterceptor,auth_interceptor.dart,AuthInterceptor,Xử lý request/response trước khi gửi hoặc nhận
+Adapter,noun_adapter.dart,NounAdapter,hive_user_adapter.dart,UserAdapter,Chuyển đổi dữ liệu cho các thư viện bên thứ ba (như Hive)
+Validator,noun_validator.dart,NounValidator,email_validator.dart,EmailValidator,Kiểm tra tính hợp lệ của dữ liệu đầu vào
+Policy,noun_policy.dart,NounPolicy,password_policy.dart,PasswordPolicy,Định nghĩa các quy tắc nghiệp vụ đặc thù
+Specification,noun_specification.dart,NounSpecification,active_user_specification.dart,ActiveUserSpecification,Lọc dữ liệu theo các điều kiện phức tạp (DDD)
+Feature Flag,noun_feature_flag.dart,NounFeatureFlag,dark_mode_feature_flag.dart,DarkModeFeatureFlag,Quản lý việc bật tắt các tính năng ứng dụng
+Analytics Event,noun_analytics_event.dart,NounAnalyticsEvent,purchase_event.dart,PurchaseEvent,Định nghĩa các sự kiện theo dõi hành vi người dùng
+Error Handler,noun_error_handler.dart,NounErrorHandler,global_error_handler.dart,GlobalErrorHandler,Xử lý tập trung các lỗi ngoại lệ
+Form Group,noun_form.dart,NounForm,registration_form.dart,RegistrationForm,Quản lý trạng thái của các nhóm input trong form
+Binding,noun_binding.dart,NounBinding,home_binding.dart,HomeBinding,Quản lý việc khởi tạo và giải phóng dependency (thường dùng trong GetX)
+App State,app_state.dart,AppState,app_state.dart,AppState,Trạng thái tổng thể của toàn bộ ứng dụng
+DI Module,noun_module.dart,NounModule,network_module.dart,NetworkModule,Khai báo các phụ thuộc cho Dependency Injection
+Local Storage,noun_storage.dart,NounStorage,secure_storage.dart,SecureStorage,Giao tiếp với bộ nhớ lưu trữ cục bộ của thiết bị
+Permission Handler,noun_permission_handler.dart,NounPermissionHandler,camera_permission_handler.dart,CameraPermissionHandler,Xử lý yêu cầu và kiểm tra quyền hệ thống
+Notification Service,noun_notification_service.dart,NounNotificationService,fcm_notification_service.dart,FcmNotificationService,Quản lý thông báo đẩy và thông báo cục bộ
+Background Task,noun_task.dart,NounTask,sync_data_task.dart,SyncDataTask,Các tác vụ chạy ngầm định kỳ hoặc theo sự kiện
+Deep Link Handler,noun_link_handler.dart,NounLinkHandler,product_link_handler.dart,ProductLinkHandler,Xử lý các liên kết điều hướng từ bên ngoài vào app
+Flavor Config,noun_config.dart,NounConfig,dev_config.dart,DevConfig,Cấu hình môi trường (Dev, Staging, Prod)
+Environment Variable,env_variable.dart,EnvVariable,env_variable.dart,EnvVariable,Quản lý các biến môi trường từ file .env
+JSON Converter,noun_converter.dart,NounConverter,date_time_converter.dart,DateTimeConverter,Tùy chỉnh cách parse JSON cho các kiểu dữ liệu đặc biệt
+Value Object,noun_vo.dart,NounVO,phone_number_vo.dart,PhoneNumberVO,Các đối tượng mang giá trị không có định danh riêng (DDD)
+Aggregate Root,noun_aggregate.dart,NounAggregate,order_aggregate.dart,OrderAggregate,Điểm truy cập chính cho một nhóm các Entity liên quan (DDD)
+Factory,noun_factory.dart,NounFactory,widget_factory.dart,WidgetFactory,Tạo các đối tượng phức tạp thông qua factory pattern
+Abstract Factory,abstract_noun_factory.dart,AbstractNounFactory,abstract_ui_factory.dart,AbstractUiFactory,Giao diện tạo các nhóm đối tượng liên quan
+Singleton,noun_manager.dart,NounManager,session_manager.dart,SessionManager,Đảm bảo class chỉ có duy nhất một instance toàn cục
+Strategy,noun_strategy.dart,NounStrategy,payment_strategy.dart,PaymentStrategy,Thay đổi thuật toán thực thi tại thời điểm chạy
+Observer,noun_observer.dart,NounObserver,navigation_observer.dart,NavigationObserver,Theo dõi sự thay đổi trạng thái của một đối tượng khác
+Command,noun_command.dart,NounCommand,send_message_command.dart,SendMessageCommand,Đóng gói một yêu cầu thành một đối tượng
+State Machine,noun_state_machine.dart,NounStateMachine,order_state_machine.dart,OrderStateMachine,Quản lý các bước chuyển trạng thái logic
+Mixin,noun_mixin.dart,NounMixin,validation_mixin.dart,ValidationMixin,Tái sử dụng code giữa nhiều class khác nhau
+Custom Painter,noun_painter.dart,NounPainter,chart_painter.dart,ChartPainter,Vẽ các hình khối hoặc hiệu ứng đồ họa tùy chỉnh
+Custom Clipper,noun_clipper.dart,NounClipper,wave_clipper.dart,WaveClipper,Cắt các Widget theo hình dạng đặc thù
+Animation Wrapper,noun_animation.dart,NounAnimation,fade_in_animation.dart,FadeInAnimation,Bọc các logic hiệu ứng chuyển động
+Asset Manager,noun_assets.dart,NounAssets,image_assets.dart,ImageAssets,Quản lý đường dẫn các file tài nguyên (ảnh, font, video)
+Localization,noun_localizations.dart,NounLocalizations,app_localizations.dart,AppLocalizations,Hỗ trợ đa ngôn ngữ cho ứng dụng
+Font Style,noun_text_styles.dart,NounTextStyles,app_text_styles.dart,AppTextStyles,Định nghĩa các kiểu chữ dùng chung
+Shadow Style,noun_shadows.dart,NounShadows,container_shadows.dart,ContainerShadows,Định nghĩa các hiệu ứng đổ bóng
+Gradient Style,noun_gradients.dart,NounGradients,button_gradients.dart,ButtonGradients,Định nghĩa các dải màu chuyển sắc
+Method Channel,noun_channel.dart,NounChannel,battery_channel.dart,BatteryChannel,Giao tiếp giữa Flutter và mã nguồn Native (Java/Swift)
+Event Channel,noun_event_stream.dart,NounEventStream,sensor_event_stream.dart,SensorEventStream,Nhận luồng dữ liệu liên tục từ Native
+Isolate Manager,noun_isolate.dart,NounIsolate,image_processor_isolate.dart,ImageProcessorIsolate,Xử lý các tác vụ nặng trên luồng riêng biệt
+Cache Manager,noun_cache.dart,NounCache,user_cache.dart,UserCache,Quản lý dữ liệu tạm thời để tăng tốc độ phản hồi
+Security Helper,noun_security.dart,NounSecurity,encryption_security.dart,EncryptionSecurity,Các hàm mã hóa và bảo mật dữ liệu
+OAuth Provider,noun_auth_provider.dart,NounAuthProvider,google_auth_provider.dart,GoogleAuthProvider,Xử lý đăng nhập qua các bên thứ ba
+Logger,noun_logger.dart,NounLogger,debug_logger.dart,DebugLogger,Ghi lại lịch sử hoạt động và lỗi của ứng dụng
+Benchmark/Metric,noun_metric.dart,NounMetric,fps_metric.dart,FpsMetric,Đo lường hiệu năng của các thành phần trong app
+Golden Test,noun_golden_test.dart,NounGoldenTest,login_page_golden_test.dart,LoginPageGoldenTest,Kiểm tra giao diện bằng cách so sánh hình ảnh mẫu
