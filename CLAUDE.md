@@ -257,6 +257,12 @@ Tất cả 19 rules được lưu trong `src/flutter-pro-max/templates/base/rule
 | 1️⃣8️⃣ | **Google Play Visuals** | `18_google_play_visuals.md` | Screenshots, Feature graphics, Icon guidance |
 | 1️⃣9️⃣ | **Architecture Decision Matrix** | `19_architecture_decision_matrix.md` | Greenfield vs Brownfield strategies |
 
+### Tier 5: Workflow Rules
+
+| # | Rule | Tệp | Mục đích |
+|---|------|-----|---------|
+| 2️⃣0️⃣ | **Development Workflow** | `20_development_workflow.md` | Quy trình 8 bước từ Requirement đến Optimization |
+
 ### 🔗 How to Use Rules
 
 Mỗi rule file có cấu trúc tương tự:
@@ -290,7 +296,8 @@ globs: lib/**/*.dart  # Áp dụng cho files nào
 | Fix bug | 2, 3, 5, 6, 7, 14 |
 | Refactor code lớn | 2, 3, 9, 10, 19 |
 | Release app | 16, 17, 18 |
-| Performance tuning | 7, 11, 12, 13, 15 |
+| Bắt đầu Feature mới | 20, 1, 2, 3, 19 |
+| Performance tuning | 7, 11, 12, 13, 15, 20 |
 | Xử lý data nhạy cảm | 5, 8, 11 |
 
-> **Important:** Các rules được tự động kích hoạt khi tạo projects với CLI. Lúc đó toàn bộ 19 rules sẽ được copy vào `.instructions.md` của project.
+> **Important:** Các rules được tự động kích hoạt khi tạo projects với CLI. Lúc đó toàn bộ 20 rules sẽ được copy vào `.instructions.md` của project.

@@ -21,7 +21,9 @@ globs: *
 **Workflow bắt buộc:**
 
 ```
-User request → Search skill (≥2 domains) → Đọc kết quả → Áp dụng vào code
+User request → Xac dinh task type (Greenfield/Brownfield) theo Architecture Decision Matrix → Search skill (≥2 domains) → Đọc kết quả → Áp dụng vào code
 ```
+
+> Tham chieu: `19_architecture_decision_matrix.md` de chon architecture strategy, state strategy, va refactor scope truoc khi implement.
 
 > ⚠️ Viết code Flutter mà không tham khảo skill trước = thiếu context = code chất lượng thấp.
