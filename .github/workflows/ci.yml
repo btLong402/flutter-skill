@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-python:
+    name: Python Unit Tests (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run Core & Assets Test Suites
+        run: |
+          python -m unittest discover -s src/flutter-pro-max/scripts/tests/
+          python -m unittest discover -s cli/assets/scripts/tests/
+
+  build-and-test-cli:
+    name: Build & E2E Test CLI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: cli/package-lock.json
+
+      - name: Set up Python for CLI integration test
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies & Build CLI
+        run: |
+          npm ci --prefix cli
+          npm run build --prefix cli
+
+      - name: E2E Test CLI Generators & Skill Installation
+        run: |
+          mkdir -p /tmp/e2e-test
+          cd /tmp/e2e-test
+
+          # 1. Test help
+          node $GITHUB_WORKSPACE/cli/dist/index.js --help
+
+          # 2. Test makefile generator
+          node $GITHUB_WORKSPACE/cli/dist/index.js makefile
+          test -f Makefile
+
+          # 3. Test fastlane generator
+          mkdir -p android ios
+          node $GITHUB_WORKSPACE/cli/dist/index.js fastlane -f
+          test -f android/fastlane/Fastfile
+          test -f ios/fastlane/Fastfile
+
+          # 4. Test gitignore updater
+          node $GITHUB_WORKSPACE/cli/dist/index.js gitignore
+          test -f .gitignore
+          grep -q "Flutter Pro Max" .gitignore
+
+          # 5. Test skill initialization & execution
+          node $GITHUB_WORKSPACE/cli/dist/index.js init -a claude -f
+          test -f CLAUDE.md
+          test -f .claude/skills/flutter-pro-max/SKILL.md
+
+          # 6. Test search execution from generated skill
+          python3 .claude/skills/flutter-pro-max/scripts/search.py "ListView" --top 1
+          python3 .claude/skills/flutter-pro-max/scripts/search.py "hero" --domain motion --top 1

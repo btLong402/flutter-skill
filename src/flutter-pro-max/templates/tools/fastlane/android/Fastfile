@@ -1,0 +1,57 @@
+# Fastfile for Android
+default_platform(:android)
+
+platform :android do
+  before_all do
+    # Load environment variables if .env.fastlane exists
+    Dotenv.overload("../.env.fastlane") if File.exist?("../.env.fastlane")
+  end
+
+  desc "Build debug APK for internal testing"
+  lane :build_dev do
+    gradle(
+      task: "assemble",
+      flavor: "dev",
+      build_type: "Debug"
+    )
+  end
+
+  desc "Build release AppBundle (AAB) with production flavor"
+  lane :build_prod do
+    gradle(
+      task: "bundle",
+      flavor: "prod",
+      build_type: "Release"
+    )
+  end
+
+  desc "Distribute APK to Firebase App Distribution"
+  lane :beta_firebase do
+    build_dev
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID_ANDROID"],
+      groups: "internal-testers",
+      release_notes: "Auto-generated build from Fastlane"
+    )
+  end
+
+  desc "Deploy production bundle to Google Play Internal Sharing track"
+  lane :deploy_internal do
+    build_prod
+    upload_to_play_store(
+      track: "internal",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Deploy production bundle to Google Play Production track"
+  lane :deploy_play_store do
+    build_prod
+    upload_to_play_store(
+      track: "production",
+      release_status: "completed"
+    )
+  end
+end

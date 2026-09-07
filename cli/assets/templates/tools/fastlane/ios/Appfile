@@ -1,0 +1,7 @@
+# iOS Appfile for Fastlane
+# Defines the Apple ID, App Identifier, and Developer Team ID
+
+app_identifier(ENV["IOS_APP_IDENTIFIER"] || "com.example.app")
+apple_id(ENV["APPLE_ID"] || "developer@example.com")
+team_id(ENV["APPLE_TEAM_ID"] || "XXXXXXXXXX")
+itc_team_id(ENV["APPLE_ITC_TEAM_ID"]) if ENV["APPLE_ITC_TEAM_ID"]

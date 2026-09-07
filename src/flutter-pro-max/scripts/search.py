@@ -113,6 +113,32 @@ Examples:
         default="ascii",
         help="Output format for design system"
     )
+    parser.add_argument(
+        "--variance",
+        type=int,
+        choices=range(1, 11),
+        default=None,
+        help="Variance dial (1-10): layout creativity vs minimalism"
+    )
+    parser.add_argument(
+        "--motion",
+        type=int,
+        choices=range(1, 11),
+        default=None,
+        help="Motion dial (1-10): animation intensity from subtle to complex"
+    )
+    parser.add_argument(
+        "--density",
+        type=int,
+        choices=range(1, 11),
+        default=None,
+        help="Density dial (1-10): spacing from spacious to high-density dashboard"
+    )
+    parser.add_argument(
+        "--export-dart",
+        action="store_true",
+        help="Generate production-ready Dart ThemeData & ThemeExtension code"
+    )
     # Persistence (Master + Overrides pattern)
     parser.add_argument(
         "--persist",
@@ -142,7 +168,11 @@ Examples:
             args.format,
             persist=args.persist,
             page=args.page,
-            output_dir=args.output_dir
+            output_dir=args.output_dir,
+            variance=args.variance,
+            motion=args.motion,
+            density=args.density,
+            export_dart=args.export_dart
         )
         print(result)
         

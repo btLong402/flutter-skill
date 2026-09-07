@@ -27,12 +27,12 @@ Flutter Pro Max tách biệt hoàn toàn **logic ra quyết định** và **côn
 
 | Layer | Vai trò | Nội dung |
 |-------|---------|----------|
-| **🧠 Rules (Brain)** | System prompt, persona, constraints | 11 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
-| **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 17 domain data files, design system generator |
+| **🧠 Rules (Brain)** | System prompt, persona, constraints | 20 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
+| **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 18 domain data files, design system generator, design review agent |
 
-### 🧠 19 Modular Rules — Comprehensive Guidebook
+### 🧠 20 Modular Rules — Comprehensive Guidebook
 
-Hệ thống được thiết kế với **19 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
+Hệ thống được thiết kế với **20 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
 
 **Tier 1: Foundation Rules (Bắt buộc)**
 ```
@@ -66,7 +66,8 @@ Hệ thống được thiết kế với **19 module rules** chuyên biệt, bao
 ├── 16_google_play_aso            # ASO: Store listing, Keywords optimization
 ├── 17_google_play_compliance     # Content rating, Data safety, Privacy policy
 ├── 18_google_play_visuals        # Screenshots, Feature graphics, Icon guidance
-└── 19_architecture_decision_matrix # Greenfield vs Brownfield strategies
+├── 19_architecture_decision_matrix # Greenfield vs Brownfield strategies
+└── 20_development_workflow       # 8-step SDLC flow từ Requirement đến Polish
 ```
 
 **🔥 Đột phá cho người dùng Cursor/Windsurf:** Khi khởi tạo, CLI tự động xuất sang định dạng `.mdc`. AI của bạn giờ đây có thể tự động đọc YAML frontmatter từ file `.mdc` để biết chính xác lúc nào nên nạp rule nào vào buffer (dựa trên tên file/context).
@@ -77,10 +78,16 @@ Hệ thống được thiết kế với **19 module rules** chuyên biệt, bao
 
 ## 🚀 Features
 
-Hệ thống kiến thức được xây dựng trên dữ liệu có cấu trúc bao quát hơn **150+ thành phần**:
+Hệ thống kiến thức được xây dựng trên dữ liệu có cấu trúc bao quát hơn **180+ thành phần**:
 
-- **� Intelligent Design System Generator** *(NEW)*: Tự động sinh complete design system (colors, typography, spacing, patterns) dựa trên app category với reasoning engine.
-- **�🏗️ Architecture Excellence**: Clean Architecture, Feature-First, DDD, Repository Pattern, và Modular Design.
+- **🎛️ Design Dials (`--variance`, `--motion`, `--density`)** *(NEW)*: Tinh chỉnh linh hoạt biên độ sáng tạo, cường độ hoạt họa và mật độ giao diện (ánh xạ trực tiếp vào `VisualDensity` và `AppSpacing`).
+- **🐦 Production Dart Theme Generator (`--export-dart`)** *(NEW)*: Xuất trực tiếp mã nguồn `app_theme.dart` theo chuẩn Material 3 với 3-Layer Tokens (`AppColors`, `AppSpacing`, `AppRadius`, `ColorScheme`, `ThemeExtension<AppCustomTokens>`).
+- **🎬 Flutter Motion & Micro-interactions** *(NEW)*: Thư viện hoạt họa chuyên sâu (`flutter-motion.csv`) phân tầng Subtle, Standard, Complex với code Flutter chuẩn và chỉ dẫn GPU/Accessibility (`MediaQuery.disableAnimationsOf`).
+- **🛡️ Deterministic Reasoning Contract** *(NEW)*: Closed-grammar reasoning engine (`reasoning_contract.py`) xử lý quy tắc quyết định không lỗi, loại bỏ hoàn toàn AI hallucination.
+- **🔍 Flutter Design Review Agent & Command** *(NEW)*: Subagent `@flutter-design-review` và lệnh `/flutter-review` thực hiện audit 6 pha (RenderFlex overflow, touch target $\ge 48\text{ dp}$, font scaling `TextScaler`, theming, const hygiene).
+- **🛠️ Developer Utility Tools (`makefile`, `fastlane`, `gitignore`)** *(NEW)*: Bộ công cụ tạo nhanh `Makefile` chuẩn hóa workflows, cấu hình `Fastlane` tự động hóa CI/CD (TestFlight & Google Play) và tự động quản lý `.gitignore` ngăn rò rỉ skill assets.
+- **🎯 Intelligent Design System Generator**: Tự động sinh complete design system (colors, typography, spacing, patterns) dựa trên app category với reasoning engine.
+- **🏛️ Architecture Excellence**: Clean Architecture, Feature-First, DDD, Repository Pattern, và Modular Design.
 - **📱 Premium UI/UX Patterns**: 100+ design patterns có sẵn code snippets cho Glassmorphism, Neumorphism, Modern SaaS, và eCommerce.
 - **📦 Smart Package Selection**: Hướng dẫn sử dụng 100+ packages phổ biến (Dio, Riverpod, Drift, Isar) với best practices và tránh xung đột stack.
 - **⚡ Performance Optimization**: 35+ patterns tối ưu render, memory, isolate, animation với code examples.
@@ -174,7 +181,7 @@ Khi bạn thêm hoặc cập nhật rules, **cần sync từ source đến CLI a
 1. **Tạo/sửa rule file** trong `src/flutter-pro-max/templates/base/rules/`:
    ```bash
    # Ví dụ: Thêm rule mới
-   vim src/flutter-pro-max/templates/base/rules/20_new_rule.md
+   vim src/flutter-pro-max/templates/base/rules/21_new_rule.md
    ```
 
 2. **Sync ngay vào CLI assets** (bắt buộc trước khi commit):
@@ -192,11 +199,11 @@ Khi bạn thêm hoặc cập nhật rules, **cần sync từ source đến CLI a
    ```bash
    git add src/flutter-pro-max/templates/base/rules/
    git add cli/assets/templates/base/rules/
-   git commit -m "feat: add rule 20 - [description]"
+   git commit -m "feat: add rule 21 - [description]"
    ```
 
 4. **Before Publishing CLI** (trong workflow npm publish):
-   - Verify tất cả 19 rules đã sync vào `cli/assets/templates/base/rules/`
+   - Verify tất cả 20 rules đã sync vào `cli/assets/templates/base/rules/`
    - Bump version trong `cli/package.json`
    - Workflow tự động publish
 
@@ -240,12 +247,13 @@ python3 src/flutter-pro-max/scripts/search.py "ListView pagination" --top 5
 python3 src/flutter-pro-max/scripts/search.py "const rebuild" --domain performance --top 5
 python3 src/flutter-pro-max/scripts/search.py "banking app" --domain ui-reasoning --top 3
 python3 src/flutter-pro-max/scripts/search.py "touch target" --domain accessibility --top 3
+python3 src/flutter-pro-max/scripts/search.py "hero transition" --domain motion --top 3
 
 # Tìm kiếm theo stack (loại bỏ packages xung đột)
 python3 src/flutter-pro-max/scripts/search.py "state management" --stack riverpod --top 5
 ```
 
-### Available Search Domains (17 total)
+### Available Search Domains (18 total)
 
 | Domain | Description |
 |--------|-------------|
@@ -266,6 +274,7 @@ python3 src/flutter-pro-max/scripts/search.py "state management" --stack riverpo
 | `performance` | Performance optimization patterns |
 | `ui-reasoning` | UI decisions theo app category |
 | `accessibility` | Mobile accessibility patterns |
+| `motion` | Flutter animations & micro-interactions *(NEW)* |
 
 ### Example Prompts
 - *"Thiết kế kiến trúc thư mục cho một ứng dụng eCommerce lớn theo Feature-First."*
@@ -276,54 +285,81 @@ python3 src/flutter-pro-max/scripts/search.py "state management" --stack riverpo
 
 ---
 
-## 🎯 Design System Generator (NEW)
+## 🎯 Design System Generator & Dials (v2.5)
 
-Tính năng flagship - tự động sinh **complete design system** cho Flutter app của bạn.
+Tính năng flagship - tự động sinh **complete design system** cho Flutter app của bạn với bộ suy luận khép kín (Reasoning Contract) và các nút điều khiển trực quan.
 
-### Generate Design System
+### 🎛️ Design Dials (1-10)
+
+Tùy chỉnh linh hoạt hệ thống thiết kế mà không cần viết prompt thủ công:
+
+- `--variance <1-10>`: Biến thiên bố cục (`1-3`: Tối giản, đối xứng $\rightarrow$ `8-10`: Phá cách, Bento Grid, Expressive).
+- `--motion <1-10>`: Cường độ hoạt họa (`1-3`: Subtle micro-interactions $\rightarrow$ `4-7`: Standard transitions/Hero $\rightarrow$ `8-10`: Complex physics).
+- `--density <1-10>`: Mật độ bố cục (`1-3`: Thoáng đãng/Lifestyle $\rightarrow$ `4-7`: Chuẩn Material $\rightarrow$ `8-10`: Bảng điều khiển tài chính/Data tables).
+
+### Commands
 
 ```bash
-# Generate design system với ASCII output
-python3 src/flutter-pro-max/scripts/search.py "fintech banking app" --design-system -p "MyBank"
+# 1. Generate với Design Dials
+python3 src/flutter-pro-max/scripts/search.py "crypto trading wallet" --design-system --variance 8 --motion 5 --density 9 -p "CryptoPro"
 
-# Generate với Markdown output
+# 2. Xuất trực tiếp mã nguồn Flutter ThemeData & ThemeExtension
+python3 src/flutter-pro-max/scripts/search.py "e-commerce fashion" --design-system --export-dart -p "StyleShop"
+
+# 3. Generate với Markdown output
 python3 src/flutter-pro-max/scripts/search.py "e-commerce fashion" --design-system -f markdown -p "StyleShop"
+
+# 4. Persist vào files (Master + Overrides pattern)
+python3 src/flutter-pro-max/scripts/search.py "fintech banking" --design-system --persist -p "MyBank"
+
+# 5. Tạo file override cho screen cụ thể
+python3 src/flutter-pro-max/scripts/search.py "fintech banking" --design-system --persist -p "MyBank" --page "dashboard"
 ```
 
-### Sample Output
+### Sample Output (ASCII Box with Dials & Motion)
 
 ```
 +-----------------------------------------------------------------------------------------+
-|  TARGET: MYBANK - FLUTTER DESIGN SYSTEM                                                 |
+|  TARGET: CryptoPro - FLUTTER DESIGN SYSTEM                                              |
 +-----------------------------------------------------------------------------------------+
 |                                                                                         |
-|  ARCHITECTURE: Clean Architecture + Security-First                                      |
-|     Structure: Feature-First / Clean Architecture                                       |
-|     State: Riverpod                                                                     |
-|     Patterns: Secure Form Pattern, Biometric Auth, Transaction List                     |
+|  DESIGN DIALS:                                                                          |
+|     Variance: 8/10 (Bold / Expressive / Bento)                                          |
+|     Motion:   5/10 (Standard)                                                           |
+|     Density:  9/10 (Compact / High-Density Dashboard)                                   |
 |                                                                                         |
-|  UI STYLE: Minimalism & Swiss Style                                                     |
-|     Keywords: Clean, professional, trustworthy, secure                                  |
-|     Best For: Banking, fintech, enterprise apps                                         |
+|  SCREEN PATTERN: Hero + Features + CTA                                                  |
+|     Sections: Hero > Features > CTA                                                     |
+|     CTA: Bottom + Sticky                                                                |
+|                                                                                         |
+|  ARCHITECTURE: Clean Architecture + Feature-First                                       |
+|     State: Riverpod / BLoC                                                              |
+|                                                                                         |
+|  UI STYLE: Typographic Brutalism                                                        |
+|     Keywords: Giant text, sans-serif, black/white, minimal imagery, extreme weight      |
 |                                                                                         |
 |  COLOR PALETTE:                                                                         |
-|     Primary:    #1E3A5F (Deep Navy)                                                     |
-|     Secondary:  #2563EB (Trust Blue)                                                    |
-|     CTA:        #10B981 (Success Green)                                                 |
+|     Primary:    #F59E0B                                                                 |
+|     Secondary:  #FBBF24                                                                 |
+|     CTA:        #8B5CF6                                                                 |
 |     Background: #FFFFFF                                                                 |
 |     Surface:    #F8FAFC                                                                 |
 |     Text:       #1E293B                                                                 |
 |                                                                                         |
-|  TYPOGRAPHY: Inter / Inter                                                              |
-|     Mood: Professional, clean, readable                                                 |
+|  MOTION INTELLIGENCE: Scroll Reveal (Standard)                                          |
+|     Duration: 300-400ms | Curve: Curves.easeOutCubic                                    |
+|     Snippet:  TweenAnimationBuilder<double>(tween: Tween(begin: 0.0, end: ...          |
 |                                                                                         |
-|  AVOID (Anti-patterns):                                                                 |
-|     Bright neon colors + Playful animations + Casual fonts + AI purple gradients        |
+|  SPACING SCALE (VisualDensity.compact):                                                 |
+|     xs: 2.0 | sm: 4.0 | md: 8.0 | lg: 12.0 | xl: 16.0                                  |
 |                                                                                         |
 |  PRE-DELIVERY CHECKLIST:                                                                |
-|     [ ] const constructors for immutable widgets                                        |
-|     [ ] Accessibility: Semantics labels, touch targets >= 48px                          |
-|     [ ] Performance: ListView.builder for long lists                                    |
+|     [ ] const constructors used everywhere possible                                     |
+|     [ ] Touch target >= 48x48 dp on mobile                                              |
+|     [ ] Semantics widgets added for screen readers                                      |
+|     [ ] MediaQuery.disableAnimationsOf respected                                        |
+|     [ ] No God Widgets (files < 300 lines)                                              |
+|                                                                                         |
 +-----------------------------------------------------------------------------------------+
 ```
 
@@ -331,35 +367,63 @@ python3 src/flutter-pro-max/scripts/search.py "e-commerce fashion" --design-syst
 
 Lưu design system vào files để **sử dụng nhất quán across sessions**:
 
-```bash
-# Generate và persist vào design-system/mybank/MASTER.md
-python3 src/flutter-pro-max/scripts/search.py "fintech banking" --design-system --persist -p "MyBank"
-
-# Tạo thêm file override cho screen cụ thể
-python3 src/flutter-pro-max/scripts/search.py "fintech banking" --design-system --persist -p "MyBank" --page "dashboard"
-```
-
-Tạo cấu trúc `design-system/`:
-
 ```
 design-system/
 ├── mybank/
 │   ├── MASTER.md           # Global Source of Truth (colors, typography, spacing)
+│   ├── app_theme.dart      # (Optional) Production Flutter Theme code
 │   └── pages/
 │       └── dashboard.md    # Screen-specific overrides
 ```
 
-**Cách sử dụng hierarchical retrieval:**
-1. Khi build một screen (e.g., "Checkout"), kiểm tra `design-system/mybank/pages/checkout.md` trước
-2. Nếu file tồn tại, rules trong đó **override** MASTER.md
-3. Nếu không, sử dụng `design-system/mybank/MASTER.md`
+---
+
+## 🔍 Flutter Design Review Subagent & Slash Command (NEW)
+
+Không chỉ sinh code, **Flutter Pro Max** tích hợp subagent chuyên biệt để đánh giá, phản biện và rà soát giao diện người dùng theo 6 tiêu chuẩn khắt khe trước khi bàn giao:
+
+```bash
+# Sử dụng slash command
+/flutter-review lib/features/dashboard/presentation/dashboard_screen.dart
+
+# Hoặc kích hoạt subagent trong Claude Code / Antigravity
+@flutter-design-review
+```
+
+### Quy Trình Audit 6 Pha:
+1. **Layout Resilience**: Phát hiện nguy cơ tràn pixel (`RenderFlex overflowed`), thiếu flex constraint hoặc bàn phím che form.
+2. **Touch Targets & Ergonomics**: Đảm bảo vùng bấm đạt chuẩn Material 3 ($\ge 48\times 48\text{ dp}$) và iOS HIG ($\ge 44\times 44\text{ pt}$).
+3. **Accessibility & Font Scaling**: Rà soát nhãn `Semantics` và đảm bảo layout co giãn mượt mà khi người dùng bật `TextScaler` phóng to chữ 1.5x - 2.0x.
+4. **Visual Polish & Tokens**: Triệt tiêu màu sắc hardcode (`Color(0xFF...)`), ép buộc sử dụng `Theme.of(context)` và Design Tokens đồng nhất.
+5. **Motion & Haptics**: Kiểm tra curve chuyển động, giải phóng `AnimationController` trong `dispose()`, và tuân thủ `MediaQuery.disableAnimationsOf(context)`.
+6. **Performance & Rebuild Hygiene**: Rà soát `const` constructors, giới hạn phạm vi rebuild (`Consumer`, `BlocBuilder`) và ngăn chặn `setState()` ở cấp root.
+
+---
+
+## 🛠️ Developer Utility Tools (NEW)
+
+Flutter Pro Max tích hợp sẵn bộ công cụ tự động hóa chuẩn công nghiệp giúp bạn setup dự án nhanh chóng:
+
+```bash
+# 1. Sinh Makefile chuẩn hóa (build_runner, lint, format, test, coverage, flavors APK/IPA)
+npx flutter-pro-max makefile [-f]
+make help
+
+# 2. Sinh Fastlane CI/CD automation chuyên nghiệp cho Android & iOS
+npx flutter-pro-max fastlane [-p android|ios|all] [-f]
+
+# 3. Tự động thêm block loại trừ file nội bộ của skill vào .gitignore (chạy độc lập)
+npx flutter-pro-max gitignore
+```
+
+> 💡 **Tự động bảo vệ Git:** Lệnh `flutter-pro-max init` mặc định sẽ tự động cập nhật `.gitignore` để ngăn chặn việc commit nhầm `.shared/` hoặc `__pycache__/` lên repository (có thể bỏ qua bằng cờ `--skip-gitignore`).
 
 ---
 
 ## 📖 How It Works
 
 1.  **Requirement Analysis**: AI phân tích yêu cầu, scale ứng dụng và tech stack bạn chọn (Riverpod, Bloc, etc.).
-2.  **Domain Searching**: Tìm kiếm trong 17 kiến thức domain chuyên sâu (Architecture, UI, Performance, Accessibility).
+2.  **Domain Searching**: Tìm kiếm trong 18 kiến thức domain chuyên sâu (Architecture, UI, Performance, Accessibility, Motion).
 3.  **Cross-Reference**: Đối chiếu với các pattern đã được thiết lập để đảm bảo không có xung đột giữa các thư viện.
 4.  **Actionable Output**: Trả về hướng dẫn triển khai cụ thể, code snippets thực tế và các lưu ý (pro-tips).
 
@@ -402,6 +466,20 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 ---
 
 ## 📝 Changelog
+
+### v2.5.0 (2026-09-07)
+- **🎛️ Design Dials**: Bổ sung 3 nút điều khiển thiết kế `--variance` (bố cục sáng tạo), `--motion` (cường độ hoạt họa), và `--density` (mật độ spacing & visual density).
+- **🐦 Production Dart Theme Generator**: Hỗ trợ cờ `--export-dart` xuất trực tiếp code Dart hoàn chỉnh với 3-Layer Tokens (`AppColors`, `AppSpacing`, `AppRadius`, `ColorScheme`, `ThemeExtension<AppCustomTokens>`).
+- **🎬 Flutter Motion Intelligence**: Bổ sung domain thứ 18 `motion` với cơ sở dữ liệu `flutter-motion.csv` (CurvedAnimation, PageRoute transitions, Hero, Shimmer skeleton, Spring physics).
+- **🛡️ Closed-Grammar Reasoning Contract**: Tích hợp `reasoning_contract.py` loại bỏ hoàn toàn AI hallucination khi parse `decision_rules`.
+- **🔍 Flutter Design Review Subagent & Command**: Ra mắt subagent `@flutter-design-review` và slash command `/flutter-review` với quy trình audit 6 pha (RenderFlex overflow, touch targets $\ge 48\text{ dp}$, text scaling `TextScaler`, theming, const hygiene).
+- **📊 Catalog Governance & Unit Testing**: Tích hợp `catalog-summary.json`, `data-provenance.json` và bộ test suite 9 unit tests bao phủ 100%.
+- **🛠️ Developer Utility Tools**: Bổ sung các lệnh `makefile`, `fastlane`, `gitignore` và tự động bảo vệ `.gitignore` trong quy trình `init`.
+
+### v2.4.5 (2026-05-14)
+- **📋 Development Workflow Rule**: Bổ sung rule `20_development_workflow.md` chuẩn hóa quy trình SDLC 8 bước.
+- **🏗️ Architecture Decision Matrix**: Tích hợp hướng dẫn kiến trúc Greenfield vs Brownfield trong `19_architecture_decision_matrix.md`.
+- **⚡ Lifecycle & State Enhancements**: Nâng cấp các quy tắc quản lý state & lifecycle linh hoạt theo kiến trúc dự án.
 
 ### v2.3.3 (2026-02-26)
 - **🧠 15 Modular Rules**: Bổ sung các chuẩn mực từ Software Engineering (Resiliency, Offline-First, Graceful Degradation)

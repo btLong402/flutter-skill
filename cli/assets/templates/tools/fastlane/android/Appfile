@@ -1,0 +1,5 @@
+# Android Appfile for Fastlane
+# Defines the JSON key file for Google Play Developer API and package name
+
+json_key_file(ENV["GOOGLE_PLAY_JSON_KEY_FILE"] || "fastlane/google-play-key.json")
+package_name(ENV["ANDROID_PACKAGE_NAME"] || "com.example.app")

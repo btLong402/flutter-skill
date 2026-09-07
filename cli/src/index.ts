@@ -7,6 +7,7 @@ import { dirname, join } from 'path';
 import { initCommand } from './commands/init.js';
 import { versionsCommand } from './commands/versions.js';
 import { updateCommand } from './commands/update.js';
+import { generateMakefile, generateFastlane, updateGitignore } from './commands/tools.js';
 import type { AIType } from './types/index.js';
 import { AI_TYPES } from './types/index.js';
 
@@ -26,6 +27,7 @@ program
     .description('Install Flutter Pro Max skill to current project')
     .option('-a, --ai <type>', `AI assistant type (${AI_TYPES.join(', ')})`)
     .option('-f, --force', 'Overwrite existing files')
+    .option('--skip-gitignore', 'Skip automatic .gitignore configuration')
     .action(async (options) => {
         if (options.ai && !AI_TYPES.includes(options.ai)) {
             console.error(`Invalid AI type: ${options.ai}`);
@@ -35,7 +37,69 @@ program
         await initCommand({
             ai: options.ai as AIType | undefined,
             force: options.force,
+            skipGitignore: options.skipGitignore,
         });
+    });
+
+program
+    .command('makefile')
+    .description('Generate professional Makefile with Flutter build, test, and code-gen workflows')
+    .option('-f, --force', 'Overwrite existing Makefile if present')
+    .action(async (options) => {
+        await generateMakefile({ force: options.force });
+    });
+
+program
+    .command('fastlane')
+    .description('Generate professional Fastlane CI/CD automation for Android and iOS')
+    .option('-f, --force', 'Overwrite existing Fastlane files if present')
+    .option('-p, --platform <platform>', 'Target platform (android, ios, all)', 'all')
+    .action(async (options) => {
+        await generateFastlane({
+            force: options.force,
+            platform: options.platform as 'android' | 'ios' | 'all',
+        });
+    });
+
+program
+    .command('gitignore')
+    .description('Configure .gitignore to exclude Flutter Pro Max internal skill assets')
+    .option('-f, --force', 'Force re-adding the ignore rules block')
+    .action(async (options) => {
+        await updateGitignore({ force: options.force });
+    });
+
+// Tools subcommand group
+const toolsGroup = program
+    .command('tools')
+    .description('Developer utility generators (makefile, fastlane, gitignore)');
+
+toolsGroup
+    .command('makefile')
+    .description('Generate professional Makefile')
+    .option('-f, --force', 'Overwrite existing Makefile')
+    .action(async (options) => {
+        await generateMakefile({ force: options.force });
+    });
+
+toolsGroup
+    .command('fastlane')
+    .description('Generate professional Fastlane CI/CD setup')
+    .option('-f, --force', 'Overwrite existing Fastlane files')
+    .option('-p, --platform <platform>', 'Target platform (android, ios, all)', 'all')
+    .action(async (options) => {
+        await generateFastlane({
+            force: options.force,
+            platform: options.platform as 'android' | 'ios' | 'all',
+        });
+    });
+
+toolsGroup
+    .command('gitignore')
+    .description('Configure .gitignore to exclude skill assets')
+    .option('-f, --force', 'Force update .gitignore')
+    .action(async (options) => {
+        await updateGitignore({ force: options.force });
     });
 
 program

@@ -131,6 +131,11 @@ CSV_CONFIG: dict[str, dict[str, str | list[str]]] = {
         "file": "mobile-accessibility.csv",
         "search_cols": ["Category", "Issue", "Keywords", "Platform", "Description", "Do", "Don't"],
         "output_cols": ["Category", "Issue", "Keywords", "Platform", "Description", "Do", "Don't", "Code Example Good", "Code Example Bad", "Severity"]
+    },
+    "motion": {
+        "file": "flutter-motion.csv",
+        "search_cols": ["Category", "Intensity Tier", "Keywords", "Trigger", "Duration", "Easing", "Flutter Snippet", "Do", "Don't"],
+        "output_cols": ["Category", "Intensity Tier", "Keywords", "Trigger", "Duration", "Easing", "Flutter Snippet", "Framework Notes", "Do", "Don't", "Performance Notes"]
     }
 }
 

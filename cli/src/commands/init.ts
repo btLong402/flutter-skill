@@ -8,10 +8,12 @@ import { AI_TYPES } from '../types/index.js';
 import { generatePlatformFiles, generateAllPlatformFiles } from '../utils/template.js';
 import { detectAIType, getAITypeDescription } from '../utils/detect.js';
 import { logger } from '../utils/logger.js';
+import { updateGitignore } from './tools.js';
 
 interface InitOptions {
     ai?: AIType;
     force?: boolean;
+    skipGitignore?: boolean;
 }
 
 export async function initCommand(options: InitOptions): Promise<void> {
@@ -68,6 +70,12 @@ export async function initCommand(options: InitOptions): Promise<void> {
         copiedFolders.forEach(folder => {
             console.log(`  ${chalk.green('+')} ${folder}`);
         });
+
+        // Automatically configure .gitignore unless opted out
+        if (!options.skipGitignore) {
+            console.log();
+            await updateGitignore({ cwd, silent: false });
+        }
 
         console.log();
         logger.success('Flutter Pro Max Skill installed successfully!');

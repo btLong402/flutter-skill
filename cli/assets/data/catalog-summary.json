@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-07",
+  "totalDomains": 19,
+  "counts": {
+    "architect": 17,
+    "charts": 25,
+    "colors": 96,
+    "flutter_motion": 12,
+    "flutter_performance": 90,
+    "icons": 100,
+    "landing": 31,
+    "mobile_accessibility": 35,
+    "name_convention": 77,
+    "package": 160,
+    "patterns": 169,
+    "play_store": 73,
+    "products": 96,
+    "prompts": 23,
+    "styles": 118,
+    "typography": 111,
+    "ui_reasoning": 35,
+    "ux_guidelines": 170,
+    "widget": 104
+  },
+  "snapshots": {
+    "architect.csv": {
+      "sha256": "5ba67237dcefb3ca1ea902374d3d3adfa12f5c4135d0b45e2a929bc27e0a9c8e",
+      "records": 17
+    },
+    "charts.csv": {
+      "sha256": "47c7bf90439c8ddb5c5b69b5b7ecdd0067af42b81e6b4314cfa779076dbbf02c",
+      "records": 25
+    },
+    "colors.csv": {
+      "sha256": "810e2df8659ac77642665217db481982fa01b7d45f72ab90fa600eee9962dfa0",
+      "records": 96
+    },
+    "flutter-motion.csv": {
+      "sha256": "589ce18eb28c8dd371d99c70884918ea2272b1cf255cf56484c087802ecf8ce4",
+      "records": 12
+    },
+    "flutter-performance.csv": {
+      "sha256": "aeb6aa850288e0005b2bd2fc2eb6fd14de210e2f4b3a40a8328404e259f0c719",
+      "records": 90
+    },
+    "icons.csv": {
+      "sha256": "26be5e47c4c3fc7acae52ac8bbfaf1bf9e5ddc9c01808953a3636f8615b9de9f",
+      "records": 100
+    },
+    "landing.csv": {
+      "sha256": "3467992d0c282cc3131628048630e199f98839779fbdd04a41842a32e25fc7c2",
+      "records": 31
+    },
+    "mobile-accessibility.csv": {
+      "sha256": "6350bb8b9af1bb4bcb7df4c8b139894876acb0cdbeee2b148d1ffefe80f1cc4e",
+      "records": 35
+    },
+    "name_convention.csv": {
+      "sha256": "959164a45ed92d05e2a410de4b0a6e14176d67a7538c72e8ba0af54ee5bdbe44",
+      "records": 77
+    },
+    "package.csv": {
+      "sha256": "d0c060837dd1b419406b0603754170da540b25524b6b8ab61ddb8e5eb0b8f479",
+      "records": 160
+    },
+    "patterns.csv": {
+      "sha256": "11aec505817e9c8c0394247f546b57421c750b9671fb03bafe40ea8367ebde3e",
+      "records": 169
+    },
+    "play-store.csv": {
+      "sha256": "9fa674d859cd39c2876fbb5a54e7232a51826deb5f733edccd4ebc419f52115b",
+      "records": 73
+    },
+    "products.csv": {
+      "sha256": "6f9c9be6fdb53a415af273dac6221e87a418d1600da2ee39f974b997e880050e",
+      "records": 96
+    },
+    "prompts.csv": {
+      "sha256": "4fafc5d3bbf699705bf9b944ca3550fb5687ae1efa9cad31ef84ac51753132f5",
+      "records": 23
+    },
+    "styles.csv": {
+      "sha256": "eff55699c95746f343d271fcd85d1801370d003ccf08c1943a691778805ef64b",
+      "records": 118
+    },
+    "typography.csv": {
+      "sha256": "1e04e8dfb69b7d3c95ca3403740a10689502db0a0bdcdf67fd50f223c4e435ab",
+      "records": 111
+    },
+    "ui-reasoning.csv": {
+      "sha256": "022f31136b9793a9ca105bd26b203f5271481a84356bae3c98678548fbba249b",
+      "records": 35
+    },
+    "ux-guidelines.csv": {
+      "sha256": "8911df0703d9c254d1b8ec253d68d6b84f00257932426bd2aa3f8bcd8bcfac3d",
+      "records": 170
+    },
+    "widget.csv": {
+      "sha256": "b942fa9692d13daa9b7f60e165584091e6dd51700d8fb2fd2af6a29832395a12",
+      "records": 104
+    }
+  }
+}

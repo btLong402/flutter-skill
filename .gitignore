@@ -30,3 +30,15 @@ npm-debug.log*
 # Test
 coverage/
 .pytest_cache/
+
+# ==============================================================================
+# Flutter Pro Max — AI Skill & Design System Artifacts
+# ==============================================================================
+.shared/
+design-system/pages/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+coverage/
+*.lcov

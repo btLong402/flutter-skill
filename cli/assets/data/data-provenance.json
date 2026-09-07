@@ -1,0 +1,27 @@
+{
+  "catalog": "Flutter Pro Max Intelligence System",
+  "version": "2.1.0",
+  "verifiedAt": "2026-09-07",
+  "sources": [
+    {
+      "name": "Flutter Official Documentation & Best Practices",
+      "url": "https://docs.flutter.dev"
+    },
+    {
+      "name": "Material Design 3 Guidelines",
+      "url": "https://m3.material.io"
+    },
+    {
+      "name": "Apple Human Interface Guidelines (Cupertino)",
+      "url": "https://developer.apple.com/design/human-interface-guidelines/"
+    },
+    {
+      "name": "Flutter Community & Riverpod Architecture Guidelines",
+      "url": "https://riverpod.dev"
+    },
+    {
+      "name": "Web Content Accessibility Guidelines (WCAG 2.1 AA)",
+      "url": "https://www.w3.org/WAI/standards-guidelines/wcag/"
+    }
+  ]
+}
