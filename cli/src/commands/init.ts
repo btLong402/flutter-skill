@@ -74,7 +74,7 @@ export async function initCommand(options: InitOptions): Promise<void> {
         // Automatically configure .gitignore unless opted out
         if (!options.skipGitignore) {
             console.log();
-            await updateGitignore({ cwd, silent: false });
+            await updateGitignore({ cwd, ai: aiType, silent: false });
         }
 
         console.log();

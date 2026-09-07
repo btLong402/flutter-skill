@@ -63,10 +63,16 @@ program
 
 program
     .command('gitignore')
-    .description('Configure .gitignore to exclude Flutter Pro Max internal skill assets')
+    .description('Configure .gitignore to exclude Flutter Pro Max internal skill assets and AI assistant folders')
+    .option('-a, --ai <type>', 'Target AI assistant type (e.g., antigravity, claude, cursor, all)')
+    .option('--all', 'Include ignore patterns for all supported AI assistants')
     .option('-f, --force', 'Force re-adding the ignore rules block')
     .action(async (options) => {
-        await updateGitignore({ force: options.force });
+        await updateGitignore({
+            ai: options.ai,
+            all: options.all,
+            force: options.force,
+        });
     });
 
 // Tools subcommand group
@@ -96,10 +102,16 @@ toolsGroup
 
 toolsGroup
     .command('gitignore')
-    .description('Configure .gitignore to exclude skill assets')
+    .description('Configure .gitignore to exclude skill assets and AI assistant folders')
+    .option('-a, --ai <type>', 'Target AI assistant type (e.g., antigravity, claude, cursor, all)')
+    .option('--all', 'Include ignore patterns for all supported AI assistants')
     .option('-f, --force', 'Force update .gitignore')
     .action(async (options) => {
-        await updateGitignore({ force: options.force });
+        await updateGitignore({
+            ai: options.ai,
+            all: options.all,
+            force: options.force,
+        });
     });
 
 program
