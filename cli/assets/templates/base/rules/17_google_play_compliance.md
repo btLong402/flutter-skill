@@ -1,39 +1,44 @@
 ---
-description: Google Play content rating, data safety, privacy policy
-globs: *
+description: Tiêu chuẩn Tuân thủ Google Play (Compliance), Đánh giá Nội dung (IARC), Data Safety, Chính sách Quyền riêng tư
+globs: docs/play_store/**,play_store_metadata/**,android/app/src/main/AndroidManifest.xml
 ---
 
-# Rule: Google Play Compliance
+# Rule: Google Play Compliance & Data Safety
 
-> Kich hoat: Khi user yeu cau content rating, data safety, privacy policy, location disclosure, hoac release checklist.
+> Kích hoạt: Khi người dùng yêu cầu cấu hình Content Rating, Data Safety, Privacy Policy, khai báo quyền Android hoặc checklist chuẩn bị release
 
-## Content Rating
+## 1. Đánh Giá Phân Loại Nội Dung (Content Rating / IARC)
 
-- Tra loi IARC theo tinh nang that.
-- Neu app co UGC, report, block, hoac moderation, phai de cap ro.
-- Neu app co location, phai phan biet approximate va precise.
-- Khong doan mo neu chua biet; danh dau can xac minh.
+- Trả lời bảng câu hỏi IARC hoàn toàn dựa trên tính năng thực tế đang có của ứng dụng.
+- Nếu ứng dụng có tính năng người dùng tương tác (UGC - User Generated Content), bắt buộc phải có cơ chế **báo cáo (Report)**, **chặn (Block)** và **kiểm duyệt nội dung (Moderation)**.
+- Nếu ứng dụng sử dụng vị trí: Phải phân biệt rõ ràng giữa vị trí tương đối (Approximate Location) và vị trí chính xác (Precise Location).
+- Tuyệt đối không phỏng đoán mơ hồ; các mục chưa rõ phải đánh dấu cần xác minh với Product Owner.
 
-## Data Safety
+---
 
-- Chi khai bao du lieu that su thu thap hoac chia se.
-- Neu co du lieu ca nhan, phai ghi ro muc dich su dung.
-- Neu du lieu duoc ma hoa khi truyen, ghi ro "encrypted in transit".
-- Neu app ho tro xoa du lieu, ghi ro duong dan request xoa.
+## 2. Khai Báo An Toàn Dữ Liệu (Data Safety Section)
 
-## Privacy Policy
+- **Nguyên tắc trung thực:** Chỉ khai báo những loại dữ liệu mà ứng dụng thực tế thu thập hoặc chia sẻ với bên thứ ba (qua SDK như Firebase, AdMob, AppsFlyer...).
+- Nếu có thu thập dữ liệu cá nhân (Email, số điện thoại, tên): Phải giải thích rõ mục đích sử dụng (Xác thực tài khoản, cá nhân hóa...).
+- Bắt buộc khai báo dữ liệu được mã hóa trong quá trình truyền tải (**Encrypted in transit** qua HTTPS/TLS).
+- Cung cấp đường dẫn và quy trình cho phép người dùng yêu cầu xóa tài khoản và dữ liệu cá nhân (**Account & Data Deletion URL**).
 
-- Phai co URL on dinh va hoat dong.
-- Phai neu ro loai du lieu, muc dich, retention, sharing, va contact.
-- Email ho tro phai khop voi domain neu co the.
+---
 
-## Final Gate
+## 3. Chính Sách Quyền Riêng Tư (Privacy Policy)
 
-Truoc khi xuat ket qua, phai kiem tra:
+- Phải có một URL hoạt động ổn định, có thể truy cập công khai mà không cần đăng nhập.
+- Nội dung Privacy Policy phải liệt kê chi tiết: Loại dữ liệu thu thập, mục đích, thời gian lưu trữ (retention), chính sách chia sẻ bên thứ ba và thông tin liên hệ hỗ trợ.
+- Email liên hệ hỗ trợ phải khớp với tên miền của sản phẩm hoặc tổ chức phát hành.
 
-1. Content rating co trung thuc.
-2. Data safety khop voi hanh vi san pham.
-3. Privacy policy co link va noi dung day du.
-4. Thong tin lien he hoat dong.
+---
 
-> Compliance sai se gay reject, nen uong dua vao facts, khong phai assumptions.
+## 4. Cổng Kiểm Soát Cuối Cùng (Final Compliance Gate)
+
+Trước khi xuất kết quả cho người dùng, AI phải tự kiểm tra 4 điểm cốt tử:
+1. Đánh giá Content Rating có trung thực với ứng dụng không?
+2. Khai báo Data Safety có khớp hoàn toàn với các quyền trong `AndroidManifest.xml` không?
+3. Đường link Privacy Policy có hợp lệ và đầy đủ điều khoản không?
+4. Đã có hướng dẫn xóa tài khoản theo chính sách mới của Google Play chưa?
+
+> 🔴 **CẢNH BÁO:** Bất kỳ sai lệch nào trong Data Safety hoặc Content Rating đều có thể dẫn đến việc ứng dụng bị **Reject hoặc Gỡ bỏ (Suspension)** khỏi Google Play Store.

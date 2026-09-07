@@ -1,35 +1,40 @@
 ---
-description: Google Play screenshots, feature graphic, icon guidance
-globs: *
+description: Tiêu chuẩn Hình ảnh Google Play (Screenshots, Feature Graphic, Icon Guidance)
+globs: assets/store/**,docs/store/**,fastlane/metadata/**
 ---
 
-# Rule: Google Play Visuals
+# Rule: Google Play Visual Assets
 
-> Kich hoat: Khi user yeu cau screenshot, feature graphic, icon guidance, hoac visual pack cho Play Store.
+> Kích hoạt: Khi người dùng yêu cầu hướng dẫn thiết kế ảnh chụp màn hình (Screenshots), Feature Graphic, App Icon hoặc bộ tài nguyên hình ảnh phát hành
 
-## Screenshots
+## 1. Nguyên Tắc Thiết Kế Ảnh Chụp Màn Hình (Screenshots)
 
-- Anh dau tien phai the hien core feature manh nhat.
-- Thu tu anh nen di tu value -> feature -> trust -> CTA.
-- Khong dung device mockup qua cu.
-- Khong nhieu chu, khong lam nguoi xem phai doc qua lau.
+- **Ảnh đầu tiên là quan trọng nhất:** Bắt buộc phải thể hiện tính năng cốt lõi hoặc giá trị lớn nhất của ứng dụng ngay ở tấm ảnh đầu tiên (trong 3 giây đầu tiên của người dùng).
+- **Luồng kể chuyện (Visual Storytelling):** Sắp xếp thứ tự ảnh theo phễu tâm lý:  
+  $$\text{Giá trị độc bản (Value)} \longrightarrow \text{Tính năng chủ đạo (Feature)} \longrightarrow \text{Uy tín & Đánh giá (Trust)} \longrightarrow \text{Kêu gọi hành động (CTA)}$$
+- **Thiết bị Mockup:** Sử dụng khung thiết bị viền mỏng hiện đại; tuyệt đối không dùng mockup thiết bị cũ có nút Home vật lý lỗi thời.
+- **Văn bản mô tả (Text Caption):** Ngắn gọn, cỡ chữ lớn, tối đa 1-2 dòng, tương phản cao trên nền để người dùng dễ đọc trên màn hình điện thoại nhỏ.
 
-## Feature Graphic
+---
 
-- Mot thong diep chinh, mot focal point ro rang.
-- Chu to, ngan, de nhan biet tren mobile.
-- Giu safe area sach, khong nhot qua nhieu icon.
+## 2. Đồ Họa Nổi Bật (Feature Graphic - $1024 \times 500\,\text{px}$)
 
-## Icon / Brand
+- Đúng một thông điệp chính và một tâm điểm thị giác (Focal Point) rõ ràng.
+- Giữ vùng an toàn (Safe Area): Tránh đặt logo hoặc chữ sát mép biên hoặc góc dưới bên trái (nơi hiển thị nút Play/Cài đặt).
+- Tránh đưa quá nhiều chi tiết rối mắt; ưu tiên phong cách tối giản, tinh tế.
 
-- Khong dung trademark cua ben thu ba neu khong co quyen.
-- Giữ mau sac nhat quan voi app.
-- Uu tien hinh khoi don gian, nhan dien nhanh.
+---
 
-## Quality Gate
+## 3. Biểu Tượng Ứng Dụng (App Icon - $512 \times 512\,\text{px}$)
 
-- Co core feature ngay anh dau.
-- Device mockup hien dai va dong nhat.
-- Visual khong lam sai san pham that.
+- Tuyệt đối không sử dụng nhãn hiệu hoặc logo của bên thứ ba mà chưa có bản quyền.
+- Màu sắc nhận diện phải đồng nhất với màu chủ đạo trong Design System của ứng dụng.
+- Ưu tiên hình khối hình học rõ ràng, dễ nhận biết ngay cả khi thu nhỏ trên màn hình chính.
 
-> Muc tieu la tang conversion, khong phai trang tri vo nghia.
+---
+
+## 4. Cổng Kiểm Định Chất Lượng Hình Ảnh (Quality Gate)
+
+- [ ] Ảnh chụp màn hình số 1 đã thể hiện ngay tính năng cốt lõi chưa?
+- [ ] Kích thước và tỉ lệ khung hình có đúng chuẩn Play Console (Tối thiểu 1080p, tỉ lệ 16:9 hoặc 9:16) không?
+- [ ] Hình ảnh có trung thực với giao diện thực tế của ứng dụng không (tránh vi phạm chính sách hiển thị sai lệch)?

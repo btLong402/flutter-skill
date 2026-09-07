@@ -1,74 +1,112 @@
 ---
-description: Quản lý state theo cấp độ (Native-first), ValueNotifier
+description: Quản lý State theo cấp độ (Native-First Escalation), ValueNotifier, ChangeNotifier
 globs: lib/presentation/**/*.dart, lib/ui/**/*.dart
 ---
 
-# Rule: State Management
+# Rule: State Management (Native-First)
 
-> Kích hoạt: Khi quản lý state trong widget, screen, hoặc app-level
+> Kích hoạt: Khi quản lý trạng thái trong Widget, màn hình hoặc toàn bộ ứng dụng
 
-## Nguyên tắc: Native-First, Escalate khi cần
+## 1. Triết lý Cốt lõi: Native-First, Escalate khi Cần
 
-## Architecture-Aware Policy
+> 🔴 **CẢNH BÁO VI PHẠM:** Tuyệt đối không tự ý thêm các thư viện quản lý state bên thứ ba (như Riverpod, Bloc, MobX, GetX) vào dự án nếu **người dùng chưa yêu cầu rõ ràng**.  
+> Việc đưa thư viện ngoài vào để xử lý các bài toán state cục bộ đơn giản bị coi là **hành vi Over-engineering nghiêm trọng**.
 
-1. **Mac dinh (code moi):** Follow Clean Architecture, state dat o presentation layer (notifier/view model/controller presentation).
-2. **Maintenance du an cu:** Giu nguyen state stack hien co cua module (MVC Controller, MVVM ViewModel, Bloc, Provider...), khong ep migrate neu khong co yeu cau ro rang.
-3. **Feature moi trong module cu:** Uu tien giong pattern state cua module do de giam chi phi maintain.
+---
 
-### Hierarchy (Ưu tiên từ trên xuống)
+## 2. Chính sách Quản lý State theo Kiến trúc
 
-| Level | Giải pháp | Khi nào dùng |
-|-------|-----------|-------------|
-| 1️⃣ | `StatelessWidget` | UI tĩnh, không có state |
-| 2️⃣ | `ValueNotifier` + `ValueListenableBuilder` | State đơn giản (counter, toggle, loading) |
-| 3️⃣ | `ChangeNotifier` + `ListenableBuilder` | State phức tạp có nhiều fields (form, cart) |
-| 4️⃣ | `InheritedWidget` / `Provider` | Shared state giữa nhiều widgets |
-| 5️⃣ | Riverpod / Bloc | **CHỈ KHI user yêu cầu rõ ràng** |
+1. **Mặc định (Dự án mới / Module mới):** Tuân thủ Clean Architecture, state đặt tại Presentation layer (Notifier / ViewModel / Presentation Controller).
+2. **Dự án bảo trì (Brownfield):** Giữ nguyên kiến trúc state hiện có của từng module (MVC Controller, MVVM ViewModel, Bloc, Provider...).
+3. **Tính năng mới trong module cũ:** Ưu tiên đồng bộ với pattern state hiện hữu của module đó để giảm thiểu chi phí chuyển giao và bảo trì.
 
-### Mapping theo kien truc
+---
 
-| Kien truc | State owner uu tien |
-|----------|-----------------------|
-| Clean Architecture | Presentation Notifier / ViewModel |
-| MVC | Controller |
-| MVVM | ViewModel |
-| Legacy setState app | Local state scoped widget/screen |
+## 3. Thang Bậc Leo Thang (Escalation Hierarchy)
 
-### Quy tắc cứng
+Ưu tiên giải pháp từ trên xuống dưới theo thứ tự:
 
-| ❌ Sai | ✅ Đúng |
-|--------|---------|
-| Dùng Riverpod cho counter đơn giản | `ValueNotifier<int>` |
-| `setState` rebuild toàn screen | `ValueListenableBuilder` scoped |
-| Global state cho state chỉ 1 screen dùng | Local state trong widget |
-| Mutable state trực tiếp | Immutable state + `copyWith` |
+| Cấp độ | Giải pháp kỹ thuật | Tình huống áp dụng |
+| :---: | :--- | :--- |
+| **Level 1** | `StatelessWidget` | Giao diện tĩnh hoàn toàn, không có trạng thái biến thiên. |
+| **Level 2** | `ValueNotifier` + `ValueListenableBuilder` | Trạng thái nguyên tử đơn giản (Bật/tắt toggle, tăng giảm counter, cờ loading). |
+| **Level 3** | `ChangeNotifier` + `ListenableBuilder` | Trạng thái phức tạp gồm nhiều trường dữ liệu (Form nhập liệu, giỏ hàng, bộ lọc). |
+| **Level 4** | `InheritedWidget` / `Provider` | Trạng thái dùng chung (Shared state) giữa nhiều màn hình hoặc toàn ứng dụng. |
+| **Level 5** | **Bloc / Riverpod** | **CHỈ KHI người dùng yêu cầu rõ ràng** hoặc dự án đã cài sẵn. |
 
-### Pattern chuẩn
+---
+
+## 4. Ánh xạ State Owner theo Kiến trúc
+
+| Kiến trúc dự án | Vị trí nắm giữ State ưu tiên |
+| :--- | :--- |
+| **Clean Architecture** | Presentation Notifier / ViewModel |
+| **MVC** | Controller |
+| **MVVM** | ViewModel |
+| **Legacy App (dùng setState)** | Tái cấu trúc thành Local State có phạm vi hẹp (Scoped Widget) |
+
+---
+
+## 5. Quy Tắc Bất Biến (Hard Constraints)
+
+| ❌ Sai lầm phổ biến | ✅ Giải pháp chuẩn hóa |
+| :--- | :--- |
+| Cài Riverpod chỉ để quản lý 1 nút bấm | Dùng `ValueNotifier<bool>` tích hợp sẵn |
+| Gọi `setState()` ở cấp Scaffold làm rebuild cả màn hình | Dùng `ValueListenableBuilder` bọc đúng vị trí Widget cần thay đổi |
+| Đưa biến trạng thái cục bộ của 1 màn hình vào Global State | Khởi tạo State trong phạm vi nội bộ của màn hình đó |
+| Thay đổi trực tiếp thuộc tính của object (Mutable mutation) | Trạng thái bất biến (Immutable) kết hợp phương thức `copyWith` |
+
+---
+
+## 6. Mẫu Triển Khai Chuẩn (Standard Patterns)
+
+### Cấp độ 2: State đơn giản với `ValueNotifier`
 
 ```dart
-// ✅ Simple: ValueNotifier
-class CounterWidget extends StatelessWidget {
-  final _count = ValueNotifier<int>(0);
+// ✅ Gọn nhẹ, không rebuild toàn tree, không cần thư viện ngoài
+class CounterView extends StatelessWidget {
+  CounterView({super.key});
+
+  final ValueNotifier<int> _counter = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<int>(
-      valueListenable: _count,
-      builder: (_, value, __) => Text('$value'),
+    return Scaffold(
+      body: Center(
+        child: ValueListenableBuilder<int>(
+          valueListenable: _counter,
+          builder: (context, count, child) {
+            return Text('Số lần bấm: $count', style: Theme.of(context).textTheme.headlineMedium);
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _counter.value++,
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
+```
 
-// ✅ Complex: ChangeNotifier
+### Cấp độ 3: State phức tạp với `ChangeNotifier` & Immutability
+
+```dart
+// ✅ Quản lý form / nghiệp vụ màn hình mà không cần thư viện cồng kềnh
 class CartNotifier extends ChangeNotifier {
-  final List<Item> _items = [];
-  List<Item> get items => List.unmodifiable(_items);
+  final List<CartItem> _items = [];
+  List<CartItem> get items => List.unmodifiable(_items);
 
-  void add(Item item) {
+  void addItem(CartItem item) {
     _items.add(item);
+    notifyListeners(); // Thông báo cập nhật UI
+  }
+
+  void removeItem(String id) {
+    _items.removeWhere((element) => element.id == id);
     notifyListeners();
   }
 }
 ```
 
-> ⚠️ **Khong tu y thay state framework cua du an cu.** Chi escalate (Riverpod/Bloc/GetX hoac migrate) khi user yeu cau ro rang.
+> ⚠️ **TUYỆT ĐỐI KHÔNG:** Tự ý đổi framework state của dự án cũ trừ khi có yêu cầu bằng văn bản rõ ràng từ người dùng.

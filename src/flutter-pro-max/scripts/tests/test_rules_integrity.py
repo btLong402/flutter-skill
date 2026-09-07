@@ -9,9 +9,9 @@ RULES_DIR = Path(__file__).parent.parent.parent / "templates" / "base" / "rules"
 
 
 class TestRulesIntegrity(unittest.TestCase):
-    def test_all_20_rules_exist(self):
+    def test_all_22_rules_exist(self):
         rule_files = sorted([f.name for f in RULES_DIR.glob("*.md")])
-        self.assertEqual(len(rule_files), 20, f"Expected 20 rules, found {len(rule_files)}: {rule_files}")
+        self.assertEqual(len(rule_files), 22, f"Expected 22 rules, found {len(rule_files)}: {rule_files}")
 
     def test_rules_frontmatter_and_content(self):
         for rule_file in RULES_DIR.glob("*.md"):

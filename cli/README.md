@@ -38,7 +38,7 @@ flutter-pro-max init
 
 ### 1. `flutter-pro-max init` (Khởi tạo Skill & Rules)
 
-Cài đặt skill, bộ 20 Modular Rules và tự động bảo vệ `.gitignore`:
+Cài đặt skill, bộ 22 Modular Rules và tự động bảo vệ `.gitignore`:
 
 ```bash
 # Chế độ tương tác (tự động nhận diện trợ lý AI)
@@ -246,7 +246,7 @@ cli/
 │   ├── data/                 # 18 CSV datasets + metadata governance
 │   ├── scripts/              # Python search engine & design system generator
 │   └── templates/
-│       ├── base/             # Base skill markdown templates & 20 rules
+│       ├── base/             # Base skill markdown templates & 22 rules
 │       ├── tools/            # Makefile.template, Fastlane, Gitignore
 │       └── platforms/        # 16 platform JSON configuration files
 ├── package.json
@@ -256,6 +256,17 @@ cli/
 ---
 
 ## 📝 Changelog
+
+### v2.6.0 (2026-09-07)
+- **🧠 22 Modular Rules (Tier 5 Expansion)**: Mở rộng hệ thống lên 22 rules với Tier 5:
+  - `21_navigation_governance.md`: Chuẩn hóa Declarative Routing (`go_router`), type-safe parameters, Auth Redirect Guards và kiểm tra Deep Link an toàn.
+  - `22_localization.md`: Thiết lập tiêu chuẩn cấm hardcode chuỗi text trên UI (**Zero Hardcoded Strings**), chuẩn hóa định dạng ARB và extension `context.l10n`.
+- **🛡️ Ironclad Compliance Framework (Ép buộc AI tuân thủ Rules)**:
+  - **Pre-Flight Compliance Block**: Bắt buộc AI phải xuất khối YAML cam kết thẩm định tiêu chuẩn kiến trúc và hard constraints trước khi sinh bất kỳ dòng code Dart nào.
+  - **Ngưỡng hành động mềm 200 dòng**: Bắt buộc chủ động phân rã file khi ước tính đạt $\ge 200$ dòng thay vì chờ chạm trần 300 dòng.
+- **✨ 100% Vietnamese Diacritics Standardization**: Chuẩn hóa toàn bộ 22 rules sang tiếng Việt có dấu đầy đủ, tối ưu hóa quá trình phân giải token của BPE Tokenizer, ngăn ngừa hallucination và hiểu sai chỉ thị.
+- **⚡ Context Window Token Optimization**: Tinh chỉnh cấu hình `globs` cho nhóm Rule Google Play Store (`16`, `17`, `18`) giúp tiết kiệm ~1,000 tokens cho mỗi lượt prompt lập trình thông thường.
+- **🛠️ Production Reference Implementations**: Bổ sung code mẫu thực chiến của `ResilientRetryInterceptor` (Dio Backoff + Jitter trong Rule 12), Stream Repository (Offline-first trong Rule 13) và checklist `dispose()` (Rule 15).
 
 ### v2.5.1 (2026-09-07)
 - **🛡️ AI-Tailored Gitignore**: Hỗ trợ may đo quy tắc `.gitignore` riêng biệt cho 16 nền tảng trợ lý AI (`-a <type>`, `--all`). Tự động phát hiện AI đang sử dụng và chèn chính xác các thư mục như `.agents/`, `.claude/skills/`, `.cursor/rules/`, `.shared/`, v.v.

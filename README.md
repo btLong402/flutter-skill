@@ -27,12 +27,12 @@ Flutter Pro Max tách biệt hoàn toàn **logic ra quyết định** và **côn
 
 | Layer | Vai trò | Nội dung |
 |-------|---------|----------|
-| **🧠 Rules (Brain)** | System prompt, persona, constraints | 20 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
+| **🧠 Rules (Brain)** | System prompt, persona, constraints | 22 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
 | **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 18 domain data files, design system generator, design review agent |
 
-### 🧠 20 Modular Rules — Comprehensive Guidebook
+### 🧠 22 Modular Rules — Comprehensive Guidebook
 
-Hệ thống được thiết kế với **20 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
+Hệ thống được thiết kế với **22 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
 
 **Tier 1: Foundation Rules (Bắt buộc)**
 ```
@@ -61,13 +61,19 @@ Hệ thống được thiết kế với **20 module rules** chuyên biệt, bao
 └── 15_state_lifecycle            # Orientation change, Memory warning
 ```
 
-**Tier 4: App Store & Product Rules**
+**Tier 4: Architecture & Store Delivery**
 ```
 ├── 16_google_play_aso            # ASO: Store listing, Keywords optimization
 ├── 17_google_play_compliance     # Content rating, Data safety, Privacy policy
 ├── 18_google_play_visuals        # Screenshots, Feature graphics, Icon guidance
 ├── 19_architecture_decision_matrix # Greenfield vs Brownfield strategies
 └── 20_development_workflow       # 8-step SDLC flow từ Requirement đến Polish
+```
+
+**Tier 5: Navigation & Internationalization**
+```
+├── 21_navigation_governance      # GoRouter, Type-Safe Routes, Deep Linking, Auth Guards
+└── 22_localization               # Đa ngôn ngữ l10n, ARB files, Zero Hardcoded Strings
 ```
 
 **🔥 Đột phá cho người dùng Cursor/Windsurf:** Khi khởi tạo, CLI tự động xuất sang định dạng `.mdc`. AI của bạn giờ đây có thể tự động đọc YAML frontmatter từ file `.mdc` để biết chính xác lúc nào nên nạp rule nào vào buffer (dựa trên tên file/context).
@@ -476,6 +482,17 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 ---
 
 ## 📝 Changelog
+
+### v2.6.0 (2026-09-07)
+- **🧠 22 Modular Rules (Tier 5 Expansion)**: Mở rộng toàn diện hệ thống lên 22 rules:
+  - `21_navigation_governance.md`: Chuẩn hóa Declarative Routing (`go_router`), Type-Safe parameters, Auth Redirect Guards và validate Deep Link an toàn.
+  - `22_localization.md`: Thiết lập tiêu chuẩn **Zero Hardcoded Strings**, cấm hardcode text trên UI, chuẩn hóa cấu trúc ARB và extension `context.l10n`.
+- **🛡️ Ironclad Compliance Framework**:
+  - **Pre-Flight Compliance Block**: Bắt buộc AI phải xuất khối YAML cam kết thẩm định tiêu chuẩn kiến trúc và hard constraints trước khi sinh bất kỳ dòng code Dart nào (giải quyết triệt để vấn đề AI phớt lờ rules).
+  - **Ngưỡng hành động mềm 200 dòng**: Bắt buộc chủ động phân rã file khi ước tính đạt $\ge 200$ dòng thay vì chờ chạm trần 300 dòng.
+- **✨ 100% Vietnamese Diacritics Standardization**: Chuẩn hóa toàn bộ 22 rules sang tiếng Việt có dấu chuẩn xác, tối ưu hóa quá trình phân giải token của BPE Tokenizer, ngăn ngừa hallucination.
+- **⚡ Context Window Token Optimization**: Tinh chỉnh cấu hình `globs` cho nhóm Rule Google Play Store (`16`, `17`, `18`) giúp tiết kiệm ~1,000 tokens cho mỗi lượt prompt lập trình thông thường.
+- **🛠️ Production Reference Implementations**: Bổ sung code mẫu thực chiến của `ResilientRetryInterceptor` (Dio Backoff + Jitter trong Rule 12), Stream Repository (Offline-first trong Rule 13) và checklist `dispose()` giải phóng bộ nhớ (Rule 15).
 
 ### v2.5.1 (2026-09-07)
 - **🛡️ AI-Tailored Gitignore**: Nâng cấp lệnh `flutter-pro-max gitignore` hỗ trợ may đo chính xác cho từng trợ lý AI (`-a <type>`, `--all`) với 16 nền tảng. Ngăn chặn triệt để việc lộ file nội bộ, rules, hoặc `.agents/` lên git repository.

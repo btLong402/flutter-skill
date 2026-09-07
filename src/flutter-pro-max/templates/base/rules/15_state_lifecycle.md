@@ -1,36 +1,52 @@
 ---
-description: Xử lý Vòng đời thiêt bị (Lifecycle), Orientation Change, Background State
+description: Quản lý Vòng đời Thiết bị (Lifecycle), Xoay màn hình, App Background State, Giải phóng Bộ nhớ
 globs: lib/**/*.dart
 ---
 
 # Rule: State & Lifecycle Resilience
 
-> Kích hoạt: Khi quản lý state bat ky kien truc (Clean/MVC/MVVM/Provider/Bloc), xử lý orientation, handle app background state
+> Kích hoạt: Khi quản lý state (Clean / MVC / MVVM / Provider / Bloc), xử lý xoay màn hình hoặc background state
 
-## Nguyên tắc: Chống hao pin & lag vô ích
+## 1. Nguyên Tắc Cốt Lõi: Chống Hao Pin, Nóng Máy & Lag
 
-Quản lý vòng đời (lifecycle) kém sẽ làm máy nóng, lag và hao pin nhanh chóng, đặc biệt trên thiết bị Android yếu.
+Việc quản lý vòng đời ứng dụng cẩu thả sẽ gây rò rỉ bộ nhớ (Memory Leak), làm nóng máy và tiêu hao pin nghiêm trọng, đặc biệt trên các dòng điện thoại Android cấu hình yếu.
 
-### Xử lý Lifecycle Events
+---
 
-1. **Xoay màn hình (Orientation Change):** 
-   - Việc xoay dọc/ngang không được làm trigger lại các API requests. 
-   - State phải được giữ nguyên bằng cơ chế state management dang dung cua module (notifier/controller/viewmodel), widget chỉ rebuild UI Layout.
+## 2. Xử Lý Các Sự Kiện Vòng Đời (Lifecycle Events)
 
-2. **App chuyển vào nền (Backgrounded):**
-   - Lập tức ngắt (Pause/Cancel) các Streams liên tục (như vị trí GPS, socket).
-   - Tạm dừng các `Timer` đếm ngược.
+### 1. Xoay màn hình (Orientation Change)
+- Xoay dọc/ngang chỉ được phép rebuild lại bố cục giao diện (Layout).
+- **TUYỆT ĐỐI KHÔNG** để việc xoay màn hình kích hoạt lại các yêu cầu gọi API hoặc khởi tạo lại State từ đầu.
+- Nắm giữ State ở Controller / Notifier nằm ngoài lifecycle của Widget dựng hình.
 
-3. **Memory Warning (Cảnh báo RAM):**
-   - Clear cache hình ảnh trong bộ nhớ (ví dụ: xoá cache network images).
-   - Giải phóng tài nguyên memory lớn không dùng tới.
+### 2. Ứng dụng chuyển vào chạy ngầm (Backgrounded / Paused)
+- Lập tức tạm dừng (Pause) hoặc hủy (Cancel) các luồng dữ liệu liên tục: Định vị GPS, Camera feed, WebSocket, Sensor.
+- Hủy hoặc tạm dừng các `Timer` chu kỳ (`Timer.periodic`).
 
-### Rò rỉ bộ nhớ (Memory Leaks)
-- Luôn gọi `dispose()` trên các Controller (AnimationController, ScrollController, TextEditingController).
-- Đảm bảo huỷ (cancel) StreamSubscription khi Widget bị huỷ.
+### 3. Cảnh báo đầy bộ nhớ (Memory Pressure)
+- Xóa bộ nhớ đệm hình ảnh tạm thời (`imageCache.clear()`).
+- Hủy các danh sách dữ liệu kích thước lớn không nằm trong màn hình hiện tại.
 
-### Mapping theo kien truc
+---
 
-- **Clean:** quan ly lifecycle trong presentation/controller layer va service can thiet.
-- **MVC:** controller chiu trach nhiem pause/resume stream, timer, subscription.
-- **MVVM:** view model chiu trach nhiem cleanup stateful resources.
+## 3. Checklist Bắt Buộc: Chống Rò Rỉ Bộ Nhớ (Memory Leaks)
+
+Mọi tài nguyên có trạng thái mở **BẮT BUỘC** phải được giải phóng trong phương thức `dispose()`:
+
+| Loại tài nguyên | Phương thức giải phóng bắt buộc | Hậu quả nếu quên |
+| :--- | :--- | :--- |
+| `AnimationController` | `controller.dispose()` | CPU tiếp tục vẽ tick gây ngốn pin |
+| `ScrollController` | `scrollController.dispose()` | Giữ tham chiếu Context, leak RAM |
+| `TextEditingController` | `textController.dispose()` | Giữ listeners, leak bộ nhớ |
+| `FocusNode` | `focusNode.dispose()` | Rò rỉ focus tree |
+| `StreamSubscription` | `subscription.cancel()` | Tiếp tục nhận event ngầm, crash app |
+| `Timer` | `timer.cancel()` | Tiếp tục chạy tick vô tận dưới nền |
+
+---
+
+## 4. Ánh Xạ Trách Nhiệm theo Kiến Trúc
+
+- **Clean Architecture:** Tầng Presentation (Widget / Notifier) chịu trách nhiệm giải phóng Controllers và UI Subscriptions; Tầng Data chịu trách nhiệm đóng kết nối DB / Client socket.
+- **MVC:** Controller nắm giữ và chịu trách nhiệm `dispose()` tất cả Streams, Timers và Subscriptions khi View bị hủy.
+- **MVVM:** ViewModel chịu trách nhiệm dọn dẹp các luồng reactive (`dispose()`) khi người dùng rời khỏi màn hình.

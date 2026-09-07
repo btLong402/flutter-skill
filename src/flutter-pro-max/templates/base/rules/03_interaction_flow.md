@@ -1,47 +1,64 @@
 ---
-description: Quy trình làm việc ABCR (Audit-Block-Critique-Refactor) khi nhận request
+description: Quy trình làm việc ABCR (Audit-Block-Critique-Refactor) và Kiểm soát Tương tác
 globs: *
 ---
 
-# Rule: Interaction Flow (ABCR)
+# Rule: Interaction Flow (ABCR Protocol)
 
-> Kích hoạt: Khi review, refactor, hoặc fix bugs
+> Kích hoạt: Khi nhận yêu cầu tạo mới, chỉnh sửa, review, refactor hoặc sửa lỗi (fix bug)
 
-## Architecture Mode Selection (Bắt buộc)
+## 1. Phân loại Chế độ Kiến trúc (Architecture Mode Selection)
 
-Truoc khi vao ABCR, xac dinh mode kien truc:
+Trước khi thực hiện bất kỳ thao tác nào, bạn **BẮT BUỘC** xác định rõ chế độ kiến trúc:
 
-1. **Greenfield/New Module** -> Mac dinh dung **Clean Architecture**.
-2. **Maintenance du an cu** -> **Ton trong kien truc hien huu** (MVC/MVVM/Layered), khong ep migrate tong the.
-3. **Them feature trong du an cu** -> Follow convention hien tai cua feature, chi refactor tang dan de giam no ky thuat.
+1. **Greenfield / Module mới:** Mặc định áp dụng **Clean Architecture** (Data $\rightarrow$ Domain $\rightarrow$ Presentation).
+2. **Bảo trì dự án cũ (Brownfield):** **Tôn trọng tuyệt đối kiến trúc hiện hữu** (MVC / MVVM / Layered). Tuyệt đối không ép migrate toàn diện.
+3. **Thêm tính năng trong dự án cũ:** Tuân thủ convention hiện có của feature đó, chỉ tái cấu trúc tăng dần (incremental refactor) trong phạm vi file bị chỉnh sửa.
 
-## Mandatory Execution Header (Bat buoc)
+---
 
-Truoc moi lan implement, refactor, hoac review code, phai bat dau bang header sau:
+## 2. Rào Chắn Thực Thi Bắt Buộc (Mandatory Execution Header)
 
-```md
-Task Type: <Greenfield | Brownfield Feature | Brownfield Hotfix>
-Architecture Strategy: <Clean default | Follow existing architecture>
-State Strategy: <stack duoc chon cho module>
-Refactor Scope: <minimal | incremental | structured>
+Mọi phản hồi liên quan đến lập trình, thêm tính năng, sửa lỗi hoặc refactor **BẮT BUỘC** phải bắt đầu bằng khối Pre-Flight Checklist (theo chuẩn Rule 02 & 19):
+
+```yaml
+# PRE-FLIGHT COMPLIANCE CHECK
+task_type: Greenfield | Brownfield Feature | Brownfield Hotfix
+architecture_strategy: Clean default | Follow existing architecture
+state_strategy: ValueNotifier | ChangeNotifier | Provider | Bloc/Riverpod (theo yêu cầu)
+refactor_scope: minimal | incremental | structured
 ```
 
-Neu thieu header nay, coi nhu chua dat quy trinh ABCR.
+> ⚠️ Nếu thiếu phần khai báo này, phản hồi bị coi là **chưa đạt tiêu chuẩn tương tác**.
 
-Khi nhận request liên quan đến code hiện tại, luôn tuân thủ quy trình:
+---
 
-1. **AUDIT** - Quét code smells, kiểm tra God Class/File
-2. **BLOCK** - Cảnh báo nếu vi phạm, giải thích Technical Debt
-3. **REFACTOR** - Refactor toi thieu trong kien truc hien huu truoc khi fix bug (chi de xuat migrate tong the khi user yeu cau)
-4. **EXPLAIN** - Giải thích lý do tách/refactor
+## 3. Quy trình 4 Bước ABCR
+
+Khi nhận được yêu cầu liên quan đến mã nguồn hiện tại, luôn tuân thủ nghiêm ngặt 4 bước:
+
+```
+[1. AUDIT] ──► Quét mã nguồn, tìm Code Smells, God Files, Logic Leakage
+     │
+[2. BLOCK] ──► Dừng lại, cảnh báo nếu phát hiện vi phạm kiến trúc hoặc nợ kỹ thuật
+     │
+[3. REFACTOR]► Tái cấu trúc tối thiểu trong phạm vi cho phép trước khi thêm code mới
+     │
+[4. EXPLAIN] ─► Giải thích ngắn gọn lý do tại sao phải tách/refactor
+```
 
 ### Khi nào áp dụng ABCR?
 
-| Tình huống | Áp dụng? |
-|------------|----------|
-| User yêu cầu fix bug | ✅ AUDIT trước, refactor nếu có code smell |
-| User yêu cầu thêm feature | ✅ AUDIT file đích trước khi thêm code |
-| User yêu cầu tạo file mới | ⚠️ Chỉ AUDIT các file liên quan |
-| User hỏi kiến thức chung | ❌ Không cần ABCR |
+| Tình huống yêu cầu | Áp dụng ABCR? | Hành động cụ thể |
+| :--- | :---: | :--- |
+| **Sửa lỗi (Fix bug)** | ✅ **BẮT BUỘC** | AUDIT trước, viết test tái hiện lỗi, refactor nếu có code smell rồi mới fix. |
+| **Thêm tính năng mới (Add feature)**| ✅ **BẮT BUỘC** | AUDIT file đích trước khi thêm code. Nếu file đích $\ge 200$ dòng $\rightarrow$ Tách trước! |
+| **Tạo file mới hoàn toàn** | ⚠️ **MỘT PHẦN** | AUDIT các module liên quan để đảm bảo tái sử dụng (Reuse), tránh trùng lặp. |
+| **Hỏi đáp kiến thức chung** | ❌ **KHÔNG** | Phản hồi trực tiếp, súc tích, không cần header rườm rà. |
 
-> 💡 **Mục đích:** Không bao giờ thêm code rác lên code rác. Fix nền tảng trước.
+---
+
+## 4. Nguyên Tắc Cốt Lõi
+
+> 💡 **KHÔNG BAO GIỜ VIẾT CODE MỚI ĐÈ LÊN MỘT NỀN TẢNG CODE RÁC.**  
+> Luôn dọn dẹp và củng cố nền tảng trước khi xây tầng tiếp theo.
