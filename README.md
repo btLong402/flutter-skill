@@ -406,17 +406,27 @@ Flutter Pro Max tích hợp sẵn bộ công cụ tự động hóa chuẩn côn
 
 ```bash
 # 1. Sinh Makefile chuẩn hóa (build_runner, lint, format, test, coverage, flavors APK/IPA)
+# 🎯 Tự động phát hiện FVM: Nếu project có .fvmrc, tự động dùng `fvm flutter`, ngược lại dùng SDK hệ thống!
 npx flutter-pro-max makefile [-f]
 make help
 
 # 2. Sinh Fastlane CI/CD automation chuyên nghiệp cho Android & iOS
 npx flutter-pro-max fastlane [-p android|ios|all] [-f]
 
-# 3. Tự động thêm block loại trừ file nội bộ của skill vào .gitignore (chạy độc lập)
+# 3. Tự động thêm block loại trừ file nội bộ của skill & AI folders vào .gitignore
+# Mặc định tự động quét và thêm đúng AI đang dùng trong project (.agents/, .claude/, .cursor/...)
 npx flutter-pro-max gitignore
+
+# Hoặc chỉ định rõ AI trợ lý cần ignore:
+npx flutter-pro-max gitignore -a antigravity
+npx flutter-pro-max gitignore -a claude
+npx flutter-pro-max gitignore -a cursor
+
+# Hoặc bảo vệ toàn diện trước toàn bộ 16 AI coding assistants:
+npx flutter-pro-max gitignore --all
 ```
 
-> 💡 **Tự động bảo vệ Git:** Lệnh `flutter-pro-max init` mặc định sẽ tự động cập nhật `.gitignore` để ngăn chặn việc commit nhầm `.shared/` hoặc `__pycache__/` lên repository (có thể bỏ qua bằng cờ `--skip-gitignore`).
+> 💡 **Tự động bảo vệ Git khi cài đặt:** Lệnh `flutter-pro-max init` mặc định sẽ tự động cập nhật `.gitignore` với các quy tắc phù hợp với chính AI bạn vừa chọn để ngăn rò rỉ assets (có thể bỏ qua bằng cờ `--skip-gitignore`).
 
 ---
 
@@ -466,6 +476,12 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 ---
 
 ## 📝 Changelog
+
+### v2.5.1 (2026-09-07)
+- **🛡️ AI-Tailored Gitignore**: Nâng cấp lệnh `flutter-pro-max gitignore` hỗ trợ may đo chính xác cho từng trợ lý AI (`-a <type>`, `--all`) với 16 nền tảng. Ngăn chặn triệt để việc lộ file nội bộ, rules, hoặc `.agents/` lên git repository.
+- **🎯 FVM Auto-Detection in Makefile**: Makefile template tự động nhận diện cấu hình FVM (`.fvmrc`, `.fvm/`) để điều phối `fvm flutter` / `fvm dart` và hiển thị trạng thái trong `make help`.
+- **🔄 Unified CI/CD Pipeline**: Tích hợp quy trình kiểm thử hoàn chỉnh (21 unit tests, assets parity, E2E CLI testing) và publish npm tự động.
+- **📜 Full Changelog & Documentation**: Chuẩn hóa tài liệu CLI, khôi phục đầy đủ lịch sử phát hành từ v2.0.0.
 
 ### v2.5.0 (2026-09-07)
 - **🎛️ Design Dials**: Bổ sung 3 nút điều khiển thiết kế `--variance` (bố cục sáng tạo), `--motion` (cường độ hoạt họa), và `--density` (mật độ spacing & visual density).

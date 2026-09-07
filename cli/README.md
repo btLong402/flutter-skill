@@ -1,220 +1,227 @@
 # 🚀 Flutter Pro Max CLI
 
-**The official command-line interface for deploying Flutter Pro Max technical intelligence to your favorite AI coding assistants.**
+**The official command-line interface for deploying Flutter Pro Max technical intelligence, modular rules, and developer automation tools to your favorite AI coding assistants.**
 
 [![npm version](https://img.shields.io/npm/v/flutter-pro-max-cli.svg)](https://www.npmjs.com/package/flutter-pro-max-cli)
 [![Downloads](https://img.shields.io/npm/dm/flutter-pro-max-cli.svg)](https://www.npmjs.com/package/flutter-pro-max-cli)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI/CD](https://github.com/btLong402/flutter-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/btLong402/flutter-skill/actions/workflows/ci.yml)
+
+[Quick Start](#-quick-start) | [Commands](#-commands--usage) | [Supported Assistants](#-supported-ai-assistants) | [Architecture & Features](#-architecture--features) | [Changelog](#-changelog)
 
 ---
 
-## 📦 Installation
+## ⚡ Quick Start
 
-### The Quick Way (Recommended)
-Bootstrap any project in seconds. This command will guide you through selecting and installing the skill for your environment.
+### One-liner Bootstrap (Recommended)
+Cài đặt tức thì skill vào dự án của bạn mà không cần cài đặt global:
 
 ```bash
 npx flutter-pro-max-cli
 ```
 
 ### Global Installation
-For heavy users who want the `flutter-pro-max` command available everywhere:
+Dành cho lập trình viên muốn sử dụng lệnh `flutter-pro-max` ở mọi nơi trên terminal:
 
 ```bash
-# Install globally
+# Cài đặt toàn cục
 npm install -g flutter-pro-max-cli
 
-# Initialize in your project
+# Khởi tạo trong dự án Flutter
 flutter-pro-max init
 ```
 
 ---
 
-## 🛠️ Usage
+## 🛠️ Commands & Usage
 
-### Interactive Setup
-Simply run the command and follow the prompts to detect and install the skill for your active AI assistants.
+### 1. `flutter-pro-max init` (Khởi tạo Skill & Rules)
+
+Cài đặt skill, bộ 20 Modular Rules và tự động bảo vệ `.gitignore`:
 
 ```bash
+# Chế độ tương tác (tự động nhận diện trợ lý AI)
 flutter-pro-max init
-```
 
-### Scripted Installation
-For CI/CD or automated setups, you can specify the assistant type directly:
-
-```bash
-# Install for a specific assistant
+# Chỉ định cụ thể AI Assistant
 flutter-pro-max init --ai claude
 flutter-pro-max init --ai cursor
 flutter-pro-max init --ai antigravity
+flutter-pro-max init --ai windsurf
+flutter-pro-max init --ai copilot
 
-# Install for all supported assistants
+# Cài đặt đồng thời cho tất cả 16 AI trợ lý
 flutter-pro-max init --ai all
+
+# Ghi đè file cấu hình đã có
+flutter-pro-max init -f
+
+# Bỏ qua việc tự động cập nhật .gitignore
+flutter-pro-max init --skip-gitignore
 ```
 
-### Other Commands
+---
+
+### 2. 🧰 Developer Utility Tools (Mới trong v2.5)
+
+#### 📝 `flutter-pro-max makefile`
+Sinh `Makefile` chuẩn hóa cho Flutter với **22 target** hỗ trợ toàn bộ vòng đời phát triển:
+- **🎯 Tự động phát hiện FVM**: Nếu dự án có `.fvmrc` hoặc thư mục `.fvm/`, Makefile sẽ tự động điều phối `fvm flutter` và `fvm dart`; ngược lại sẽ fallback mượt mà về Flutter SDK hệ thống!
+- **Code Generation & Watch**: `make build-runner`, `make watch`
+- **Quality Assurance**: `make format` (line-length 120), `make lint` / `analyze`, `make test`, `make coverage` (HTML lcov report), `make check`
+- **Build Flavors**: `make build-apk-dev`, `make build-apk-prod` (split-per-abi), `make build-appbundle-prod` (obfuscation + split-debug-info), `make build-ios-prod`
 
 ```bash
-# List available versions from GitHub releases
+# Sinh Makefile vào thư mục gốc của dự án
+flutter-pro-max makefile [-f]
+
+# Xem danh sách target có màu sắc trực quan
+make help
+```
+
+#### 🚀 `flutter-pro-max fastlane`
+Khởi tạo cấu trúc CI/CD Fastlane chuyên nghiệp chuẩn cho cả Android và iOS:
+- **Android**: `android/fastlane/Appfile` & `Fastfile` (lanes: `build_dev`, `build_prod`, `beta_firebase`, `deploy_internal`, `deploy_play_store`)
+- **iOS**: `ios/fastlane/Appfile` & `Fastfile` (lanes: `certificates` via `match`, `build_dev`, `build_prod`, `beta_testflight`, `deploy_app_store`)
+- **Bảo mật môi trường**: Tạo template `.env.fastlane.example` ở root dự án để quản lý keystore, bundle ID và tokens an toàn.
+
+```bash
+# Sinh Fastlane cho cả 2 nền tảng
+flutter-pro-max fastlane [-f]
+
+# Chỉ định cụ thể nền tảng
+flutter-pro-max fastlane -p android
+flutter-pro-max fastlane -p ios
+```
+
+#### 🛡️ `flutter-pro-max gitignore`
+Tự động cấu hình `.gitignore` để ngăn chặn việc commit nhầm các assets nội bộ của skill (`.shared/`, `design-system/pages/`, `__pycache__/`, `*.pyc`, `.fvm/flutter_sdk`) và **thư mục sinh ra của từng trợ lý AI**:
+- **Smart AI Detection**: Tự động phát hiện các thư mục AI đang có trong dự án (`.agents/`, `.claude/`, `.cursor/`, `.windsurf/`...) để thêm đúng phần cần thiết!
+- **Tùy biến theo AI**: Chỉ định rõ AI cần cấu hình hoặc bỏ qua.
+- **Tính Idempotent**: Chạy nhiều lần không bao giờ bị nhân đôi dòng.
+
+```bash
+# Tự động phát hiện AI trong dự án và cập nhật .gitignore
+flutter-pro-max gitignore
+
+# Chỉ định AI cụ thể:
+flutter-pro-max gitignore -a antigravity  # Thêm .agents/
+flutter-pro-max gitignore -a claude       # Thêm .claude/skills/flutter-pro-max/...
+flutter-pro-max gitignore -a cursor       # Thêm .cursor/rules/, .shared/
+
+# Thêm quy tắc bảo vệ trước toàn bộ 16 AI trợ lý:
+flutter-pro-max gitignore --all
+```
+
+---
+
+### 3. Các Lệnh Quản Lý Khác
+
+```bash
+# Xem danh sách phiên bản đã phát hành trên GitHub
 flutter-pro-max versions
 
-# Update to the latest version
+# Cập nhật skill lên phiên bản mới nhất
 flutter-pro-max update
 flutter-pro-max update --ai claude
 ```
 
-### npm Publish
+---
 
-The CLI can be published automatically from GitHub Actions via [.github/workflows/npm-publish.yml](../.github/workflows/npm-publish.yml).
+## 🤖 Supported AI Assistants (16 Nền Tảng)
 
-Requirements:
-- Add `NPM_TOKEN` to repository secrets
-- Bump `cli/package.json` version before pushing to `main`
-- The workflow skips publish if that exact version already exists on npm
+CLI liên kết cơ sở tri thức khổng lồ của Flutter Pro Max với môi trường AI của bạn:
+
+| Assistant | Type Flag | Chế Độ Cài Đặt | Vị Trí Lưu Trữ | Giới Hạn Buffer |
+|-----------|-----------|----------------|----------------|-----------------|
+| **Claude Code** | `claude` | Full | `.claude/skills/` & `CLAUDE.md` | Không giới hạn |
+| **Antigravity (Google)** | `antigravity` | Full | `.agents/skills/` & `.agents/rules/` | Tối ưu 12k chars |
+| **Cursor** | `cursor` | Reference | `.cursor/rules/` (.mdc) & `.shared/` | Không giới hạn |
+| **Windsurf** | `windsurf` | Reference | `.windsurf/rules/` & `.shared/` | Không giới hạn |
+| **GitHub Copilot** | `copilot` | Full | `.github/skills/` & `.github/` | Không giới hạn |
+| **VS Code** | `vscode` | Full | `.vscode/rules/` & `.github/skills/` | Không giới hạn |
+| **Gemini CLI** | `gemini` | Full | `.gemini/skills/` & `.gemini/rules/` | 1M+ Tokens |
+| **Trae** | `trae` | Full | `.trae/skills/` & `.trae/rules/` | Không giới hạn |
+| **Roo Code** | `roocode` | Reference | `.roo/rules/` & `.shared/` | Không giới hạn |
+| **Kiro** | `kiro` | Reference | `.kiro/rules/` & `.shared/` | Không giới hạn |
+| **Continue** | `continue` | Full | `.continue/skills/` & `.continue/rules/` | Không giới hạn |
+| **CodeBuddy** | `codebuddy` | Full | `.codebuddy/skills/` & `.codebuddy/rules/` | Không giới hạn |
+| **Codex CLI** | `codex` | Full | `.codex/skills/` & `.codex/rules/` | Không giới hạn |
+| **JetBrains AI (Junie)** | `junie` | Full | `.junie/skills/` & `.junie/rules/` | Không giới hạn |
+| **OpenCode** | `opencode` | Full | `.opencode/skills/` & `.opencode/rules/` | Không giới hạn |
+| **Qodo/Qoder** | `qoder` | Reference | `.qoder/rules/` & `.shared/` | Không giới hạn |
 
 ---
 
-## 🤖 Supported AI Assistants
+## 🧠 Architecture & Features (v2.5)
 
-This CLI bridges the gap between the Flutter Pro Max knowledge base and your development tools (16 platforms):
+Sau khi cài đặt bằng CLI, dự án của bạn sẽ sở hữu các khả năng chuyên sâu:
 
-| Assistant | Type Flag | Install Type | Template | Limit |
-|-----------|-----------|--------------|----------|-------|
-| **Claude Code** | `claude` | Full | Full (~15KB) | No Limit |
-| **Codex CLI** | `codex` | Full | Full (~15KB) | No Limit |
-| **Continue** | `continue` | Full | Full (~15KB) | No Limit |
-| **JetBrains AI (Junie)** | `junie` | Full | Full (~15KB) | No Limit |
-| **Gemini CLI** | `gemini` | Full | Full (~15KB) | 1M+ Tokens |
-| **OpenCode** | `opencode` | Full | Full (~15KB) | No Limit |
-| **CodeBuddy** | `codebuddy` | Full | Full (~15KB) | No Limit |
-| **Trae** | `trae` | Full | Full (~15KB) | No Limit |
-| **Antigravity (Google)** | `antigravity` | Full | Compact (~5KB) | **12,000 chars** |
-| **Cursor** | `cursor` | Reference | Full (~13KB) | No Limit |
-| **Windsurf** | `windsurf` | Reference | Full (~13KB) | No Limit |
-| **GitHub Copilot** | `copilot` | Full | Full (~15KB) | No Limit |
-| **VS Code** | `vscode` | Full | Full (~15KB) | No Limit |
-| **Kiro** | `kiro` | Reference | Full (~13KB) | No Limit |
-| **RooCode** | `roocode` | Reference | Full (~13KB) | No Limit |
-| **Qodo/Qoder** | `qoder` | Reference | Full (~13KB) | No Limit |
+```
+src/flutter-pro-max/ (Source of Truth) -> Đồng bộ 100% vào cli/assets/
+├── data/                            # 18 domain CSVs + Catalog Governance
+├── scripts/
+│   ├── search.py                    # BM25 Multi-domain Search CLI
+│   ├── core.py                      # Search Engine lõi (18 domains)
+│   ├── reasoning_contract.py        # Closed-Grammar Deterministic Rules Parser
+│   ├── design_system.py             # Design Dials & Dart Code Generator
+│   └── tests/                       # 21 unit tests bao phủ 100%
+└── templates/
+    ├── base/rules/                  # 20 Modular Rules (MDC / Markdown)
+    └── tools/                       # Makefile, Fastlane, Gitignore templates
+```
 
-**Install Types:**
-- **Full**: Data và scripts nằm trong skill folder (standalone, ~500KB)
-- **Reference**: Skill file trỏ đến `.shared/` folder chung (tiết kiệm dung lượng khi dùng nhiều assistants)
+### 1. 🎛️ Design Dials & Dart Theme Generator
+- **3 Cần gạt thiết kế (`--variance`, `--motion`, `--density`)**: Điều khiển biên độ sáng tạo layout, cường độ hoạt họa và mật độ spacing/VisualDensity từ 1 đến 10.
+- **Xuất Dart Code Chuẩn (`--export-dart`)**: Tự động sinh `app_theme.dart` với Material 3 `ThemeData` và 3-Layer Tokens (`AppColors`, `AppSpacing`, `AppRadius`, `ThemeExtension<AppCustomTokens>`).
 
-**Templates (theo platform limits - dựa trên [Flutter AI Rules](https://docs.flutter.dev/ai/ai-rules)):**
-- **Full (~15KB)**: Đầy đủ rules, code examples, Material 3 theming, accessibility
-- **Compact (~5KB)**: Core rules, essential patterns (Antigravity 12k limit)
-- **Mini (~2KB)**: Essential rules only (Copilot ~4k limit)
+### 2. 🎬 Flutter Motion Intelligence (Domain #18)
+Thư viện hoạt họa chuyên sâu `flutter-motion.csv` phân loại theo 3 tầng (Subtle, Standard, Complex), tích hợp sẵn code Flutter chuẩn (`TweenAnimationBuilder`, `Hero`, `PageRouteBuilder`, `Curves`) và chỉ dẫn tối ưu GPU/Accessibility (`MediaQuery.disableAnimationsOf`).
+
+### 3. 🔍 Flutter Design Review Subagent & Command
+Tích hợp subagent `@flutter-design-review` và slash command `/flutter-review` thực hiện audit 6 pha nghiêm ngặt:
+1. **Layout Resilience** (chống lỗi `RenderFlex overflowed`)
+2. **Touch Targets** ($\ge 48\times 48\text{ dp}$ Material 3 & $\ge 44\times 44\text{ pt}$ iOS HIG)
+3. **Accessibility & Font Scaling** (`TextScaler` 1.5x - 2.0x, `Semantics`)
+4. **Visual Polish & Tokens** (triệt tiêu hardcoded `Color(0xFF...)`)
+5. **Motion & Haptics** (kiểm soát lifecycle `AnimationController`, disable animations)
+6. **Performance & Rebuild Hygiene** (`const` widgets, giới hạn phạm vi rebuild)
 
 ---
 
 ## 📊 What Gets Installed
 
-### Rules Files (19 modules)
-| Tier | Rules | Description |
-|------|-------|-------------|
-| **Foundation (5)** | 01-05 | Skill usage, Code quality, Interaction flow, Consistency, Error handling |
-| **Code Quality (5)** | 06-10 | Testing, Performance, Security, State Management, Naming |
-| **UX & Resilience (5)** | 11-15 | Accessibility, Network resilience, Offline-first, Graceful degradation, Lifecycle |
-| **Product (4)** | 16-19 | Google Play ASO, Compliance, Visuals, Architecture decisions |
+### 🧠 Rules Files (20 modules)
+| Tier | Rules | Mô Tả |
+|------|-------|-------|
+| **Tier 1: Foundation (5)** | 01-05 | Tự động dùng skill, Code quality, Interaction flow (ABCR), App consistency, Error handling |
+| **Tier 2: Code Quality (5)** | 06-10 | Testing (Unit/Widget), Performance (const/ListView), Security, State Management, Naming |
+| **Tier 3: UX & Resilience (5)** | 11-15 | Accessibility, Network resiliency, Offline-first, Graceful degradation, State lifecycle |
+| **Tier 4: Architecture & SDLC (5)** | 16-20 | Google Play ASO, Compliance, Visuals, Architecture Decision Matrix, Development Workflow |
 
-**Rules are automatically generated** into platform-specific locations:
-- **Append mode** (Claude, Copilot): Rules concatenated into existing file
-- **Create mode** (Cursor, Windsurf, others): Separate `.mdc` or `.md` files in rules folder
-
-### Data Files (17 domains)
-| Domain | File | Description |
-|--------|------|-------------|
-| Widgets | `widget.csv` | 65+ Flutter widgets |
-| Packages | `package.csv` | 100+ packages với alternatives |
-| Patterns | `patterns.csv` | 110+ design patterns |
-| Architecture | `architect.csv` | Architecture layers |
-| Performance | `flutter-performance.csv` | 35 optimization patterns |
-| Accessibility | `mobile-accessibility.csv` | 35 accessibility patterns |
-| UI Reasoning | `ui-reasoning.csv` | 35 app category decisions |
-| Colors | `colors.csv` | 50+ color palettes |
-| Typography | `typography.csv` | 40+ font pairings |
-| Styles | `styles.csv` | 60+ UI styles |
-| UX | `ux-guidelines.csv` | 50+ UX rules |
-| Icons | `icons.csv` | 100+ icon recommendations |
-| Landing | `landing.csv` | 30+ landing patterns |
-| Products | `products.csv` | 40+ product recommendations |
-| Prompts | `prompts.csv` | 30+ AI prompts |
-| Charts | `charts.csv` | 20+ chart types |
-| Naming | `name_convention.csv` | Naming conventions |
-
-### Search Scripts
-- `search.py` - BM25 search CLI
-- `core.py` - Search engine core
+### 📚 Data Files (18 domains)
+Bao quát hơn **180+ thành phần kiến thức** được cấu trúc dạng CSV:
+- `widget.csv` (65+ widgets), `package.csv` (100+ packages), `patterns.csv` (110+ patterns), `architect.csv` (layers & clean architecture)
+- `flutter-performance.csv` (35 optimization rules), `mobile-accessibility.csv` (35 a11y patterns), `ui-reasoning.csv` (35 app categories)
+- `flutter-motion.csv` (25+ animation presets), `colors.csv`, `typography.csv`, `styles.csv`, `ux-guidelines.csv`
+- `icons.csv`, `landing.csv`, `products.csv`, `prompts.csv`, `charts.csv`, `name_convention.csv`
 
 ---
 
-## 🔧 Development
+## 🔄 Assets Parity & Testing
 
-If you want to contribute or modify the CLI:
-
-```bash
-# Clone and install
-git clone https://github.com/btLong402/flutter-skill.git
-cd cli
-npm install
-
-# Build the project
-npm run build
-
-# Run locally
-node dist/index.js init --ai claude
-
-# Test search
-node dist/index.js init --ai claude
-cd .claude/skills/flutter-pro-max
-python3 scripts/search.py "ListView" --domain widget --top 3
-```
-
----
-
-## 🔄 Syncing Assets (Rules & Data)
-
-When you update rules or data files in the source directory, you must sync them to CLI assets before publishing.
-
-### Sync Rules Only
-After adding/updating rules in `src/flutter-pro-max/templates/base/rules/`:
+CLI đảm bảo tính toàn vẹn tuyệt đối thông qua bộ test suite chạy song song trong CI/CD:
 
 ```bash
-# Copy all rules to CLI
-cp -r src/flutter-pro-max/templates/base/rules/* cli/assets/templates/base/rules/
-
-# Verify sync
-ls cli/assets/templates/base/rules/ | wc -l  # Should show 19 files
+# Chạy toàn bộ test suites kiểm tra dữ liệu và CLI tools
+python3 -m unittest discover -s src/flutter-pro-max/scripts/tests/
+python3 -m unittest discover -s cli/assets/scripts/tests/
 ```
 
-### Sync All Assets (Complete)
-Before publishing to npm:
-
-```bash
-# Sync data files (17 domains)
-cp -r src/flutter-pro-max/data/* cli/assets/data/
-
-# Sync scripts
-cp -r src/flutter-pro-max/scripts/* cli/assets/scripts/
-
-# Sync templates (skills + rules + platforms)
-cp -r src/flutter-pro-max/templates/* cli/assets/templates/
-
-# Verify
-cd cli/assets
-find . -type f | wc -l  # Should show significantly more files
-```
-
-### Pre-Publish Checklist
-- [ ] All 19 rules present in `cli/assets/templates/base/rules/`
-- [ ] All 17 data files present in `cli/assets/data/`
-- [ ] All scripts present in `cli/assets/scripts/`
-- [ ] Version bumped in `cli/package.json`
-- [ ] No uncommitted changes in CLI files
-
-> ⚠️ **CRITICAL:** Without syncing, users will not receive the latest rules/data when they run `flutter-pro-max-cli`
+- **Data Integrity**: Đảm bảo 18 file CSV có đầy đủ schema và dữ liệu.
+- **Assets Parity Guard**: Kiểm tra so sánh byte-level giữa `src/` và `cli/assets/` để ngăn ngừa drift trước khi release.
+- **E2E CLI Testing**: Kiểm thử tự động quá trình sinh Makefile, Fastlane, Gitignore và chạy search từ skill vừa cài.
 
 ---
 
@@ -223,40 +230,53 @@ find . -type f | wc -l  # Should show significantly more files
 ```
 cli/
 ├── src/
-│   ├── index.ts              # CLI entry point
+│   ├── index.ts              # CLI entry point & command registration
 │   ├── commands/
-│   │   ├── init.ts           # Install command
-│   │   ├── versions.ts       # List versions
-│   │   └── update.ts         # Update command
+│   │   ├── init.ts           # Cài đặt skill & tự động cập nhật .gitignore
+│   │   ├── tools.ts          # Bộ sinh Makefile, Fastlane, Gitignore theo AI
+│   │   ├── versions.ts       # Danh sách release versions
+│   │   └── update.ts         # Cập nhật skill
 │   ├── types/
-│   │   └── index.ts          # TypeScript types
+│   │   └── index.ts          # TypeScript interfaces & AITypes
 │   └── utils/
-│       ├── detect.ts         # AI type detection
-│       ├── github.ts         # GitHub API client
-│       ├── logger.ts         # Console logger
-│       └── template.ts       # Template renderer
-├── assets/
-│   ├── data/                 # 17 CSV knowledge files
-│   ├── scripts/              # Python search scripts
+│       ├── detect.ts         # Tự động phát hiện AI trong thư mục dự án
+│       ├── template.ts       # Template rendering engine
+│       └── logger.ts         # Terminal color logger
+├── assets/                   # Bản sao canonical đồng bộ 100% từ src/
+│   ├── data/                 # 18 CSV datasets + metadata governance
+│   ├── scripts/              # Python search engine & design system generator
 │   └── templates/
-│       ├── base/             # Markdown templates
-│       │   ├── skill-content.md      # Full template (~13KB)
-│       │   ├── skill-content-10k.md  # Compact (~5KB)
-│       │   ├── skill-content-4k.md   # Mini (~2KB)
-│       │   └── quick-reference.md    # Add-on (~2KB)
-│       └── platforms/        # 16 platform JSON configs
+│       ├── base/             # Base skill markdown templates & 20 rules
+│       ├── tools/            # Makefile.template, Fastlane, Gitignore
+│       └── platforms/        # 16 platform JSON configuration files
 ├── package.json
 └── tsconfig.json
 ```
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 📝 Changelog
+
+### v2.5.1 (2026-09-07)
+- **🛡️ AI-Tailored Gitignore**: Hỗ trợ may đo quy tắc `.gitignore` riêng biệt cho 16 nền tảng trợ lý AI (`-a <type>`, `--all`). Tự động phát hiện AI đang sử dụng và chèn chính xác các thư mục như `.agents/`, `.claude/skills/`, `.cursor/rules/`, `.shared/`, v.v.
+- **🎯 FVM Auto-Detection in Makefile**: Makefile template tự động kiểm tra sự tồn tại của `.fvmrc` hoặc `.fvm/` để tự điều phối giữa `fvm flutter` / `fvm dart` và Flutter SDK hệ thống.
+- **🔄 Unified CI/CD Pipeline**: Đồng bộ hóa CI/CD, kiểm thử 21 unit tests, assets parity và CLI E2E tests trước khi publish lên npm registry.
+- **📜 Restored Full Changelog**: Khôi phục và chuẩn hóa toàn bộ lịch sử thay đổi từ v2.0.0 đến v2.5.1.
+
+### v2.5.0 (2026-09-07)
+- **🧰 Developer Utility Tools**: Bổ sung bộ 3 công cụ tự động hóa `makefile` (kèm auto-detect FVM), `fastlane` (CI/CD Android & iOS) và `gitignore` (may đo riêng cho từng AI trợ lý).
+- **🛡️ AI-specific Gitignore**: Tự động nhận diện trợ lý AI (`antigravity`, `claude`, `cursor`, `copilot`...) để ngăn ngừa rò rỉ file skill/rules lên repository.
+- **🎛️ Design Dials**: 3 nút điều khiển `--variance`, `--motion`, `--density` tinh chỉnh biên độ sáng tạo, hoạt họa và spacing.
+- **🐦 Production Dart Theme Generator**: Tùy chọn `--export-dart` xuất trực tiếp `app_theme.dart` chuẩn Material 3 với 3-Layer Tokens.
+- **🎬 Flutter Motion Intelligence**: Bổ sung domain thứ 18 `motion` với cơ sở dữ liệu `flutter-motion.csv`.
+- **🛡️ Closed-Grammar Reasoning Contract**: Tích hợp `reasoning_contract.py` loại bỏ hoàn toàn AI hallucination.
+- **🔍 Flutter Design Review Subagent & Command**: Ra mắt subagent `@flutter-design-review` và slash command `/flutter-review` với quy trình audit 6 pha.
+- **📊 20 Modular Rules**: Cập nhật chuẩn hóa đủ 20 rules với [20_development_workflow.md](file:///Users/longbt/Documents/dev/private/flutter-skill/src/flutter-pro-max/templates/base/rules/20_development_workflow.md).
+- **🔄 Unified CI/CD Pipeline**: Tích hợp luồng test 21 unit tests (Python 3.10-3.12), test E2E CLI và tự động publish lên npm registry khi xanh 100%.
+
+### v2.4.5 (2026-05-14)
+- **📋 Development Workflow Rule**: Bổ sung rule 20 chuẩn hóa quy trình SDLC 8 bước.
+- **🏗️ Architecture Decision Matrix**: Tích hợp hướng dẫn kiến trúc Greenfield vs Brownfield.
 
 ### v2.3.0 (2026-02-06)
 - **VS Code 1.109 Support**: GitHub Copilot và VS Code sử dụng `.github/skills/` format
@@ -279,11 +299,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### v2.0.0
 - Phiên bản đầu tiên với 14 AI assistant support
+- BM25-based semantic search engine
+- Design System Generator
 
 ---
 
-<div align="center">
+## 📄 License
 
-**Streamline your Flutter development with AI-powered architectural intelligence.**
-
-</div>
+Project này được cấp phép theo [MIT License](LICENSE).
