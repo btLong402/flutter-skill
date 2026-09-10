@@ -32,7 +32,7 @@ Việc quản lý vòng đời ứng dụng cẩu thả sẽ gây rò rỉ bộ 
 
 ## 3. Checklist Bắt Buộc: Chống Rò Rỉ Bộ Nhớ (Memory Leaks)
 
-Mọi tài nguyên có trạng thái mở **BẮT BUỘC** phải được giải phóng trong phương thức `dispose()`:
+Mọi tài nguyên có trạng thái mở **BẮT BUỘC** phải được giải phóng đúng nơi:
 
 | Loại tài nguyên | Phương thức giải phóng bắt buộc | Hậu quả nếu quên |
 | :--- | :--- | :--- |
@@ -42,11 +42,96 @@ Mọi tài nguyên có trạng thái mở **BẮT BUỘC** phải được giả
 | `FocusNode` | `focusNode.dispose()` | Rò rỉ focus tree |
 | `StreamSubscription` | `subscription.cancel()` | Tiếp tục nhận event ngầm, crash app |
 | `Timer` | `timer.cancel()` | Tiếp tục chạy tick vô tận dưới nền |
+| GetX `Worker` (`debounce`, `ever`) | `worker.dispose()` | Giữ lắng nghe stream Rx vĩnh viễn |
 
 ---
 
-## 4. Ánh Xạ Trách Nhiệm theo Kiến Trúc
+## 4. Rào Chắn Async Gap & Kiểm Soát Mounted (Mounted & Closed Guard)
+
+Khi thực thi bất kỳ tác vụ bất đồng bộ (`await`) nào, cây Widget hoặc Controller có thể đã bị hủy trước khi dữ liệu phản hồi trả về.
+
+### Trong `StatefulWidget`:
+```dart
+// 🔴 CẤM: Gọi setState() hoặc dùng context sau await mà không kiểm tra mounted
+// ✅ ĐÚNG: Luôn đặt rào chắn mounted ngay sau mỗi await
+Future<void> _handleRefresh() async {
+  final data = await apiService.getData();
+  if (!mounted) return; // BẮT BUỘC
+  setState(() {
+    _data = data;
+  });
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Đã cập nhật')));
+}
+```
+
+### Trong Controller (`GetxController`, `Bloc`, `ChangeNotifier`):
+```dart
+// ✅ GetX Controller: Kiểm tra isClosed trước khi update()
+Future<void> fetchData() async {
+  final res = await repository.fetch();
+  if (isClosed) return; // BẮT BUỘC: Controller có thể đã bị remove khỏi memory
+  data.value = res;
+  update();
+}
+
+// ✅ Bloc / Cubit: Luôn kiểm tra !isClosed trước khi emit()
+Future<void> onFetch(FetchEvent event, Emitter<State> emit) async {
+  final res = await repository.fetch();
+  if (!isClosed) {
+    emit(State.loaded(res));
+  }
+}
+```
+
+---
+
+## 5. Chuẩn Hóa Lifecycle Theo Framework (Framework Lifecycle Standards)
+
+### 1. GetX Framework:
+- **BẮT BUỘC:** Giải phóng tài nguyên trong `@override void onClose()`.
+- **CẤM:** Tự viết hàm `void dispose()` trong `GetxController` vì GetX runtime chỉ tự động kích hoạt `onClose()`.
+- **Dọn dẹp Worker:** Mọi `Worker` (`ever`, `interval`, `debounce`) và `StreamSubscription` phải được gán biến và hủy trong `onClose()`:
+  ```dart
+  class SearchController extends GetxController {
+    late final Worker _searchWorker;
+    StreamSubscription? _socketSub;
+
+    @override
+    void onInit() {
+      super.onInit();
+      _searchWorker = debounce(searchQuery, _performSearch, time: const Duration(milliseconds: 400));
+    }
+
+    @override
+    void onClose() {
+      _searchWorker.dispose();
+      _socketSub?.cancel();
+      super.onClose();
+    }
+  }
+  ```
+
+### 2. Provider / ChangeNotifier:
+- Luôn gọi `super.dispose()` ở dòng cuối cùng của hàm `dispose()`.
+- Đặt cờ `_disposed = true` nếu có tác vụ async lỡ dở, tránh gọi `notifyListeners()` sau khi đã giải phóng.
+
+---
+
+## 6. Cấm Tuyệt Đối Side-effects Trong Hàm `build()`
+
+Hàm `build()` có thể bị gọi hàng chục lần mỗi giây trong quá trình render và animation:
+
+| ❌ CẤM trong hàm `build()` | ✅ Giải pháp chuẩn |
+| :--- | :--- |
+| `Get.put(MyController())` hoặc `Get.find()` khởi tạo mới | Khởi tạo trong `Binding`, `initState()`, hoặc dùng `GetView<T>` |
+| `TextEditingController()`, `ScrollController()` | Khởi tạo trong `initState()` và giải phóng trong `dispose()` |
+| Gọi API hoặc Trigger async task (`fetchData()`) | Gọi trong `initState()`, Controller `onInit()`, hoặc qua event người dùng |
+| Gọi `setState()` hoặc `controller.update()` | Chỉ gọi trong callbacks (`onPressed`, `onChanged`) hoặc sau khi render |
+
+---
+
+## 7. Ánh Xạ Trách Nhiệm theo Kiến Trúc
 
 - **Clean Architecture:** Tầng Presentation (Widget / Notifier) chịu trách nhiệm giải phóng Controllers và UI Subscriptions; Tầng Data chịu trách nhiệm đóng kết nối DB / Client socket.
-- **MVC:** Controller nắm giữ và chịu trách nhiệm `dispose()` tất cả Streams, Timers và Subscriptions khi View bị hủy.
+- **MVC:** Controller nắm giữ và chịu trách nhiệm `dispose()`/`onClose()` tất cả Streams, Timers và Subscriptions khi View bị hủy.
 - **MVVM:** ViewModel chịu trách nhiệm dọn dẹp các luồng reactive (`dispose()`) khi người dùng rời khỏi màn hình.

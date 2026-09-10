@@ -69,4 +69,33 @@ extension LocalizationContext on BuildContext {
 }
 ```
 
-> 💡 **Lợi ích:** Ứng dụng luôn sẵn sàng mở rộng ra thị trường quốc tế mà không phải tốn hàng tuần rà soát và bóc tách từng chuỗi text hardcode.
+---
+
+## 5. Quy Ước Đặt Tên Key: Tránh Báo Động Giả SAST (SAST False Positives Hardening)
+
+Các công cụ phân tích bảo mật tĩnh (SAST, SonarQube, Code Sentinel, Trufflehog) thường quét regex tìm các biến hoặc key chứa từ khóa nhạy cảm.
+
+### Quy ước tiền tố (Prefix Convention):
+| Loại chuỗi UI | Tiền tố chuẩn | Ví dụ an toàn | ❌ Cấm đặt tên trơ trọi |
+| :--- | :--- | :--- | :--- |
+| Nhãn Form/Field | `lbl_` | `lbl_user_password`, `lbl_api_token` | `"password"`, `"token"` |
+| Gợi ý Placeholder | `hint_` | `hint_enter_password`, `hint_search` | `"enter_secret"` |
+| Tiêu đề màn hình | `title_` | `title_security_settings` | `"secret_key"` |
+| Thông báo / Lỗi | `msg_` / `err_` | `msg_invalid_credentials`, `err_session_expired` | `"auth_failure"` |
+
+> 🔴 **CẤM:** Đặt key như `"password": "Mật khẩu"`, `"api_key": "Mã định danh"`. Luôn dùng prefix (`lbl_password`) để SAST scanner hiểu đây là chuỗi hiển thị giao diện, không phải hardcoded credential.
+
+---
+
+## 6. Cấu Hình Allowlist / Exclude File Từ Điển Cho Máy Quét SAST
+
+Khi chạy công cụ quét bảo mật tự động trên CI/CD, hãy cấu hình loại trừ (exclude) các file tài nguyên ngôn ngữ:
+
+```properties
+# Ví dụ sonar-project.properties / SAST exclude list
+sonar.exclusions=lib/l10n/*.arb,assets/translations/**,lib/generated/intl/**,lib/generated/locale_keys.g.dart
+```
+
+---
+
+> 💡 **Lợi ích:** Ứng dụng luôn sẵn sàng mở rộng ra thị trường quốc tế mà không phải tốn hàng tuần rà soát và bóc tách từng chuỗi text hardcode, đồng thời giữ báo cáo quét bảo mật sạch bóng lỗi giả.

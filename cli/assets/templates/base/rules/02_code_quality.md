@@ -74,6 +74,18 @@ Trước khi tạo file mới hoặc viết Widget, bạn **PHẢI** tự vấn 
 | Viết câu lệnh SQL / Query trong Controller | ➜ Chuyển vào `Repository` / `Dao` | ➜ Chuyển vào data layer hiện hữu |
 | Gọi trực tiếp API (Dio / Http) trong UI | ➜ Chuyển vào `RemoteDataSource` | ➜ Chuyển vào `Service` / `Controller` |
 
+### 🚫 4. CẤM FORCE-UNWRAP (`!`) TRÊN REMOTE DATA & DYNAMIC INPUT
+
+- **CẤM:** Dùng toán tử `!` trên các trường lấy từ API / Database / Remote JSON (ví dụ: `response.data!`, `items.first!`, `user.profile!.avatar`).
+- **Hậu quả:** Server có thể trả thiếu field hoặc payload rỗng bất ngờ, dẫn đến crash ứng dụng tức thì (`Null check operator used on a null value`).
+- **Chuẩn hóa:** Luôn dùng Safe Navigation (`?.`), Fallback (`?? defaultVal`), hoặc `collection.firstOrNull` (từ Dart 3).
+
+### 🚫 5. HÀM `build()` THUẦN KHIẾT (PURE BUILD FUNCTION)
+
+- **CẤM:** Thay đổi (mutate) in-place dữ liệu trong `build()` như `list.sort()`, `list.removeWhere()`, `map.clear()`.
+- **CẤM:** Khởi tạo controller, timer, socket hoặc kích hoạt API requests trong hàm `build()`.
+- **Hậu quả:** Hàm `build()` được engine gọi liên tục khi widget tree rebuild. In-place mutation sẽ gây bug hiển thị không thể đoán trước và rớt khung hình (jank).
+
 ---
 
 ## 5. Bảng Đối Chiếu Tử Huyệt: Sai vs Đúng
@@ -86,5 +98,7 @@ Trước khi tạo file mới hoặc viết Widget, bạn **PHẢI** tự vấn 
 | Hardcode màu: `Color(0xFF1E88E5)` | Dùng token: `Theme.of(context).colorScheme.primary` |
 | Hardcode khoảng cách: `SizedBox(height: 16)` | Dùng spacing token: `SizedBox(height: AppSpacing.md)` |
 | `catch (e) {}` (Nuốt lỗi im lặng) | `Result.failure(AppError.from(e))` kèm `developer.log` |
+| Force-unwrap: `res.items.first!.name` | Safe access: `res.items.firstOrNull?.name ?? 'N/A'` |
+| Mutate trong build: `users.sort(...)` | Sort ở controller hoặc clone: `[...users]..sort(...)` |
 
 > 🔴 **KHẮC CỐT GHI TÂM:** **REUSE > CREATE**. Không bao giờ sinh file mới mà không kiểm tra codebase hiện tại trước.
