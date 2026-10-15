@@ -23,8 +23,9 @@ Luôn tuân thủ quy trình 8 bước tiêu chuẩn công nghiệp sau đây đ
 
 ## 3. Screen & UX Design (Thiết kế giao diện nếu có UI)
 - Thiết kế layout, UI components dựa trên Design Tokens và App Consistency (Rule 04).
+- Đo đạc độ tương phản WCAG và chuẩn bị thích ứng Tablet theo Rubric 10 tiêu chí của skill `mobile-tablet-ux-audit` (Rule 23).
 - Đảm bảo tính tiếp cận Accessibility (Rule 11), chuẩn hóa Navigation (Rule 21) và Đa ngôn ngữ (Rule 22).
-- **Đầu ra:** Cấu trúc phân rã Widget dạng cây.
+- **Đầu ra:** Cấu trúc phân rã Widget dạng cây và bảng kiểm tra tương phản sơ bộ.
 
 ## 4. Architecture Design (Thiết kế kiến trúc)
 - Phân loại task theo **Architecture Decision Matrix** (Rule 19): Greenfield vs Brownfield.
@@ -45,10 +46,11 @@ Luôn tuân thủ quy trình 8 bước tiêu chuẩn công nghiệp sau đây đ
 - Khi sửa bug: Bắt buộc viết test tái hiện lỗi (Reproduce test) trước khi fix.
 - **Đầu ra:** Bộ test suite chạy thành công 100% (Passed).
 
-## 7. Code Review & Self-Audit (Tự rà soát)
-- Tự rà soát lại mã nguồn theo chu trình **ABCR** (Audit - Block - Critique/Refactor - Explain - Rule 03).
+## 7. Code Review & UI/UX Self-Audit (Tự rà soát kép)
+- Tự rà soát mã nguồn theo chu trình **ABCR** (Audit - Block - Critique/Refactor - Explain - Rule 03).
 - Kiểm tra các lỗ hổng bảo mật (Rule 08) và khả năng xử lý rớt mạng (Rule 12).
-- **Đầu ra:** Mã nguồn sạch, không nợ kỹ thuật.
+- **BẮT BUỘC:** Thực hiện kiểm thử UI/UX định lượng bằng `scripts/contrast.py` và `scripts/score.py` của skill `mobile-tablet-ux-audit` (Rule 23) để đảm bảo không dính điểm trần blocker, tiêu chí $\le 1.5$, hoặc accessibility $< 3$.
+- **Đầu ra:** Mã nguồn sạch, không nợ kỹ thuật, điểm UI/UX đạt mục tiêu $\ge 85$.
 
 ## 8. Performance & Lifecycle Optimization (Tối ưu hóa)
 - Kiểm tra hiệu suất (Rule 07): `const` constructor, `ListView.builder` phân trang, tránh chạy tác vụ nặng trên UI thread.

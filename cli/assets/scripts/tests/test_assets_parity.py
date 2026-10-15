@@ -37,6 +37,31 @@ class TestAssetsParity(unittest.TestCase):
         cli_rules = sorted([f.name for f in (CLI_ASSETS_DIR / "templates" / "base" / "rules").glob("*.md")])
         self.assertEqual(src_rules, cli_rules, "Rule templates between src and cli/assets are not identical!")
 
+    def test_mobile_tablet_ux_audit_parity(self):
+        src_audit = ROOT_DIR / "src" / "mobile-tablet-ux-audit"
+        cli_audit = CLI_ASSETS_DIR / "skills" / "mobile-tablet-ux-audit"
+        self.assertTrue(src_audit.exists(), "src/mobile-tablet-ux-audit must exist")
+        self.assertTrue(cli_audit.exists(), "cli/assets/skills/mobile-tablet-ux-audit must exist")
+
+        key_files = [
+            "SKILL.md",
+            "scripts/score.py",
+            "scripts/contrast.py",
+            "assets/scorecard.template.json",
+            "assets/example-scorecard.json",
+            "references/rubric.md",
+            "references/platform-checks.md",
+            "references/evidence-collection.md",
+            "references/improvement-playbook.md"
+        ]
+        for rel_file in key_files:
+            src_file = src_audit / rel_file
+            cli_file = cli_audit / rel_file
+            self.assertTrue(src_file.exists(), f"Source file {rel_file} missing in src")
+            self.assertTrue(cli_file.exists(), f"CLI asset file {rel_file} missing in cli/assets")
+            self.assertEqual(src_file.read_bytes(), cli_file.read_bytes(), f"File {rel_file} differs between src and cli/assets")
+
 
 if __name__ == "__main__":
     unittest.main()
+

@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.8.0] - 2026-10-15
+
+### Added & Upgraded
+- **🎨 Tích hợp Skill mới: Mobile & Tablet UI/UX Audit (`mobile-tablet-ux-audit`)**:
+  - Đóng gói trọn vẹn bộ công cụ audit chất lượng UI/UX chuyên sâu vào CLI:
+    - `score.py`: Công cụ chấm điểm định lượng (thang 0–100, 10 tiêu chí), hỗ trợ chấm riêng biệt cho Mobile và Tablet, tự động áp trần điểm tới hạn (hard caps: blocker 59, tiêu chí $\le 1.5$ 69, accessibility $< 3$ 79), thuật toán xếp hạng backlog ưu tiên theo $(\text{Severity} \times \text{Reach} \times \text{Weight}) / \text{Effort}$, và so sánh delta phát hiện hồi quy giữa các vòng audit.
+    - `contrast.py`: Đo đạc độ tương phản theo chuẩn WCAG 2.x (ngưỡng 4.5:1 text thường, 3.0:1 text lớn và UI), tự động pha màu thông minh (suggest) để gợi ý mã màu đạt chuẩn.
+    - Cẩm nang tài liệu tham chiếu: Rubric 10 tiêu chí (`rubric.md`), checklist nền tảng iOS/Android/iPadOS/Foldable (`platform-checks.md`), hướng dẫn trích xuất bằng chứng (`evidence-collection.md`), và playbook sửa nhanh lỗi UI Flutter (`improvement-playbook.md`).
+    - Bộ test tự động toàn diện: 41 automated unit tests kiểm tra toàn bộ logic tính điểm, trần điểm, đo màu và toàn vẹn tài nguyên.
+- **🧠 23 Modular Rules (Bổ sung Rule 23: UI/UX Audit & Quality Governance)**:
+  - `23_mobile_tablet_ux_audit.md`: Quy chuẩn hóa việc kiểm thử giao diện định lượng, nguyên tắc dựa trên bằng chứng (evidence-based), thiết kế riêng biệt cho tablet ($\ge 600\text{dp}$ dùng NavigationRail & List-Detail), và chu trình tự cải thiện khép kín.
+- **⚡ Nâng cấp Rule 01: Context-Aware Skill Usage & Fast-Path Routing**:
+  - Chuyển đổi từ cơ chế ép buộc cứng nhắc sang phân luồng theo ngữ cảnh (Context-Aware):
+    - **Luồng Full-Flight (Bắt buộc dùng skill):** Áp dụng cho tính năng mới (Greenfield), thiết kế kiến trúc, chọn package, audit UI/UX tablet, hoặc tái cấu trúc lớn.
+    - **Luồng Fast-Path (Được đi tắt):** Cho phép sửa trực tiếp không cần tra cứu đối với hotfix nhỏ (< 15 dòng), sửa typo text, sửa null-safety, đổi config, hoặc format code.
+- **🔄 Nâng cấp Rule 20: Tích hợp UI/UX Audit vào SDLC 8 bước**:
+  - Tích hợp kiểm tra tương phản và layout tablet vào Step 3 (Screen & UX Design) và Step 7 (Code Review & UI/UX Self-Audit).
+- **🚀 CLI Dual-Skill Auto-Installer**:
+  - Lệnh `flutter-pro-max init` tự động cài đặt song song cả 2 skills (`flutter-pro-max` + `mobile-tablet-ux-audit`) và 23 rules cho toàn bộ 16 trợ lý AI (Claude, Antigravity, Cursor, Windsurf, Copilot, Trae, Gemini, Roo Code, v.v.).
+- **🧪 Assets Parity & Test Suite Expansion**:
+  - Mở rộng bộ kiểm thử tự động lên tổng cộng **85 tests** (bổ sung test parity cho skill UI/UX audit và kiểm tra toàn vẹn 23 rules), đạt tỷ lệ vượt qua 100%.
+
+---
+
 ## [2.7.0] - 2026-09-10
 
 ### Added & Hardened

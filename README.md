@@ -27,12 +27,12 @@ Flutter Pro Max tách biệt hoàn toàn **logic ra quyết định** và **côn
 
 | Layer | Vai trò | Nội dung |
 |-------|---------|----------|
-| **🧠 Rules (Brain)** | System prompt, persona, constraints | 22 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
-| **🤲 Skill (Hands)** | Tools, search, data access | Search commands, 18 domain data files, design system generator, design review agent |
+| **🧠 Rules (Brain)** | System prompt, persona, constraints | 23 modular rule files — định nghĩa cách suy nghĩ, giới hạn an toàn, luồng quyết định |
+| **🤲 Skill (Hands)** | Tools, search, data access, audit | 2 AI Skills: Flutter Code Intelligence (`flutter-pro-max`) & UI/UX Audit (`mobile-tablet-ux-audit`) |
 
-### 🧠 22 Modular Rules — Comprehensive Guidebook
+### 🧠 23 Modular Rules — Comprehensive Guidebook
 
-Hệ thống được thiết kế với **22 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
+Hệ thống được thiết kế với **23 module rules** chuyên biệt, bao quát toàn diện mọi khía cạnh từ Code Quality, UI/UX Audit đến Product Release. Mỗi file tích hợp sẵn tính năng tự động kích hoạt thông qua **YAML Frontmatter (MDC format)**.
 
 **Tier 1: Foundation Rules (Bắt buộc)**
 ```
@@ -74,6 +74,11 @@ Hệ thống được thiết kế với **22 module rules** chuyên biệt, bao
 ```
 ├── 21_navigation_governance      # GoRouter, Type-Safe Routes, Deep Linking, Auth Guards
 └── 22_localization               # Đa ngôn ngữ l10n, ARB files, Zero Hardcoded Strings
+```
+
+**Tier 6: UI/UX Audit & Quality Governance**
+```
+└── 23_mobile_tablet_ux_audit     # Audit định lượng 10 tiêu chí mobile+tablet, đo tương phản WCAG 2.x, vòng lặp tự sửa
 ```
 
 **🔥 Đột phá cho người dùng Cursor/Windsurf:** Khi khởi tạo, CLI tự động xuất sang định dạng `.mdc`. AI của bạn giờ đây có thể tự động đọc YAML frontmatter từ file `.mdc` để biết chính xác lúc nào nên nạp rule nào vào buffer (dựa trên tên file/context).
@@ -485,7 +490,15 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 
 Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](CHANGELOG.md)**.
 
-### [v2.7.0] - 2026-09-10 (Latest)
+### [v2.8.0] - 2026-10-15 (Latest)
+- **🎨 Tích hợp Skill mới: Mobile & Tablet UI/UX Audit (`mobile-tablet-ux-audit`)**: Đóng gói bộ công cụ audit UI/UX chuyên sâu vào CLI: `score.py` (chấm điểm định lượng 10 tiêu chí mobile+tablet, hard caps, backlog ưu tiên), `contrast.py` (đo độ tương phản WCAG 2.x, gợi ý màu), rubric checklist, và 41 automated unit tests.
+- **🧠 23 Modular Rules (Rule 23: UI/UX Audit & Quality Governance)**: Quy chuẩn hóa kiểm thử giao diện định lượng, bằng chứng thực chứng, layout thích ứng tablet $\ge 600\text{dp}$ với NavigationRail & List-Detail.
+- **⚡ Context-Aware Skill Usage & Fast-Path Routing (Rule 01)**: Phân luồng thông minh: Full-Flight cho tính năng mới/kiến trúc/audit, Fast-Path đi tắt cho hotfix nhỏ (< 15 dòng)/typo/config.
+- **🔄 SDLC 8 bước tích hợp UI/UX Audit (Rule 20)**: Gắn kết bước kiểm thử UI/UX định lượng vào Step 3 và Step 7.
+- **🚀 CLI Dual-Skill Auto-Installer**: Lệnh `flutter-pro-max init` tự động cài đặt song song cả 2 skills (`flutter-pro-max` + `mobile-tablet-ux-audit`) và 23 rules cho toàn bộ 16 trợ lý AI.
+- **🧪 Mở rộng Test Suite lên 85 tests**: Đạt tỷ lệ vượt qua 100% trên toàn bộ các bộ kiểm thử tự động.
+
+### [v2.7.0] - 2026-09-10
 - **🛡️ Production Hardening & Code Sentinel Audit Compliance**: Nâng cấp toàn diện 6 bộ quy tắc cốt lõi dựa trên thực tiễn quét mã nguồn dự án sản xuất (Code Sentinel SAST Audit):
   - **Guaranteed UI Cleanup (`05_error_handling.md`)**: Bắt buộc bọc mọi UI Loader / Dialog trong khối `finally` (`hideLoader()`), chống kẹt màn hình vĩnh viễn khi có ngoại lệ; cấm fake success; bắt buộc có UI Error State kèm nút Thử lại (Retry path) thay vì nuốt lỗi thành Empty State.
   - **Async Gap & Framework Lifecycle (`15_state_lifecycle.md`)**: Thiết lập rào chắn `if (!mounted) return;` trong StatefulWidget và `if (isClosed) return;` trong Controller (GetX/Bloc/Notifier). Chuẩn hóa vòng đời GetX (`onClose()`, cấm tự chế `dispose()`, hủy toàn bộ `Worker` debounce/ever). Cấm triệt để side-effects trong phương thức `build()`.

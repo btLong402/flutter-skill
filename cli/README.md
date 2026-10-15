@@ -38,7 +38,7 @@ flutter-pro-max init
 
 ### 1. `flutter-pro-max init` (Khởi tạo Skill & Rules)
 
-Cài đặt skill, bộ 22 Modular Rules và tự động bảo vệ `.gitignore`:
+Cài đặt bộ đôi skill (Flutter Code Intelligence & Mobile-Tablet UI/UX Audit), bộ 23 Modular Rules và tự động bảo vệ `.gitignore`:
 
 ```bash
 # Chế độ tương tác (tự động nhận diện trợ lý AI)
@@ -245,10 +245,11 @@ cli/
 ├── assets/                   # Bản sao canonical đồng bộ 100% từ src/
 │   ├── data/                 # 18 CSV datasets + metadata governance
 │   ├── scripts/              # Python search engine & design system generator
-│   └── templates/
-│       ├── base/             # Base skill markdown templates & 22 rules
-│       ├── tools/            # Makefile.template, Fastlane, Gitignore
-│       └── platforms/        # 16 platform JSON configuration files
+│   ├── skills/               # mobile-tablet-ux-audit skill package
+│   ├── templates/
+│   │   ├── base/             # Base skill markdown templates & 23 rules
+│   │   ├── tools/            # Makefile.template, Fastlane, Gitignore
+│   │   └── platforms/        # 16 platform JSON configuration files
 ├── package.json
 └── tsconfig.json
 ```
@@ -259,7 +260,15 @@ cli/
 
 Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](CHANGELOG.md)**.
 
-### [v2.7.0] - 2026-09-10 (Latest)
+### [v2.8.0] - 2026-10-15 (Latest)
+- **🎨 Tích hợp Skill mới: Mobile & Tablet UI/UX Audit (`mobile-tablet-ux-audit`)**: Đóng gói bộ công cụ audit UI/UX chuyên sâu vào CLI: `score.py` (chấm điểm định lượng 10 tiêu chí mobile+tablet, hard caps, backlog ưu tiên), `contrast.py` (đo độ tương phản WCAG 2.x, gợi ý màu), rubric checklist, và 41 automated unit tests.
+- **🧠 23 Modular Rules (Rule 23: UI/UX Audit & Quality Governance)**: Quy chuẩn hóa kiểm thử giao diện định lượng, bằng chứng thực chứng, layout thích ứng tablet $\ge 600\text{dp}$ với NavigationRail & List-Detail.
+- **⚡ Context-Aware Skill Usage & Fast-Path Routing (Rule 01)**: Phân luồng thông minh: Full-Flight cho tính năng mới/kiến trúc/audit, Fast-Path đi tắt cho hotfix nhỏ (< 15 dòng)/typo/config.
+- **🔄 SDLC 8 bước tích hợp UI/UX Audit (Rule 20)**: Gắn kết bước kiểm thử UI/UX định lượng vào Step 3 và Step 7.
+- **🚀 CLI Dual-Skill Auto-Installer**: Lệnh `flutter-pro-max init` tự động cài đặt song song cả 2 skills (`flutter-pro-max` + `mobile-tablet-ux-audit`) và 23 rules cho toàn bộ 16 trợ lý AI.
+- **🧪 Mở rộng Test Suite lên 85 tests**: Đạt tỷ lệ vượt qua 100% trên toàn bộ các bộ kiểm thử tự động.
+
+### [v2.7.0] - 2026-09-10
 - **🛡️ Production Hardening & Code Sentinel Audit Compliance**: Nâng cấp toàn diện 6 bộ quy tắc cốt lõi dựa trên thực tiễn quét mã nguồn dự án sản xuất (Code Sentinel SAST Audit):
   - **Guaranteed UI Cleanup (`05_error_handling.md`)**: Bắt buộc bọc mọi UI Loader / Dialog trong khối `finally` (`hideLoader()`), chống kẹt màn hình vĩnh viễn khi có ngoại lệ; cấm fake success; bắt buộc có UI Error State kèm nút Thử lại (Retry path) thay vì nuốt lỗi thành Empty State.
   - **Async Gap & Framework Lifecycle (`15_state_lifecycle.md`)**: Thiết lập rào chắn `if (!mounted) return;` trong StatefulWidget và `if (isClosed) return;` trong Controller (GetX/Bloc/Notifier). Chuẩn hóa vòng đời GetX (`onClose()`, cấm tự chế `dispose()`, hủy toàn bộ `Worker` debounce/ever). Cấm triệt để side-effects trong phương thức `build()`.

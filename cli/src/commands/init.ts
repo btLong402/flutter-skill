@@ -78,13 +78,14 @@ export async function initCommand(options: InitOptions): Promise<void> {
         }
 
         console.log();
-        logger.success('Flutter Pro Max Skill installed successfully!');
+        logger.success('Flutter Skills (Code Intelligence & UI/UX Audit) + 23 Rules installed successfully!');
 
         // Next steps
         console.log();
         console.log(chalk.bold('Next steps:'));
         console.log(chalk.dim('  1. Restart your AI coding assistant'));
-        console.log(chalk.dim('  2. Try: "Tạo màn hình đăng nhập với Riverpod"'));
+        console.log(chalk.dim('  2. Code Intelligence: Try "Tạo màn hình đăng nhập với Riverpod"'));
+        console.log(chalk.dim('  3. UI/UX Audit: Try "Đánh giá và audit UI/UX màn hình này trên mobile & tablet"'));
         console.log();
     } catch (error) {
         spinner.fail('Installation failed');

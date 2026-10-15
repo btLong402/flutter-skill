@@ -342,51 +342,81 @@ globs: lib/**/*.dart  # Áp dụng cho files nào
 
 ---
 
-# Rule: Tự động sử dụng Skill
+# Rule: Tự Động Sử Dụng Skill Theo Ngữ Cảnh
 
-> Kích hoạt: Khi làm việc với các tệp tin Flutter/Dart hoặc chuẩn bị kiến trúc
+> Kích hoạt: Khi làm việc với mã nguồn Flutter/Dart, thiết kế kiến trúc, hoặc review/audit giao diện UI/UX.
 
-**TRƯỚC KHI viết bất kỳ đoạn code Flutter nào**, bạn **BẮT BUỘC** phải tự động sử dụng skill để tra cứu kiến thức và mẫu thiết kế phù hợp. Tuyệt đối không được bỏ qua bước này.
+Tùy theo **bản chất nhiệm vụ (Task Type)**, bạn cần tự động kích hoạt skill và công cụ phù hợp nhằm cân bằng tối ưu giữa **chất lượng mã nguồn** và **tốc độ phản hồi**:
 
 ---
 
-## 1. Bảng Tra Cứu Domain theo Tình Huống
+## 1. Phân Luồng Kích Hoạt (Routing Matrix)
 
-| Tình huống kỹ thuật | Domains cần tra cứu (`search.py`) |
+### 🔴 Luồng BẮT BUỘC dùng Skill (Full Flight)
+*Bắt buộc phải tra cứu skill trước khi sinh mã hoặc khi thực hiện kiểm định:*
+- **Tạo UI / Màn hình mới (Greenfield):** Bắt buộc tra cứu `style`, `pattern`, `color`, `typography` hoặc dùng `--design-system` để sinh design system chuẩn.
+- **Thiết kế kiến trúc / Chọn Package:** Tra cứu `architect`, `package` (kèm cờ lọc `--stack` nếu có).
+- **Tối ưu hiệu năng & Bộ nhớ:** Tra cứu `performance`.
+- **Audit / Review UI/UX & Responsive Tablet:** Bắt buộc kích hoạt skill `mobile-tablet-ux-audit` (`score.py`, `contrast.py`, rubric).
+- **Tái cấu trúc lớn (Major Refactoring):** Tra cứu pattern kiến trúc để tránh logic leakage.
+
+### ⚡ Luồng ĐI TẮT (Fast-Path — Không ép buộc tra cứu)
+*Cho phép phân tích và sửa trực tiếp dựa trên ngữ cảnh file hiện hữu:*
+- **Hotfix cục bộ (< 15 dòng):** Sửa lỗi null-safety, sửa chính tả/copy text, sửa logic if-else đơn giản đã rõ nguyên nhân.
+- **Tái cấu trúc vi mô (Local Refactor):** Đổi tên biến, tách private helper widget trong cùng 1 file, format code.
+- **Hỏi đáp & Giải thích code:** Khi người dùng chỉ yêu cầu giải thích luồng hoạt động mà không yêu cầu tìm kiếm giải pháp mới.
+
+---
+
+## 2. Bảng Tra Cứu Công Cụ & Domain theo Tình Huống
+
+| Tình huống kỹ thuật | Công cụ / Domains cần tra cứu |
 | :--- | :--- |
-| **Tạo UI / Màn hình mới** | `style`, `pattern`, `color`, `typography`, `landing` |
-| **Chọn package / Thư viện** | `package` (kèm cờ lọc `--stack` nếu có) |
-| **Thiết kế kiến trúc** | `architect`, `pattern` |
-| **Tối ưu hiệu năng** | `performance` |
-| **Khả năng tiếp cận** | `accessibility` |
-| **Chưa rõ phong cách UI** | Dùng `--design-system` để sinh design system chuẩn |
+| **Tạo UI / Màn hình mới** | `search.py`: `style`, `pattern`, `color`, `typography`, `landing` |
+| **Chọn package / Thư viện** | `search.py`: `package` (kèm cờ lọc `--stack` nếu có) |
+| **Thiết kế kiến trúc** | `search.py`: `architect`, `pattern` |
+| **Tối ưu hiệu năng** | `search.py`: `performance` |
+| **Khả năng tiếp cận** | `search.py`: `accessibility` & skill `mobile-tablet-ux-audit` |
+| **Chưa rõ phong cách UI** | `search.py`: `--design-system` để sinh design system chuẩn |
+| **Kiểm tra tương phản màu** | Skill `mobile-tablet-ux-audit`: `python3 contrast.py <fg> <bg>` |
+| **Audit & chấm điểm UI/UX** | Skill `mobile-tablet-ux-audit`: `python3 score.py scorecard.json` |
+| **Review Tablet / Adaptive** | Skill `mobile-tablet-ux-audit`: Rubric 10 tiêu chí cho mobile + tablet |
 
 ---
 
-## 2. Quy Trình Bắt Buộc (Workflow)
+## 3. Quy Trình Thực Hiện (Workflow)
 
 ```
-Yêu cầu người dùng 
+Yêu cầu người dùng
     │
     ▼
-Xác định Task Type (Greenfield / Brownfield) theo Architecture Decision Matrix (Rule 19)
+Phân loại Task Type: Hotfix nhỏ / Fast-Path hay Tính năng mới / Kiến trúc / Audit?
+    ├── [Fast-Path (<15 dòng, typo, bug cục bộ)] ──────────┐
+    │                                                      │
+    ▼ [Full Flight]                                        │
+Xác định Task Type theo Architecture Decision Matrix (R19) │
+    │                                                      │
+    ▼                                                      │
+Khai báo Pre-Flight Compliance Block (R02)                 │
+    │                                                      │
+    ▼                                                      │
+Tra cứu Skill Code (search.py) & UI/UX Audit (R23)         │
+    │                                                      │
+    ▼                                                      │
+Đọc & phân tích kết quả tra cứu                            │
+    │                                                      │
+    ▼                                                      │
+Triển khai vào mã nguồn Dart thực tế ◄─────────────────────┘
     │
     ▼
-Khai báo Pre-Flight Compliance Block (Rule 02)
-    │
-    ▼
-Tra cứu Skill (search.py với ≥ 2 domains)
-    │
-    ▼
-Đọc và phân tích kết quả tra cứu
-    │
-    ▼
-Triển khai vào mã nguồn Dart thực tế
+Audit UI/UX định lượng (nếu có thay đổi UI) → Sửa backlog ưu tiên (Rule 23)
 ```
 
-> 📖 **Tham chiếu:** [`19_architecture_decision_matrix.md`](file:///Users/longbt/Documents/dev/private/flutter-skill/src/flutter-pro-max/templates/base/rules/19_architecture_decision_matrix.md) để xác định đúng chiến lược kiến trúc và phạm vi tái cấu trúc trước khi sinh mã.
+> 📖 **Tham chiếu:**
+> - [`19_architecture_decision_matrix.md`](file:///Users/longbt/Documents/dev/private/flutter-skill/src/flutter-pro-max/templates/base/rules/19_architecture_decision_matrix.md) để xác định đúng chiến lược kiến trúc và phạm vi tái cấu trúc trước khi sinh mã.
+> - [`23_mobile_tablet_ux_audit.md`](file:///Users/longbt/Documents/dev/private/flutter-skill/src/flutter-pro-max/templates/base/rules/23_mobile_tablet_ux_audit.md) để thực hiện quy trình audit và tự cải thiện UI/UX có căn cứ định lượng.
 
-> 🔴 **CẢNH BÁO:** Viết code Flutter mà không tham khảo tri thức từ skill trước = Thiếu context chuẩn = Sinh mã chất lượng thấp và lỗi thời.
+> 🔴 **CẢNH BÁO:** Bỏ qua tra cứu khi làm tính năng mới = Thiếu context chuẩn = Sinh mã chất lượng thấp. Chế tác UI mà không audit tương phản và tablet = UI vỡ trên thiết bị thực tế.
 
 ---
 
@@ -1676,3 +1706,88 @@ extension LocalizationContext on BuildContext {
 ```
 
 > 💡 **Lợi ích:** Ứng dụng luôn sẵn sàng mở rộng ra thị trường quốc tế mà không phải tốn hàng tuần rà soát và bóc tách từng chuỗi text hardcode.
+
+---
+
+# Rule: Đánh Giá & Tự Cải Thiện Chất Lượng UI/UX (Mobile & Tablet)
+
+> Kích hoạt: Khi thiết kế, review, audit, refactor giao diện UI Flutter, kiểm tra độ tương phản, khả năng tiếp cận (Accessibility), hoặc điều chỉnh layout thích ứng Tablet & màn hình lớn.
+
+Mọi đánh giá và cải thiện UI/UX phải là một quy trình kỹ thuật lặp lại được (**Evidence → Rubric Scoring → Prioritized Backlog → Fix → Re-audit**), tuyệt đối không nhận xét cảm tính hoặc ước lượng bằng mắt.
+
+---
+
+## 1. Nguyên Tắc Cốt Lõi (Core Principles)
+
+1. **Không bằng chứng, không điểm cao:**
+   - Mỗi đánh giá phải chỉ rõ màn hình (`screen`), phần tử (`element`) và số đo cụ thể (dp, contrast ratio, font size).
+   - Điểm $\ge 4.0/5$ bắt buộc phải có $\ge 2$ bằng chứng thực chứng.
+   - Chưa kiểm chứng được $\to$ chấm $3.0$ và gán `confidence: low` (công cụ `score.py` sẽ tự động chặn trần ở mức $3.5$).
+
+2. **Chấm riêng Mobile và Tablet:**
+   - Trải nghiệm Phone và Tablet hoàn toàn khác biệt. Tablet không được phép chỉ là UI điện thoại bị kéo giãn (stretched phone UI).
+   - Khi chiều rộng $\ge 600\text{dp}$: Bắt buộc dùng `NavigationRail` thay cho `BottomNavigationBar`, áp dụng layout List-Detail hoặc multi-pane.
+
+3. **Số liệu thắng cảm giác (Data > Intuition):**
+   - Đo tỉ lệ tương phản WCAG bằng `scripts/contrast.py`.
+   - Vùng chạm tối thiểu $48 \times 48\text{dp}$, khoảng cách giữa các interactive elements $\ge 8\text{dp}$.
+   - Đo chiều dài dòng văn bản trên tablet: Không vượt quá $60–80$ ký tự / dòng để đảm bảo khả năng đọc.
+
+4. **Vòng lặp tự cải thiện (Self-Improvement Loop):**
+   - Mỗi vòng sửa chỉ tập trung **3–5 lỗi hàng đầu** trong Backlog ưu tiên. Sửa quá nhiều một lúc sẽ gây khó khăn trong việc kiểm soát hồi quy (regression).
+   - Chấm lại độc lập: Sau khi sửa, ghi nhận bằng chứng mới và chấm lại từ đầu, không "tự cộng thêm điểm" dựa trên scorecard cũ.
+
+---
+
+## 2. Công Thức Ưu Tiên Backlog (Prioritization Formula)
+
+Mỗi lỗi phát hiện được xếp hạng tự động trong `score.py` theo công thức:
+
+$$\text{Priority} = \frac{\text{Severity} \times \text{Reach} \times \text{Dimension Weight}}{\text{Effort}}$$
+
+Trong đó:
+- **Severity (Mức độ nghiêm trọng):** `blocker: 8`, `major: 4`, `minor: 2`, `polish: 1`.
+- **Reach (Phạm vi ảnh hưởng):** `3` (toàn app / luồng chính), `2` (nhiều màn hình), `1` (màn hình phụ / góc khuất).
+- **Dimension Weight (Trọng số tiêu chí):** Từ $6$ đến $14$ điểm theo Rubric 10 tiêu chí.
+- **Effort (Công sức sửa):** `1` (dễ, sửa token/styling), `2` (trung bình), `3` (khó, tái cấu trúc layout/state).
+
+---
+
+## 3. Các Trần Điểm Chặn (Hard Score Caps)
+
+Dù tổng điểm thô cao, điểm cuối cùng của nền tảng sẽ bị chặn nếu vi phạm các ngưỡng tới hạn:
+- **Blocker còn mở:** Điểm tối đa bị chặn ở **59/100** (Hạng Kém).
+- **Có bất kỳ tiêu chí nào $\le 1.5/5$:** Điểm tối đa bị chặn ở **69/100** (Cần cải thiện).
+- **Khả năng tiếp cận (Accessibility) $< 3.0/5$:** Điểm tối đa bị chặn ở **79/100** (Đạt).
+
+---
+
+## 4. Quy Trình Sử Dụng Công Cụ
+
+### Bước 1: Kiểm tra tương phản màu (WCAG Contrast)
+```bash
+# Đo tương phản cặp màu đơn lẻ
+python3 scripts/contrast.py "#8A8A8E" "#FFFFFF" --size 14
+
+# Đo tương phản icon/viền UI
+python3 scripts/contrast.py "#9AA0A6" "#FFFFFF" --kind ui
+
+# Đo hàng loạt cặp màu từ file JSON
+python3 scripts/contrast.py --pairs pairs.json --json
+```
+
+### Bước 2: Chấm điểm Scorecard
+```bash
+# Chấm điểm và in báo cáo Markdown
+python3 scripts/score.py scorecard.json --out report.md --json-out summary.json
+
+# So sánh với vòng trước để phát hiện hồi quy
+python3 scripts/score.py scorecard.v1.json --previous scorecard.v0.json
+```
+
+### Bước 3: Đánh giá kết luận (Verdict)
+- **PASS:** Điểm tổng và từng nền tảng $\ge 85.0$, không còn lỗi blocker, mọi tiêu chí $\ge 3.5$.
+- **CONTINUE:** Chưa đạt mục tiêu $\to$ Lấy 3–5 lỗi đầu backlog để sửa tiếp.
+- **REVERT_RECOMMENDED:** Điểm tổng giảm hoặc có tiêu chí giảm $\ge 1.0$ điểm $\to$ Ngay lập tức kiểm tra và hoàn tác thay đổi gây hồi quy.
+- **PLATEAU_WARNING:** Điểm chỉ tăng $< 2.0$ điểm $\to$ Rà soát lại xem có đang giải quyết đúng nút thắt cổ chai hay không.
+

@@ -273,7 +273,68 @@ export async function generatePlatformFiles(
     // Generate rules file (standalone, separate from skill)
     await generateRulesFile(targetDir, config);
 
+    // Install mobile-tablet-ux-audit skill alongside flutter-pro-max
+    await installUxAuditSkill(targetDir, config);
+
     return createdFolders;
+}
+
+/**
+ * Install mobile-tablet-ux-audit skill alongside flutter-pro-max
+ */
+async function installUxAuditSkill(
+    targetDir: string,
+    config: PlatformConfig
+): Promise<void> {
+    const uxAuditSource = join(ASSETS_DIR, 'skills', 'mobile-tablet-ux-audit');
+    if (!await exists(uxAuditSource)) return;
+
+    if (config.installType === 'full') {
+        const rootSkillDir = join(
+            targetDir,
+            config.folderStructure.root,
+            'skills',
+            'mobile-tablet-ux-audit'
+        );
+        await mkdir(rootSkillDir, { recursive: true });
+        await cp(uxAuditSource, rootSkillDir, { recursive: true });
+    } else {
+        // Reference install: copy full skill to .shared/mobile-tablet-ux-audit
+        const sharedAuditDir = join(targetDir, '.shared', 'mobile-tablet-ux-audit');
+        await mkdir(sharedAuditDir, { recursive: true });
+        await cp(uxAuditSource, sharedAuditDir, { recursive: true });
+
+        // Platform-specific references
+        if (config.platform === 'cursor') {
+            const cursorSkillDir = join(targetDir, '.cursor', 'skills', 'mobile-tablet-ux-audit');
+            await mkdir(cursorSkillDir, { recursive: true });
+            await cp(uxAuditSource, cursorSkillDir, { recursive: true });
+
+            const commandsDir = join(targetDir, '.cursor', 'commands');
+            await mkdir(commandsDir, { recursive: true });
+            const commandContent = `# Mobile + Tablet UI/UX Audit & Self-Improve\n\nChấm điểm UI/UX app mobile + tablet (thang 0–100, 10 tiêu chí) và tự cải thiện theo vòng lặp audit → sửa → chấm lại.\n\n## Cách dùng:\n1. Tạo hoặc cập nhật scorecard JSON theo template tại \`.shared/mobile-tablet-ux-audit/assets/scorecard.template.json\`\n2. Chấm điểm: \`python3 .shared/mobile-tablet-ux-audit/scripts/score.py scorecard.json\`\n3. Đo tương phản màu WCAG: \`python3 .shared/mobile-tablet-ux-audit/scripts/contrast.py "#8A8A8E" "#FFFFFF" --size 14\`\n4. Tham chiếu rubric tại \`.shared/mobile-tablet-ux-audit/references/rubric.md\`\n`;
+            await writeFile(join(commandsDir, 'mobile-tablet-ux-audit.md'), commandContent, 'utf-8');
+        } else if (config.platform === 'windsurf') {
+            const windsurfSkillsDir = join(targetDir, '.windsurf', 'skills');
+            await mkdir(windsurfSkillsDir, { recursive: true });
+            const skillContent = `# Mobile + Tablet UI/UX Audit\n\nChấm điểm UI/UX app mobile + tablet theo vòng lặp audit → sửa → chấm lại.\nTham chiếu: \`.shared/mobile-tablet-ux-audit/SKILL.md\`\nChạy: \`python3 .shared/mobile-tablet-ux-audit/scripts/score.py scorecard.json\`\n`;
+            await writeFile(join(windsurfSkillsDir, 'mobile-tablet-ux-audit.md'), skillContent, 'utf-8');
+        } else if (config.platform === 'roocode') {
+            const rooCommandsDir = join(targetDir, '.roo', 'commands');
+            await mkdir(rooCommandsDir, { recursive: true });
+            const rooContent = `# Mobile + Tablet UI/UX Audit\n\nChấm điểm UI/UX app mobile + tablet: \`python3 .shared/mobile-tablet-ux-audit/scripts/score.py scorecard.json\`\n`;
+            await writeFile(join(rooCommandsDir, 'mobile-tablet-ux-audit.md'), rooContent, 'utf-8');
+        } else if (config.platform === 'kiro') {
+            const kiroDir = join(targetDir, '.kiro', 'steering');
+            await mkdir(kiroDir, { recursive: true });
+            const kiroContent = `# Mobile + Tablet UI/UX Audit\n\nChấm điểm UI/UX app mobile + tablet: \`python3 .shared/mobile-tablet-ux-audit/scripts/score.py scorecard.json\`\n`;
+            await writeFile(join(kiroDir, 'mobile-tablet-ux-audit.md'), kiroContent, 'utf-8');
+        } else if (config.platform === 'qoder') {
+            const qoderSkillsDir = join(targetDir, '.qoder', 'skills', 'mobile-tablet-ux-audit');
+            await mkdir(qoderSkillsDir, { recursive: true });
+            await cp(uxAuditSource, qoderSkillsDir, { recursive: true });
+        }
+    }
 }
 
 /**

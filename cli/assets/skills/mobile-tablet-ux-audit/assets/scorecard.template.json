@@ -1,0 +1,157 @@
+{
+  "_hướng_dẫn": "Điền score (0–5, bước 0.5), confidence (low|medium|high), evidence (ID + quan sát). Xoá các khoá bắt đầu bằng '_' nếu muốn. Nếu app chỉ có mobile: platforms=['mobile'] và bỏ ô tablet.",
+  "app": "Tên app",
+  "iteration": 0,
+  "platforms": [
+    "mobile",
+    "tablet"
+  ],
+  "evidence_modes": [
+    "screenshots",
+    "code",
+    "running_app",
+    "figma"
+  ],
+  "device_matrix": [
+    "P-S 360x640",
+    "P-L 430x932",
+    "T-P 834x1194",
+    "T-L 1194x834"
+  ],
+  "scores": {
+    "visual_hierarchy_layout": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "typography": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "color_contrast": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "navigation_ia": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "touch_interaction": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "feedback_states_motion": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "accessibility": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "consistency_design_system": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "content_microcopy": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "adaptive_responsive": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "XX-01",
+      "dimension": "touch_interaction",
+      "platform": "both",
+      "severity": "major",
+      "screen": "Tên màn hình",
+      "description": "Mô tả cụ thể, có số đo/vị trí",
+      "fix": "Cách sửa cụ thể",
+      "effort": 2,
+      "reach": 2,
+      "status": "open"
+    }
+  ]
+}

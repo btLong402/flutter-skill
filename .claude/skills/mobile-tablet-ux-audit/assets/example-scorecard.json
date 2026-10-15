@@ -1,0 +1,282 @@
+{
+  "app": "ShopNow (ví dụ minh hoạ)",
+  "iteration": 0,
+  "platforms": [
+    "mobile",
+    "tablet"
+  ],
+  "evidence_modes": [
+    "screenshots",
+    "code"
+  ],
+  "device_matrix": [
+    "P-M 390x844",
+    "T-L 1194x834"
+  ],
+  "scores": {
+    "visual_hierarchy_layout": {
+      "mobile": {
+        "score": 3.5,
+        "confidence": "high",
+        "evidence": [
+          "S-home-P-M: CTA 'Mua ngay' nổi bật, 1 hành động chính",
+          "S-cart-P-M: spacing theo thang 8dp"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "high",
+        "evidence": [
+          "S-home-T-L: nội dung một cột trải 1100dp, khoảng trống thừa",
+          "S-cart-T-L: nút Thanh toán rộng 900dp"
+        ]
+      }
+    },
+    "typography": {
+      "mobile": {
+        "score": 3.5,
+        "confidence": "medium",
+        "evidence": [
+          "S-home-P-M: body 16sp, tiêu đề rõ",
+          "C-theme.dart:20: có TextTheme"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "medium",
+        "evidence": [
+          "S-home-T-L: dòng mô tả dài ~140 ký tự"
+        ]
+      }
+    },
+    "color_contrast": {
+      "mobile": {
+        "score": 3.0,
+        "confidence": "high",
+        "evidence": [
+          "X-caption: #9A9A9A trên #FFF = 2.8:1 (trượt)",
+          "X-body: #1C1C1E trên #FFF = 17:1"
+        ]
+      },
+      "tablet": {
+        "score": 3.0,
+        "confidence": "high",
+        "evidence": [
+          "X-caption: như mobile",
+          "S-home-T-L: cùng palette"
+        ]
+      }
+    },
+    "navigation_ia": {
+      "mobile": {
+        "score": 3.5,
+        "confidence": "medium",
+        "evidence": [
+          "S-home-P-M: bottom bar 4 mục, rõ mục đang chọn",
+          "C-app_shell.dart:30: dùng NavigationBar"
+        ]
+      },
+      "tablet": {
+        "score": 2.0,
+        "confidence": "high",
+        "evidence": [
+          "S-home-T-L: vẫn bottom bar rộng 1194dp, không rail/sidebar"
+        ]
+      }
+    },
+    "touch_interaction": {
+      "mobile": {
+        "score": 2.5,
+        "confidence": "high",
+        "evidence": [
+          "R-uiautomator-home: 6 icon-button cao 36dp",
+          "S-cart-P-M: nút Xoá sát nút Số lượng (4dp)"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "medium",
+        "evidence": [
+          "C-icon_button.dart:12: size 36 cố định cho mọi màn"
+        ]
+      }
+    },
+    "feedback_states_motion": {
+      "mobile": {
+        "score": 2.5,
+        "confidence": "medium",
+        "evidence": [
+          "S-home-P-M: có spinner nhưng không skeleton",
+          "S-error-P-M: 'Đã xảy ra lỗi' không có nút thử lại"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "low",
+        "evidence": [
+          "Chưa có bằng chứng riêng cho tablet"
+        ]
+      }
+    },
+    "accessibility": {
+      "mobile": {
+        "score": 2.5,
+        "confidence": "high",
+        "evidence": [
+          "R-uiautomator-home: 9 element clickable thiếu content-desc",
+          "S-home-P-M font 2.0: tiêu đề card bị cắt"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "medium",
+        "evidence": [
+          "C-theme.dart:5: allowFontScaling bị tắt ở 3 chỗ"
+        ]
+      }
+    },
+    "consistency_design_system": {
+      "mobile": {
+        "score": 3.0,
+        "confidence": "medium",
+        "evidence": [
+          "C-lib/ui: 41 màu hex hardcode trong màn hình",
+          "C-theme.dart:12: có ColorScheme"
+        ]
+      },
+      "tablet": {
+        "score": 3.0,
+        "confidence": "medium",
+        "evidence": [
+          "Cùng codebase với mobile"
+        ]
+      }
+    },
+    "content_microcopy": {
+      "mobile": {
+        "score": 3.5,
+        "confidence": "high",
+        "evidence": [
+          "S-cart-P-M: nút 'Đặt hàng' rõ ràng",
+          "S-error-P-M: lỗi chung chung"
+        ]
+      },
+      "tablet": {
+        "score": 3.5,
+        "confidence": "high",
+        "evidence": [
+          "Cùng nội dung với mobile"
+        ]
+      }
+    },
+    "adaptive_responsive": {
+      "mobile": {
+        "score": 3.0,
+        "confidence": "medium",
+        "evidence": [
+          "S-home-P-M: ổn; chưa kiểm P-S",
+          "C-main.dart:18: không khoá orientation"
+        ]
+      },
+      "tablet": {
+        "score": 1.5,
+        "confidence": "high",
+        "evidence": [
+          "S-home-T-L: UI phone bị kéo giãn",
+          "C-main.dart:22: setPreferredOrientations(portrait) chỉ cho phone, tablet bị khoá dọc"
+        ]
+      }
+    }
+  },
+  "issues": [
+    {
+      "id": "AD-01",
+      "dimension": "adaptive_responsive",
+      "platform": "tablet",
+      "severity": "major",
+      "screen": "Toàn app",
+      "description": "Tablet bị khoá orientation dọc và dùng UI phone kéo giãn",
+      "fix": "Gỡ khoá orientation; thêm bố cục theo window size class (rail + list-detail ở ≥600dp)",
+      "effort": 3,
+      "reach": 3
+    },
+    {
+      "id": "NV-01",
+      "dimension": "navigation_ia",
+      "platform": "tablet",
+      "severity": "major",
+      "screen": "Shell",
+      "description": "Bottom bar rộng ~1194dp trên tablet ngang",
+      "fix": "Chuyển NavigationRail khi width ≥ 600dp",
+      "effort": 2,
+      "reach": 3
+    },
+    {
+      "id": "TC-01",
+      "dimension": "touch_interaction",
+      "platform": "both",
+      "severity": "major",
+      "screen": "Home, Cart",
+      "description": "IconButton mặc định 36dp (6 chỗ ở Home); nút Xoá và Số lượng cách nhau 4dp",
+      "fix": "Đặt min 48dp ở AppIconButton; tách Xoá ra menu hoặc cách ≥ 8dp",
+      "effort": 1,
+      "reach": 3
+    },
+    {
+      "id": "AC-01",
+      "dimension": "accessibility",
+      "platform": "both",
+      "severity": "major",
+      "screen": "Home, Cart",
+      "description": "9 icon-button không có nhãn truy cập",
+      "fix": "Thêm Semantics/contentDescription mô tả hành động",
+      "effort": 1,
+      "reach": 3
+    },
+    {
+      "id": "AC-02",
+      "dimension": "accessibility",
+      "platform": "both",
+      "severity": "minor",
+      "screen": "Home",
+      "description": "Font scale 2.0 làm tiêu đề card bị cắt",
+      "fix": "Bỏ height cố định, cho tiêu đề xuống dòng, minHeight",
+      "effort": 2,
+      "reach": 2
+    },
+    {
+      "id": "CC-01",
+      "dimension": "color_contrast",
+      "platform": "both",
+      "severity": "major",
+      "screen": "Toàn app",
+      "description": "Caption #9A9A9A trên trắng = 2.8:1",
+      "fix": "Đổi token caption sang màu đạt ≥ 4.5:1 (contrast.py gợi ý #767676)",
+      "effort": 1,
+      "reach": 3
+    },
+    {
+      "id": "FS-01",
+      "dimension": "feedback_states_motion",
+      "platform": "mobile",
+      "severity": "minor",
+      "screen": "Error",
+      "description": "Thông báo lỗi chung chung, không có nút thử lại",
+      "fix": "Nêu nguyên nhân + nút Thử lại, giữ dữ liệu đã nhập",
+      "effort": 1,
+      "reach": 2
+    },
+    {
+      "id": "CS-01",
+      "dimension": "consistency_design_system",
+      "platform": "both",
+      "severity": "minor",
+      "screen": "lib/ui",
+      "description": "41 màu hex hardcode trong màn hình",
+      "fix": "Chuyển về ColorScheme/token",
+      "effort": 2,
+      "reach": 3,
+      "status": "open"
+    }
+  ]
+}
