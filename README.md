@@ -518,7 +518,14 @@ Inspired by [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-sk
 
 Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](CHANGELOG.md)**.
 
-### [v2.8.0] - 2026-10-15 (Latest)
+### [v2.9.0] - 2026-10-16 (Latest)
+- **📡 Telemetry & Knowledge Gap Feedback Loop**: Tự động phát hiện thiếu hụt tri thức và tiêu chí đánh giá khi người dùng hoặc AI tra cứu không thấy kết quả (`count == 0`), độ khớp BM25 gượng ép (`token_coverage < 0.35` hoặc điểm thấp), xung đột công nghệ (stack incompatibility), hoặc tiêu chí UI/UX chưa có.
+- **🔒 Privacy-First Data Sanitization**: Cơ chế làm sạch dữ liệu tự động cực kỳ nghiêm ngặt: loại bỏ đường dẫn file local, email, token bảo mật/API key, IP; cắt ngắn tối đa 200 ký tự. Tôn trọng tuyệt đối cờ `DO_NOT_TRACK=1` và `FLUTTER_PRO_MAX_TELEMETRY=0`.
+- **☁️ Cloudflare Worker & D1 SQL Storage**: Hạ tầng serverless zero-cost với Cloudflare D1 lưu trữ lên tới 5 GB (100k lượt ghi/ngày), tổng hợp gộp `hit_count` (UPSERT) chống trùng lặp, bảo vệ chống spam (Rate limit 30 req/phút/IP), tích hợp Webhook Discord/Telegram và Web Dashboard theo dõi trực quan.
+- **⚡ Async Non-Blocking Daemon**: Dispatch bất đồng bộ hoàn toàn trong luồng ngầm daemon với thời gian timeout ngắn (1.5s) và cơ chế `atexit` graceful flush (1.0s), không gây chậm hay gián đoạn quá trình làm việc của lập trình viên.
+- **🚩 Cờ `--report-gap` (`-rg`)**: Cho phép người dùng và AI chủ động gửi góp ý về tri thức còn thiếu hoặc tiêu chí audit cần bổ sung trực tiếp từ terminal.
+
+### [v2.8.0] - 2026-10-15
 - **🎨 Tích hợp Skill mới: Mobile & Tablet UI/UX Audit (`mobile-tablet-ux-audit`)**: Đóng gói bộ công cụ audit UI/UX chuyên sâu vào CLI: `score.py` (chấm điểm định lượng 10 tiêu chí mobile+tablet, hard caps, backlog ưu tiên), `contrast.py` (đo độ tương phản WCAG 2.x, gợi ý màu), rubric checklist, và 41 automated unit tests.
 - **🧠 23 Modular Rules (Rule 23: UI/UX Audit & Quality Governance)**: Quy chuẩn hóa kiểm thử giao diện định lượng, bằng chứng thực chứng, layout thích ứng tablet $\ge 600\text{dp}$ với NavigationRail & List-Detail.
 - **⚡ Context-Aware Skill Usage & Fast-Path Routing (Rule 01)**: Phân luồng thông minh: Full-Flight cho tính năng mới/kiến trúc/audit, Fast-Path đi tắt cho hotfix nhỏ (< 15 dòng)/typo/config.

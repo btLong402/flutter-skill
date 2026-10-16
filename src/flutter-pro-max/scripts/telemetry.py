@@ -32,7 +32,7 @@ from typing import Any
 from urllib import request, error
 
 # ============ CONFIGURATION ============
-VERSION = "2.8.0"
+VERSION = "2.9.0"
 DEFAULT_TIMEOUT_SECONDS = 1.5
 DEFAULT_ENDPOINT = "https://flutter-pro-max-telemetry.longbt.workers.dev/api/telemetry"
 CONFIG_DIR = Path.home() / ".flutter-pro-max"

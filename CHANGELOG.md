@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.9.0] - 2026-10-16
+
+### Added & Upgraded
+- **📡 Telemetry & Knowledge Gap Feedback Loop**:
+  - Tự động phát hiện khoảng trống tri thức khi tra cứu skill `flutter-pro-max`:
+    - Truy vấn không có kết quả (`count == 0`).
+    - Tìm kiếm gượng ép / kết quả yếu (`token_coverage < 0.35` hoặc điểm BM25 thấp `< 4.5`).
+    - Xung đột công nghệ (stack incompatibility: ví dụ `bloc` + `getx`, `riverpod` + `provider`).
+  - Tự động phát hiện thiếu tiêu chí đánh giá trong skill `mobile-tablet-ux-audit` khi người dùng nhập dimension không nằm trong 10 tiêu chí chuẩn.
+  - Bổ sung cờ `--report-gap` (`-rg`) trong `search.py` và `score.py` cho phép chủ động gửi phản hồi tri thức/tiêu chí còn thiếu.
+- **🔒 Privacy-First Data Sanitization**:
+  - Module `telemetry.py` chuẩn hóa zero-dependency bằng thư viện chuẩn Python `urllib.request`.
+  - Cơ chế thanh lọc thông tin nhạy cảm trước khi gửi đi:
+    - Loại bỏ đường dẫn file nội bộ (Windows/Unix paths).
+    - Che địa chỉ Email, mã khóa API/Secret tokens/Bearer tokens, địa chỉ IPv4/IPv6.
+    - Cắt ngắn nội dung query tối đa 200 ký tự.
+  - Tôn trọng tuyệt đối tiêu chuẩn quyền riêng tư của developer: Tắt hoàn toàn khi có `DO_NOT_TRACK=1` hoặc `FLUTTER_PRO_MAX_TELEMETRY=0`.
+  - Fallback lưu trữ cục bộ tại `~/.flutter-pro-max/gaps.jsonl` khi mất mạng hoặc không kết nối được server.
+- **☁️ Cloudflare Worker & D1 Database Ingestion**:
+  - Endpoint serverless hiệu năng cao `POST /api/telemetry` trên Cloudflare Worker.
+  - Lưu trữ cơ sở dữ liệu quan hệ Cloudflare D1 (5 GB dung lượng miễn phí, 100.000 lượt ghi/ngày).
+  - Thuật toán tổng hợp gộp UPSERT: cùng một câu truy vấn/tiêu chí thiếu sẽ tự động tăng `hit_count` và cập nhật `last_seen_at` thay vì tạo dòng mới, tối ưu triệt để dung lượng và số lần ghi.
+  - Bộ giới hạn tần suất (Rate Limiter) 30 requests/phút/IP và chặn payload quá 10 KB.
+  - Tích hợp Webhook thông báo Discord/Telegram và Web Dashboard trực quan hiển thị top tri thức cần bổ sung.
+- **⚡ Async Non-Blocking Daemon & Exit Grace Flush**:
+  - Gửi dữ liệu trong background daemon thread với timeout ngắn (1.5s).
+  - Cơ chế `atexit` graceful flush (1.0s) đảm bảo các tiến trình CLI ngắn hạn không bị dừng đột ngột trước khi hoàn thành gửi gói tin.
+- **🔗 NPM Relative Link Fix**:
+  - Chuyển toàn bộ liên kết tương đối (`CHANGELOG.md`, `LICENSE`) trong `cli/README.md` sang đường dẫn tuyệt đối GitHub để khắc phục lỗi 404 trên npmjs.com.
+
 ## [2.8.0] - 2026-10-15
 
 ### Added & Upgraded

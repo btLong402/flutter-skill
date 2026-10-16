@@ -5,10 +5,10 @@
 [![npm version](https://img.shields.io/npm/v/flutter-pro-max-cli.svg)](https://www.npmjs.com/package/flutter-pro-max-cli)
 [![Downloads](https://img.shields.io/npm/dm/flutter-pro-max-cli.svg)](https://www.npmjs.com/package/flutter-pro-max-cli)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)](https://nodejs.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/btLong402/flutter-skill/blob/main/LICENSE)
 [![CI/CD](https://github.com/btLong402/flutter-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/btLong402/flutter-skill/actions/workflows/ci.yml)
 
-[Quick Start](#-quick-start) | [Commands](#-commands--usage) | [Supported Assistants](#-supported-ai-assistants) | [Architecture & Features](#-architecture--features) | [Changelog](CHANGELOG.md)
+[Quick Start](#-quick-start) | [Commands](#-commands--usage) | [Supported Assistants](#-supported-ai-assistants) | [Architecture & Features](#-architecture--features) | [Changelog](https://github.com/btLong402/flutter-skill/blob/main/CHANGELOG.md)
 
 ---
 
@@ -272,9 +272,16 @@ CLI và các scripts đi kèm tích hợp cơ chế thu thập phản hồi ẩn
 
 ## 📝 Changelog
 
-Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](CHANGELOG.md)**.
+Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](https://github.com/btLong402/flutter-skill/blob/main/CHANGELOG.md)**.
 
-### [v2.8.0] - 2026-10-15 (Latest)
+### [v2.9.0] - 2026-10-16 (Latest)
+- **📡 Telemetry & Knowledge Gap Feedback Loop**: Tự động phát hiện thiếu hụt tri thức và tiêu chí đánh giá khi người dùng hoặc AI tra cứu không thấy kết quả (`count == 0`), độ khớp BM25 gượng ép (`token_coverage < 0.35` hoặc điểm thấp), xung đột công nghệ (stack incompatibility), hoặc tiêu chí UI/UX chưa có.
+- **🔒 Privacy-First Data Sanitization**: Cơ chế làm sạch dữ liệu tự động cực kỳ nghiêm ngặt: loại bỏ đường dẫn file local, email, token bảo mật/API key, IP; cắt ngắn tối đa 200 ký tự. Tôn trọng tuyệt đối cờ `DO_NOT_TRACK=1` và `FLUTTER_PRO_MAX_TELEMETRY=0`.
+- **☁️ Cloudflare Worker & D1 SQL Storage**: Hạ tầng serverless zero-cost với Cloudflare D1 lưu trữ lên tới 5 GB (100k lượt ghi/ngày), tổng hợp gộp `hit_count` (UPSERT) chống trùng lặp, bảo vệ chống spam (Rate limit 30 req/phút/IP), tích hợp Webhook Discord/Telegram và Web Dashboard theo dõi trực quan.
+- **⚡ Async Non-Blocking Daemon**: Dispatch bất đồng bộ hoàn toàn trong luồng ngầm daemon với thời gian timeout ngắn (1.5s) và cơ chế `atexit` graceful flush (1.0s), không gây chậm hay gián đoạn quá trình làm việc của lập trình viên.
+- **🚩 Cờ `--report-gap` (`-rg`)**: Cho phép người dùng và AI chủ động gửi góp ý về tri thức còn thiếu hoặc tiêu chí audit cần bổ sung trực tiếp từ terminal.
+
+### [v2.8.0] - 2026-10-15
 - **🎨 Tích hợp Skill mới: Mobile & Tablet UI/UX Audit (`mobile-tablet-ux-audit`)**: Đóng gói bộ công cụ audit UI/UX chuyên sâu vào CLI: `score.py` (chấm điểm định lượng 10 tiêu chí mobile+tablet, hard caps, backlog ưu tiên), `contrast.py` (đo độ tương phản WCAG 2.x, gợi ý màu), rubric checklist, và 41 automated unit tests.
 - **🧠 23 Modular Rules (Rule 23: UI/UX Audit & Quality Governance)**: Quy chuẩn hóa kiểm thử giao diện định lượng, bằng chứng thực chứng, layout thích ứng tablet $\ge 600\text{dp}$ với NavigationRail & List-Detail.
 - **⚡ Context-Aware Skill Usage & Fast-Path Routing (Rule 01)**: Phân luồng thông minh: Full-Flight cho tính năng mới/kiến trúc/audit, Fast-Path đi tắt cho hotfix nhỏ (< 15 dòng)/typo/config.
@@ -283,19 +290,12 @@ Chi tiết toàn bộ lịch sử phát hành của các phiên bản được g
 - **🧪 Mở rộng Test Suite lên 85 tests**: Đạt tỷ lệ vượt qua 100% trên toàn bộ các bộ kiểm thử tự động.
 
 ### [v2.7.0] - 2026-09-10
-- **🛡️ Production Hardening & Code Sentinel Audit Compliance**: Nâng cấp toàn diện 6 bộ quy tắc cốt lõi dựa trên thực tiễn quét mã nguồn dự án sản xuất (Code Sentinel SAST Audit):
-  - **Guaranteed UI Cleanup (`05_error_handling.md`)**: Bắt buộc bọc mọi UI Loader / Dialog trong khối `finally` (`hideLoader()`), chống kẹt màn hình vĩnh viễn khi có ngoại lệ; cấm fake success; bắt buộc có UI Error State kèm nút Thử lại (Retry path) thay vì nuốt lỗi thành Empty State.
-  - **Async Gap & Framework Lifecycle (`15_state_lifecycle.md`)**: Thiết lập rào chắn `if (!mounted) return;` trong StatefulWidget và `if (isClosed) return;` trong Controller (GetX/Bloc/Notifier). Chuẩn hóa vòng đời GetX (`onClose()`, cấm tự chế `dispose()`, hủy toàn bộ `Worker` debounce/ever). Cấm triệt để side-effects trong phương thức `build()`.
-  - **Bảo mật File I/O & Network Hardening (`08_security.md`)**: Phòng vệ Path Traversal (`path.basename()` + regex sanitize), kiểm tra MIME type whitelist và kích thước file tối đa. Cấm bypass SSL trong WebView (`onReceivedServerTrustAuthRequest`), khóa domain allowlist và scheme https. Chuẩn hóa Log Masking (che token, password, Authorization header).
-  - **Chống Re-entrancy & Search Race Condition (`03_interaction_flow.md`)**: Tự động vô hiệu hóa nút bấm khi đang xử lý async (`isSubmitting` guard), chống pop kép trên confirmation dialog. Chuẩn hóa tìm kiếm thời gian thực với debounce (300–500ms) kết hợp `CancelToken` hủy request cũ.
-  - **Zero Force-Unwrap & Pure Build (`02_code_quality.md`)**: Cấm tuyệt đối toán tử ép null (`!`) trên Remote Data và dynamic json payload (thay bằng `firstOrNull`, `?.`, `?? fallback`); bắt buộc bảo đảm hàm `build()` thuần khiết (Pure Build Function, không in-place mutate).
-  - **Localization SAST Hardening (`22_localization.md`)**: Quy ước tiền tố đặt tên key i18n (`lbl_`, `hint_`, `title_`, `msg_`) chống báo động giả hardcoded secrets trong công cụ quét SAST/CI-CD, kèm hướng dẫn exclude file từ điển.
-- **🔄 Đồng bộ hóa 100% Assets**: Đồng bộ toàn bộ 22 rules giữa `src/flutter-pro-max/templates/base/rules/` và `cli/assets/templates/base/rules/`.
+- **🛡️ Production Hardening & Code Sentinel Audit Compliance**: Nâng cấp toàn diện 6 bộ quy tắc cốt lõi dựa trên thực tiễn quét mã nguồn dự án sản xuất (Code Sentinel SAST Audit).
 
-👉 Xem toàn bộ lịch sử các phiên bản trước tại **[CHANGELOG.md](CHANGELOG.md)**.
+👉 Xem toàn bộ lịch sử các phiên bản trước tại **[CHANGELOG.md](https://github.com/btLong402/flutter-skill/blob/main/CHANGELOG.md)**.
 
 ---
 
 ## 📄 License
 
-Project này được cấp phép theo [MIT License](LICENSE).
+Project này được cấp phép theo [MIT License](https://github.com/btLong402/flutter-skill/blob/main/LICENSE).
