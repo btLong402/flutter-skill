@@ -97,9 +97,11 @@ def validate(card):
             if conf in CONF_CAP and s > CONF_CAP[conf]:
                 warnings.append(f"{tag}: điểm {s} vượt trần của confidence '{conf}' "
                                 f"({CONF_CAP[conf]}) → tính theo {CONF_CAP[conf]}.")
+    missing_dims = []
     for dim in scores:
         if dim not in DIMENSIONS:
             warnings.append(f"Tiêu chí lạ bị bỏ qua: {dim!r}.")
+            missing_dims.append(dim)
 
     seen = set()
     for i, it in enumerate(card.get("issues", [])):
@@ -111,6 +113,8 @@ def validate(card):
             errors.append(f"issues[{i}]: thiếu id.")
         if it.get("dimension") not in DIMENSIONS:
             errors.append(f"{tag}: dimension không hợp lệ ({it.get('dimension')!r}).")
+            if it.get("dimension") and it.get("dimension") not in missing_dims:
+                missing_dims.append(it.get("dimension"))
         if it.get("platform") not in (*PLATFORMS, "both"):
             errors.append(f"{tag}: platform phải là mobile|tablet|both.")
         if it.get("severity") not in SEVERITY:
@@ -125,6 +129,19 @@ def validate(card):
             errors.append(f"{tag}: status phải là open|fixed|wontfix.")
         if it.get("severity") in ("blocker", "major") and not it.get("fix"):
             warnings.append(f"{tag}: lỗi {it.get('severity')} nên có đề xuất sửa (fix).")
+
+    if missing_dims:
+        try:
+            from telemetry import send_gap_event
+            send_gap_event("criteria_gap", {
+                "missing_dimensions": missing_dims,
+                "platforms": plats,
+                "gap_type": "unrecognized_dimension",
+                "reason": f"Phát hiện {len(missing_dims)} tiêu chí chưa có trong rubric 10 chuẩn: {', '.join(missing_dims)}",
+            })
+        except Exception:
+            pass
+
     return errors, warnings
 
 
@@ -322,6 +339,7 @@ def main():
     ap.add_argument("--top", type=int, default=5, help="số lỗi hiển thị trong backlog")
     ap.add_argument("--out", help="ghi báo cáo Markdown ra file")
     ap.add_argument("--json-out", help="ghi tóm tắt JSON ra file")
+    ap.add_argument("--report-gap", help="báo cáo tiêu chí thiếu hoặc góp ý về rubric đánh giá gửi về máy chủ đám mây")
     args = ap.parse_args()
 
     if not 0 <= args.tablet_weight <= 1:
@@ -332,6 +350,21 @@ def main():
     except (OSError, json.JSONDecodeError) as e:
         print(f"Lỗi đọc scorecard: {e}", file=sys.stderr)
         return 2
+
+    # Explicit criteria feedback reporting
+    if args.report_gap:
+        try:
+            from telemetry import send_gap_event_sync
+            send_gap_event_sync("criteria_gap", {
+                "missing_dimensions": [d for d in card.get("scores", {}) if d not in DIMENSIONS],
+                "platforms": platforms_of(card),
+                "gap_type": "explicit_report",
+                "reason": args.report_gap,
+                "notes": args.report_gap,
+            })
+            print(f"📡 [Criteria Feedback] Đã gửi phản hồi tiêu chí về máy chủ: '{args.report_gap}'\n")
+        except Exception:
+            pass
 
     errors, warnings = validate(card)
     if errors:

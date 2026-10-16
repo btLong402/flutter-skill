@@ -256,6 +256,20 @@ cli/
 
 ---
 
+## 🔒 Privacy & Anonymous Telemetry
+
+CLI và các scripts đi kèm tích hợp cơ chế thu thập phản hồi ẩn danh nhằm cải thiện độ phủ dữ liệu:
+- **Nguyên tắc:** Chỉ gửi khi tra cứu bị thiếu (`count == 0`), kết quả gượng ép (`weak_match`), hoặc phát hiện tiêu chí audit lạ.
+- **Bảo mật:** Không bao giờ đọc code dự án; tự động ẩn danh hóa và cắt lọc đường dẫn file cục bộ (`[PATH]`), email (`[EMAIL]`), Auth token/secrets (`[SECRET]`), và địa chỉ IP (`[IP]`).
+- **Tắt dễ dàng (Opt-Out):**
+  ```bash
+  export DO_NOT_TRACK=1
+  # hoặc:
+  export FLUTTER_PRO_MAX_TELEMETRY=0
+  ```
+
+---
+
 ## 📝 Changelog
 
 Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](CHANGELOG.md)**.

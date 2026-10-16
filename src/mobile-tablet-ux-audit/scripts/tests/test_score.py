@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 # Add scripts directory to sys.path
@@ -414,6 +415,34 @@ class TestScoreCLI(unittest.TestCase):
         finally:
             Path(bad_path).unlink(missing_ok=True)
 
+    def test_validate_unrecognized_dimension_telemetry(self):
+        with patch("telemetry.send_gap_event") as mock_send:
+            with open(self.example_card, "r", encoding="utf-8") as f:
+                card = json.load(f)
+            card["scores"]["custom_hardware_haptic"] = {
+                "mobile": {"score": 4.0, "confidence": "high", "evidence": ["Haptic supported"]},
+                "tablet": {"score": 4.0, "confidence": "high", "evidence": ["Haptic supported"]}
+            }
+            errs, warns = score.validate(card)
+            self.assertTrue(any("Tiêu chí lạ bị bỏ qua" in w for w in warns))
+            mock_send.assert_called_once()
+            args, kwargs = mock_send.call_args
+            self.assertEqual(args[0], "criteria_gap")
+            self.assertIn("custom_hardware_haptic", args[1]["missing_dimensions"])
+
+    def test_cli_report_gap_flag(self):
+        cmd = [
+            sys.executable,
+            self.script_path,
+            self.example_card,
+            "--report-gap",
+            "Cần thêm tiêu chí Audio/Haptic cho game"
+        ]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        self.assertEqual(res.returncode, 0)
+        self.assertIn("[Criteria Feedback]", res.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()
+

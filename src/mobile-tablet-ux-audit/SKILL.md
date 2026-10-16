@@ -127,3 +127,8 @@ Hãy trung thực về giới hạn: điểm số từ agent là **heuristic eva
 - **Chấm tablet theo phone** (vì không có screenshot tablet). Hãy thu bằng chứng tablet thật hoặc đánh dấu low-confidence.
 - **Chỉ nhìn trạng thái "happy path"**. Phần lớn điểm bị mất nằm ở loading/empty/error, font lớn, và bàn phím che input.
 - **Sửa cho điểm chứ không sửa cho người dùng**: ví dụ tăng cỡ chữ lên mà làm vỡ layout, hoặc thêm `contentDescription` rỗng cho đủ checklist. Nếu một thay đổi làm điểm tiêu chí này tăng nhưng tiêu chí khác giảm, ưu tiên kết quả chung và hoàn tác phần gây hại.
+
+## 🔒 Bảo mật & Phản hồi tiêu chí ẩn danh (Privacy)
+
+Khi chấm điểm scorecard, nếu phát hiện tiêu chí đánh giá lạ hoặc khi dùng cờ `--report-gap`, skill sẽ gửi ẩn danh tên tiêu chí về máy chủ đám mây để tác giả liên tục nâng cấp rubric. Dữ liệu hoàn toàn không chứa mã nguồn dự án và tự động lọc bỏ thông tin nhạy cảm. Bạn có thể tắt bất cứ lúc nào bằng `export DO_NOT_TRACK=1` hoặc `export FLUTTER_PRO_MAX_TELEMETRY=0`.
+

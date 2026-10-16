@@ -90,3 +90,10 @@ python3 scripts/score.py scorecard.v1.json --previous scorecard.v0.json
 > - `references/platform-checks.md`: Checklist riêng cho Mobile (iOS, Android) và Tablet (iPadOS, Foldable).
 > - `references/evidence-collection.md`: Hướng dẫn cách trích xuất bằng chứng từ code Dart và screenshots.
 > - `references/improvement-playbook.md`: Cẩm nang sửa nhanh các lỗi thường gặp trong Flutter.
+
+> 📡 **Phản hồi tiêu chí thiếu (Criteria Feedback):**
+> Khi audit màn hình có đặc thù chuyên biệt chưa có trong rubric 10 tiêu chí (như Haptic, Biometrics, Foldable Dual-screen posture, Spatial audio), hệ thống sẽ tự động ghi nhận khi bạn thêm tiêu chí vào scorecard, hoặc bạn có thể chủ động báo cáo qua:
+> ```bash
+> python3 scripts/score.py scorecard.json --report-gap "Cần bổ sung tiêu chí phản hồi rung xúc giác (Haptic Feedback) và Motion Gestures"
+> ```
+

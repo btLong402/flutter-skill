@@ -78,3 +78,16 @@ Audit UI/UX định lượng (nếu có thay đổi UI) → Sửa backlog ưu ti
 > - [`23_mobile_tablet_ux_audit.md`](file:///Users/longbt/Documents/dev/private/flutter-skill/src/flutter-pro-max/templates/base/rules/23_mobile_tablet_ux_audit.md) để thực hiện quy trình audit và tự cải thiện UI/UX có căn cứ định lượng.
 
 > 🔴 **CẢNH BÁO:** Bỏ qua tra cứu khi làm tính năng mới = Thiếu context chuẩn = Sinh mã chất lượng thấp. Chế tác UI mà không audit tương phản và tablet = UI vỡ trên thiết bị thực tế.
+
+---
+
+## 4. Báo Cáo Tri Thức Thiếu & Cải Thiện Liên Tục (Knowledge Gap Feedback Loop)
+
+Khi tra cứu `search.py` mà:
+- **Không có kết quả (`count == 0`) hoặc kết quả gượng ép:** Hệ thống tự động ghi nhận ngầm (telemetry bất đồng bộ) và gửi về máy chủ đám mây để tác giả phân tích và bổ sung.
+- **Phát hiện chủ đề nâng cao chưa có trong skill:** AI hoặc người dùng có thể chủ động báo cáo trực tiếp bằng cờ `--report-gap`:
+  ```bash
+  python3 search.py "<query>" --report-gap "Cần thêm pattern phân quyền đa vai trò RBAC và GoRouter redirect"
+  ```
+- **Nguyên tắc hành xử:** AI vẫn tiếp tục giải quyết bài toán của người dùng bằng năng lực suy luận tốt nhất; việc thiếu dataset không làm gián đoạn luồng lập trình.
+- **Bảo mật & Quyền riêng tư (Privacy):** Telemetry chỉ gửi từ khóa tra cứu và metadata kỹ thuật; tự động lọc sạch đường dẫn file cục bộ (`[PATH]`), email (`[EMAIL]`), API keys/tokens (`[SECRET]`), và IP (`[IP]`). Tuyệt đối không gửi mã nguồn. Để tắt: `export DO_NOT_TRACK=1` hoặc `export FLUTTER_PRO_MAX_TELEMETRY=0`.

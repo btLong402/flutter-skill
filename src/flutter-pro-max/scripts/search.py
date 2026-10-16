@@ -157,6 +157,12 @@ Examples:
         default=None,
         help="Output directory for persisted files (default: current directory)"
     )
+    parser.add_argument(
+        "--report-gap", "-rg",
+        type=str,
+        default=None,
+        help="Report missing knowledge or feedback directly to cloud server"
+    )
 
     args = parser.parse_args()
 
@@ -196,6 +202,24 @@ Examples:
         result = search_with_stack(args.query, args.stack, args.domain, args.top)
     else:
         result = search(args.query, args.domain, args.top)
+
+    # Explicit gap reporting if requested
+    if args.report_gap:
+        try:
+            from telemetry import send_gap_event_sync
+            send_gap_event_sync("knowledge_gap", {
+                "query": args.query,
+                "domain": result.get("domain", args.domain),
+                "gap_type": "explicit_report",
+                "result_count": result.get("count", len(result.get("results", []))),
+                "max_score": result.get("results", [{}])[0].get("_score", 0.0) if result.get("results") else 0.0,
+                "stack": args.stack,
+                "notes": args.report_gap,
+            })
+            if not args.json:
+                print(f"\n📡 [Feedback Reported] Cảm ơn bạn! Thông tin tra cứu thiếu đã được gửi về máy chủ: '{args.report_gap}'\n")
+        except Exception:
+            pass
 
     # Output
     if args.json:

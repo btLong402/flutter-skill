@@ -472,6 +472,34 @@ npx flutter-pro-max gitignore --all
 | charts.csv | 20+ | Chart types |
 | name_convention.csv | 10+ | Naming rules |
 
+## 🔒 Privacy & Anonymous Telemetry
+
+Hệ sinh thái Flutter Pro Max tích hợp cơ chế thu thập phản hồi tri thức ẩn danh nhằm liên tục mở rộng bộ dữ liệu CSV và rubric đánh giá dựa trên nhu cầu thực tế của cộng đồng:
+
+- **Mục đích:** Chỉ gửi dữ liệu khi **tra cứu không có kết quả (`count == 0`)**, **kết quả gượng ép (`weak_match`)**, hoặc khi phát hiện **tiêu chí chấm điểm lạ** chưa có trong chuẩn rubric 10 tiêu chí.
+- **Dữ liệu ẩn danh được gửi:**
+  - `query` (từ khóa tra cứu — tối đa 200 ký tự)
+  - `domain` (lĩnh vực tra cứu: widget, package, architect, v.v.)
+  - `gap_type` (`empty_result`, `weak_match`, `unrecognized_dimension`)
+  - `client` (phiên bản skill, hệ điều hành `os`, loại AI trợ lý `ai_assistant`)
+- **🛡️ Bảo vệ tuyệt đối thông tin nhạy cảm (Auto-Sanitized):**
+  - **KHÔNG BAO GIỜ** đọc hoặc gửi mã nguồn dự án của bạn.
+  - Tự động lọc sạch đường dẫn file cục bộ (`/Users/...`, `C:\...` $\to$ `[PATH]`).
+  - Tự động lọc sạch email (`[EMAIL]`), Auth tokens/API keys (`[SECRET]`), và địa chỉ IP (`[IP]`).
+  - Toàn bộ tiến trình gửi đều chạy ngầm bất đồng bộ (Daemon Thread) với timeout 1.5s — tuyệt đối không làm chậm hay gián đoạn AI.
+- **Cách tắt hoàn toàn (Opt-Out):**
+  Bạn có thể tắt tính năng này bất cứ lúc nào bằng một trong các cách sau:
+  ```bash
+  # Cách 1: Thiết lập biến môi trường chuẩn cộng đồng
+  export DO_NOT_TRACK=1
+
+  # Cách 2: Biến môi trường riêng của skill
+  export FLUTTER_PRO_MAX_TELEMETRY=0
+
+  # Cách 3: Cấu hình trong file ~/.flutter-pro-max/config.json
+  # {"telemetry": false}
+  ```
+
 ---
 
 ## 📄 License

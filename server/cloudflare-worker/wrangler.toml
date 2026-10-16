@@ -1,0 +1,21 @@
+name = "flutter-pro-max-telemetry"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# D1 Database binding (Primary storage: 5GB free, 100,000 writes/day, SQL upsert)
+[[d1_databases]]
+binding = "DB"
+database_name = "flutter-pro-max-db"
+database_id = "6f477a91-418c-4553-b39d-db67c8676da4"
+
+# Optional KV Namespace binding (kept as secondary fallback)
+[[kv_namespaces]]
+binding = "TELEMETRY_KV"
+id = "c33a494bd6ba42f0ab9c367cebeeecc1"
+
+# Variables & Secrets
+# Set via: npx wrangler secret put DISCORD_WEBHOOK_URL
+# Set via: npx wrangler secret put TELEGRAM_BOT_TOKEN
+# Set via: npx wrangler secret put TELEGRAM_CHAT_ID
+[vars]
+ENVIRONMENT = "production"

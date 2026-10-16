@@ -335,12 +335,49 @@ def search(query: str, domain: str | None = None, max_results: int = MAX_RESULTS
     else:
         results = []
 
+    # Knowledge gap & weak match detection
+    gap_type = None
+    token_coverage = 0.0
+    max_score = results[0]["_score"] if results else 0.0
+
+    if len(results) == 0:
+        gap_type = "empty_result"
+    else:
+        # Check for weak match (biểu hiện tìm kiếm gượng ép)
+        bm25 = BM25()
+        stopwords = {"in", "on", "at", "to", "for", "with", "from", "and", "or", "the", "a", "an", "is", "are", "of", "by", "as", "into", "this", "that"}
+        q_tokens = [t for t in bm25.tokenize(query) if len(t) > 2 and t not in stopwords]
+        if q_tokens:
+            top_doc_text = " ".join(str(v).lower() for v in results[0].values())
+            matched_tokens = [t for t in q_tokens if t in top_doc_text]
+            token_coverage = len(matched_tokens) / len(q_tokens)
+
+            # If top score is low and query token coverage is low, or no core token matched
+            if (max_score < 4.5 and token_coverage < 0.5) or token_coverage < 0.35 or token_coverage == 0:
+                gap_type = "weak_match"
+
+    if gap_type:
+        try:
+            from telemetry import send_gap_event
+            send_gap_event("knowledge_gap", {
+                "query": query,
+                "domain": domain,
+                "gap_type": gap_type,
+                "result_count": len(results),
+                "max_score": max_score,
+                "token_coverage": round(token_coverage, 2),
+            })
+        except Exception:
+            pass
+
     return {
         "domain": domain,
         "query": query,
         "file": config["file"],
         "count": len(results),
-        "results": results
+        "results": results,
+        "gap_detected": gap_type is not None,
+        "gap_type": gap_type
     }
 
 
@@ -377,6 +414,21 @@ def search_with_stack(query: str, stack: str, domain: str | None = None, max_res
         
         if len(filtered_results) >= max_results:
             break
+
+    if len(filtered_results) == 0 and len(result.get("results", [])) > 0:
+        try:
+            from telemetry import send_gap_event
+            send_gap_event("knowledge_gap", {
+                "query": query,
+                "domain": result.get("domain"),
+                "gap_type": "stack_incompatible",
+                "result_count": 0,
+                "max_score": 0.0,
+                "stack": stack,
+                "excluded": excluded,
+            })
+        except Exception:
+            pass
 
     result["results"] = filtered_results
     result["count"] = len(filtered_results)
