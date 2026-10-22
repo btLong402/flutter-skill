@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.10.0] - 2026-10-22
+
+### Added & Upgraded
+- **🎨 Nâng Cấp Rubric v2 Cho Mobile & Tablet UX Audit (`mobile-tablet-ux-audit`)**:
+  - Mở rộng từ 10 lên **12 tiêu chí đánh giá định lượng** (tổng trọng số 100):
+    - Bổ sung `performance_perceived` (Hiệu năng cảm nhận & độ mượt, trọng số 5): đo thời gian khởi động, độ mượt khi cuộn 60fps, bộ nhớ, tải dữ liệu cực trị, thích ứng cửa sổ tablet.
+    - Bổ sung `theming_dark_mode` (Theming & Dark mode, trọng số 4): kiểm tra độ tương phản và tính nhất quán dark mode trên toàn bộ màn hình, dialog, bottom sheet, status bar của cả mobile và tablet.
+    - Điều chỉnh trọng số cân bằng: `visual_hierarchy_layout` (10), `navigation_ia` (11), `touch_interaction` (11), `accessibility` (14), `adaptive_responsive` (10), `feedback_states_motion` (9), `typography` (7), `color_contrast` (7), `consistency_design_system` (7), `content_microcopy` (5).
+  - **Tương thích ngược 100% với Scorecard v1 (10 tiêu chí)**: Tự động phát hiện phiên bản qua `rubric_version` hoặc tập thuộc tính, áp dụng đúng trọng số v1/v2.
+  - **Cơ chế Alias thông minh**: Tự động quy đổi tên gọi khác (`tablet_adaptive`, `responsive_tablet`, `dark_mode_theming`, `performance_smoothness`...) về khóa chuẩn của rubric.
+  - **Đề xuất khoảng trống Rubric (`rubric_gaps`)**: Cho phép ghi nhận các khía cạnh chuyên biệt vào scorecard mà không làm sai lệch điểm số chuẩn, tự động tổng hợp trong báo cáo Markdown & JSON.
+  - **Cảnh báo so sánh chéo phiên bản**: Tự động phát hiện và cảnh báo khi so sánh scorecard giữa hai phiên bản rubric khác nhau (`comparable: false`).
+- **🛡️ Cập nhật Rule 23, Rule 01, Rule 20 và CLI Templates**: Đồng bộ quy chuẩn đánh giá 12 tiêu chí trên toàn bộ 16 AI coding assistants.
+- **🧪 Mở rộng Test Suite**: Bổ sung unit tests cho Rubric v2, kiểm tra chuẩn xác toàn bộ test suite đạt 100% asset parity.
+
 ## [2.9.0] - 2026-10-16
 
 ### Added & Upgraded

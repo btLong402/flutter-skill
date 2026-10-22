@@ -7,7 +7,8 @@
   ],
   "evidence_modes": [
     "screenshots",
-    "code"
+    "code",
+    "running_app"
   ],
   "device_matrix": [
     "P-M 390x844",
@@ -186,6 +187,42 @@
           "C-main.dart:22: setPreferredOrientations(portrait) chỉ cho phone, tablet bị khoá dọc"
         ]
       }
+    },
+    "performance_perceived": {
+      "mobile": {
+        "score": 3.0,
+        "confidence": "high",
+        "evidence": [
+          "R-startup: am start -W TotalTime=3120ms, màn trắng ~1.2s",
+          "R-gfxinfo-home: janky frames 14% khi cuộn danh sách 200 mục"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "medium",
+        "evidence": [
+          "C-home_list.dart:48: ListView dựng toàn bộ item (không builder)",
+          "R-resize-T-L: kéo cửa sổ giật, tải lại danh sách mỗi lần đổi kích thước"
+        ]
+      }
+    },
+    "theming_dark_mode": {
+      "mobile": {
+        "score": 2.5,
+        "confidence": "high",
+        "evidence": [
+          "S-home-dark-P-M: chữ phụ #9A9A9A trên nền #121212 ổn nhưng logo nền trắng chói",
+          "S-checkout-dark-P-M: dialog vẫn nền sáng"
+        ]
+      },
+      "tablet": {
+        "score": 2.5,
+        "confidence": "medium",
+        "evidence": [
+          "S-home-dark-T-L: sidebar chưa đổi theme",
+          "C-theme.dart:12: có ColorScheme dark nhưng 41 màu hardcode"
+        ]
+      }
     }
   },
   "issues": [
@@ -277,6 +314,36 @@
       "effort": 2,
       "reach": 3,
       "status": "open"
+    },
+    {
+      "id": "PF-01",
+      "dimension": "performance_perceived",
+      "platform": "both",
+      "severity": "major",
+      "screen": "Home",
+      "description": "Danh sách 200 mục dựng toàn bộ item; janky frames 14% khi cuộn",
+      "fix": "Dùng ListView.builder/lazy list + cache và resize ảnh",
+      "effort": 2,
+      "reach": 2
+    },
+    {
+      "id": "TH-01",
+      "dimension": "theming_dark_mode",
+      "platform": "both",
+      "severity": "minor",
+      "screen": "Checkout, Logo",
+      "description": "Dialog và logo không theo dark mode",
+      "fix": "Chuyển dialog sang token surface; thêm logo biến thể dark",
+      "effort": 1,
+      "reach": 2
+    }
+  ],
+  "rubric_version": 2,
+  "rubric_gaps": [
+    {
+      "name": "offline_first_sync",
+      "platform": "both",
+      "reason": "Ví dụ: mức độ app dùng được khi offline chưa tiêu chí nào chứa trọn (phần nào ở feedback_states_motion, phần ở performance_perceived)"
     }
   ]
 }

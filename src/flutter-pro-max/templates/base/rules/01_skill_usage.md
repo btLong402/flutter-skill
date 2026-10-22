@@ -41,7 +41,7 @@ Tùy theo **bản chất nhiệm vụ (Task Type)**, bạn cần tự động k�
 | **Chưa rõ phong cách UI** | `search.py`: `--design-system` để sinh design system chuẩn |
 | **Kiểm tra tương phản màu** | Skill `mobile-tablet-ux-audit`: `python3 contrast.py <fg> <bg>` |
 | **Audit & chấm điểm UI/UX** | Skill `mobile-tablet-ux-audit`: `python3 score.py scorecard.json` |
-| **Review Tablet / Adaptive** | Skill `mobile-tablet-ux-audit`: Rubric 10 tiêu chí cho mobile + tablet |
+| **Review Tablet / Adaptive** | Skill `mobile-tablet-ux-audit`: Rubric 12 tiêu chí (v2) cho mobile + tablet |
 
 ---
 

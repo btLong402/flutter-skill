@@ -124,11 +124,37 @@ Chọn **3–5 mục đầu**, nhưng áp thêm phán đoán:
 | Vỡ ở split view hẹp | Dùng breakpoint theo **độ rộng cửa sổ hiện tại**, không theo kích thước thiết bị |
 | Ảnh mờ trên tablet | Cung cấp ảnh độ phân giải cao hơn / vector / `srcset` tương đương |
 
+### Hiệu năng cảm nhận
+| Lỗi | Cách sửa |
+|---|---|
+| Màn trắng lúc khởi động | Splash/skeleton ngay frame đầu; hoãn khởi tạo nặng (SDK, DB) sang sau frame đầu; hiển thị dữ liệu cache trước |
+| Cuộn danh sách giật | Dùng lazy/virtualized list (`ListView.builder`, `FlatList`/`FlashList`, `LazyColumn`, `LazyVStack`); item có key ổn định; tránh layout phức tạp trong item |
+| Ảnh nặng | Tải đúng kích thước hiển thị, cache, placeholder, decode ngoài main thread; dùng định dạng nén (WebP/AVIF) |
+| Thao tác trễ | Chuyển việc nặng ra background/isolate/coroutine; phản hồi UI trước, xử lý sau (optimistic) |
+| Rebuild cả màn hình | Tách widget/composable nhỏ, `const`/`remember`/`memo`, state cục bộ thay vì state toàn cục đổi liên tục |
+| Treo với dữ liệu lớn (10k mục) | Phân trang/streaming, tìm kiếm phía server hoặc debounce; không sắp xếp/lọc toàn bộ trên UI thread |
+| Giật khi xoay/resize tablet | Không tải lại dữ liệu khi đổi cấu hình (giữ state, ViewModel/Bloc); tránh dựng lại cây UI không cần |
+| Mạng chậm/offline treo UI | Timeout hợp lý, hủy được, skeleton + thông báo, hàng đợi cho thao tác ghi |
+
+### Theming & Dark mode
+| Lỗi | Cách sửa |
+|---|---|
+| Màu hardcode phá dark mode | Gom về token ngữ nghĩa (`surface`, `onSurface`…), thay hàng loạt, thêm lint chặn hex trong màn hình |
+| Dialog/bottom sheet nền sáng trong dark | Dùng theme của hệ component (`DialogTheme`, `ModalBottomSheet` colors) thay vì màu cố định |
+| Logo/ảnh nền trắng chói | Thêm biến thể dark hoặc nền trung tính; ảnh PNG trong suốt kiểm lại trên nền tối |
+| Nền `#000` + chữ `#FFF` quá gắt | Surface phân tầng (`#121212` → lớp cao sáng dần), chữ ~87% độ sáng, giảm bão hòa accent |
+| Status/nav bar không đổi | Đặt biểu tượng thanh hệ thống sáng/tối theo theme; kiểm tra splash/launch screen |
+| WebView/chart/bản đồ không theo theme | Truyền theme (CSS `prefers-color-scheme`, tùy chọn style bản đồ, màu series chart) |
+| Đổi theme mất state/nháy trắng | Theme là state toàn cục đổi tại gốc cây UI; không tạo lại các màn hình khi đổi |
+| Không có lựa chọn trong app | Settings: Hệ thống / Sáng / Tối, lưu lựa chọn |
+
 ---
 
 ## 3. Gợi ý theo framework
 
 **Flutter**
+- Hiệu năng: `flutter run --profile`, DevTools; dùng `ListView.builder`, `const` widget, `RepaintBoundary` có chọn lọc; ảnh dùng `cacheWidth`/`cacheHeight`.
+- Theme: `ThemeData.light()/dark()` + `ColorScheme.fromSeed`, `themeMode: ThemeMode.system`; truy cập màu qua `Theme.of(context).colorScheme`.
 - Breakpoint: `LayoutBuilder` + `MediaQuery.sizeOf(context).width`; đóng gói `WindowClass` enum (compact <600, medium <840, expanded).
 - Điều hướng thích ứng: `NavigationBar` ↔ `NavigationRail` ↔ `Drawer`; `adaptive_scaffold` (package) cho list-detail.
 - Vùng chạm: `visualDensity: VisualDensity.standard`, `materialTapTargetSize: MaterialTapTargetSize.padded`, `ConstrainedBox(constraints: BoxConstraints(minWidth: 48, minHeight: 48))`.
@@ -136,6 +162,8 @@ Chọn **3–5 mục đầu**, nhưng áp thêm phán đoán:
 - Test hồi quy: golden test ở nhiều size/`textScaler`/dark.
 
 **React Native**
+- Hiệu năng: `FlashList` cho danh sách dài, `React.memo`/`useCallback` ở item, bản release khi đo, tránh tác vụ nặng trên JS thread.
+- Theme: `useColorScheme()`, ThemeProvider với token, không hardcode màu.
 - Breakpoint: `useWindowDimensions`; tránh `Dimensions.get` tĩnh (không cập nhật khi resize/split).
 - A11y: `accessibilityLabel`, `accessibilityRole`, `accessibilityState`, `importantForAccessibility`; không `allowFontScaling={false}`.
 - Vùng chạm: `hitSlop`, `Pressable` với `minHeight`.
@@ -143,12 +171,16 @@ Chọn **3–5 mục đầu**, nhưng áp thêm phán đoán:
 - Tablet: kiểm tra `Platform.isPad` chỉ để *khởi điểm*; quyết định bố cục theo độ rộng.
 
 **SwiftUI / UIKit**
+- Hiệu năng: `LazyVStack`/`List`, tránh `body` nặng, Instruments → Animation Hitches.
+- Theme: Asset Catalog colors có biến thể Any/Dark, semantic colors (`Color.primary`, `.secondary`), `.preferredColorScheme` chỉ khi cần ép.
 - Size classes: `@Environment(\.horizontalSizeClass)`, `NavigationSplitView`, `TabView` dạng sidebar (iPad), `ViewThatFits`.
 - Dynamic Type: `.font(.body)` semantic styles, `@ScaledMetric`, test `.dynamicTypeSize(...accessibility5)`.
 - A11y: `.accessibilityLabel`, `.accessibilityElement(children:)`, `.accessibilityAddTraits`, rotor/actions tùy chỉnh.
 - Phím tắt/pointer: `.keyboardShortcut`, `.hoverEffect`, `.contextMenu`.
 
 **Jetpack Compose**
+- Hiệu năng: `LazyColumn` với `key`, `remember`/`derivedStateOf`, Baseline Profiles cho khởi động, Macrobenchmark để đo.
+- Theme: `MaterialTheme(colorScheme = if (isSystemInDarkTheme()) dark else light)`, `dynamicColorScheme` (Android 12+) nếu chọn hỗ trợ, `@PreviewLightDark`.
 - `currentWindowAdaptiveInfo()` + `WindowSizeClass`; `NavigationSuiteScaffold`, `ListDetailPaneScaffold`/`SupportingPaneScaffold`.
 - Vùng chạm: `Modifier.minimumInteractiveComponentSize()`; `Modifier.sizeIn(minWidth = 48.dp, minHeight = 48.dp)`.
 - A11y: `Modifier.semantics { contentDescription = ...; role = ... }`, `clearAndSetSemantics` (thận trọng), `mergeDescendants = true`.

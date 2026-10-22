@@ -23,7 +23,7 @@ Luôn tuân thủ quy trình 8 bước tiêu chuẩn công nghiệp sau đây đ
 
 ## 3. Screen & UX Design (Thiết kế giao diện nếu có UI)
 - Thiết kế layout, UI components dựa trên Design Tokens và App Consistency (Rule 04).
-- Đo đạc độ tương phản WCAG và chuẩn bị thích ứng Tablet theo Rubric 10 tiêu chí của skill `mobile-tablet-ux-audit` (Rule 23).
+- Đo đạc độ tương phản WCAG và chuẩn bị thích ứng Tablet theo Rubric 12 tiêu chí của skill `mobile-tablet-ux-audit` (Rule 23).
 - Đảm bảo tính tiếp cận Accessibility (Rule 11), chuẩn hóa Navigation (Rule 21) và Đa ngôn ngữ (Rule 22).
 - **Đầu ra:** Cấu trúc phân rã Widget dạng cây và bảng kiểm tra tương phản sơ bộ.
 

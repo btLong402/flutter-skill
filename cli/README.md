@@ -274,7 +274,14 @@ CLI và các scripts đi kèm tích hợp cơ chế thu thập phản hồi ẩn
 
 Chi tiết toàn bộ lịch sử phát hành của các phiên bản được ghi nhận đầy đủ tại **[CHANGELOG.md](https://github.com/btLong402/flutter-skill/blob/main/CHANGELOG.md)**.
 
-### [v2.9.0] - 2026-10-16 (Latest)
+### [v2.10.0] - 2026-10-22 (Latest)
+- **🎨 Nâng Cấp Rubric v2 Cho Mobile & Tablet UX Audit (`mobile-tablet-ux-audit`)**: Mở rộng từ 10 lên **12 tiêu chí đánh giá định lượng** (tổng trọng số 100), bổ sung `performance_perceived` (Hiệu năng cảm nhận & độ mượt, trọng số 5) và `theming_dark_mode` (Theming & Dark mode, trọng số 4).
+- **🔄 Tương thích ngược 100% với Scorecard v1 (10 tiêu chí)**: Tự động phát hiện phiên bản và áp dụng đúng bảng trọng số. Tự động quy đổi tên gọi khác (`ALIASES`) về khóa chuẩn của rubric.
+- **📝 Đề xuất khoảng trống Rubric (`rubric_gaps`)**: Cho phép ghi nhận các khía cạnh chuyên biệt vào scorecard mà không làm sai lệch điểm số chuẩn, tự động tổng hợp trong báo cáo Markdown & JSON.
+- **🛡️ Cập nhật Rule 23, Rule 01, Rule 20 và CLI Templates**: Đồng bộ quy chuẩn đánh giá 12 tiêu chí trên toàn bộ 16 AI coding assistants.
+- **🧪 Mở rộng Test Suite**: Bổ sung unit tests cho Rubric v2, kiểm tra chuẩn xác toàn bộ test suite đạt 100% asset parity.
+
+### [v2.9.0] - 2026-10-16
 - **📡 Telemetry & Knowledge Gap Feedback Loop**: Tự động phát hiện thiếu hụt tri thức và tiêu chí đánh giá khi người dùng hoặc AI tra cứu không thấy kết quả (`count == 0`), độ khớp BM25 gượng ép (`token_coverage < 0.35` hoặc điểm thấp), xung đột công nghệ (stack incompatibility), hoặc tiêu chí UI/UX chưa có.
 - **🔒 Privacy-First Data Sanitization**: Cơ chế làm sạch dữ liệu tự động cực kỳ nghiêm ngặt: loại bỏ đường dẫn file local, email, token bảo mật/API key, IP; cắt ngắn tối đa 200 ký tự. Tôn trọng tuyệt đối cờ `DO_NOT_TRACK=1` và `FLUTTER_PRO_MAX_TELEMETRY=0`.
 - **☁️ Cloudflare Worker & D1 SQL Storage**: Hạ tầng serverless zero-cost với Cloudflare D1 lưu trữ lên tới 5 GB (100k lượt ghi/ngày), tổng hợp gộp `hit_count` (UPSERT) chống trùng lặp, bảo vệ chống spam (Rate limit 30 req/phút/IP), tích hợp Webhook Discord/Telegram và Web Dashboard theo dõi trực quan.

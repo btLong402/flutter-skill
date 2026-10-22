@@ -99,7 +99,7 @@ export FLUTTER_PRO_MAX_TELEMETRY=0
      "max_score": 0.0,
      "token_coverage": 0.0,
      "client": {
-       "version": "2.9.0",
+       "version": "2.10.0",
        "os": "darwin",
        "ai_assistant": "cursor"
      },
@@ -116,7 +116,7 @@ export FLUTTER_PRO_MAX_TELEMETRY=0
      "gap_type": "unrecognized_dimension", // hoặc "explicit_report"
      "reason": "Phát hiện 2 tiêu chí chưa có trong rubric 10 chuẩn",
      "client": {
-       "version": "2.9.0",
+       "version": "2.10.0",
        "os": "darwin",
        "ai_assistant": "claude"
      },

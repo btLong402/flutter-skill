@@ -1,7 +1,8 @@
 {
-  "_hướng_dẫn": "Điền score (0–5, bước 0.5), confidence (low|medium|high), evidence (ID + quan sát). Xoá các khoá bắt đầu bằng '_' nếu muốn. Nếu app chỉ có mobile: platforms=['mobile'] và bỏ ô tablet.",
+  "_hướng_dẫn": "Rubric v2 (12 tiêu chí). Điền score (0–5, bước 0.5), confidence (low|medium|high), evidence (ID + quan sát). Dùng ĐÚNG khoá chuẩn trong references/rubric.md. Khía cạnh chưa có trong rubric → ghi vào rubric_gaps, đừng tạo khoá mới trong scores. Nếu app chỉ có mobile: platforms=['mobile'] và bỏ ô tablet.",
   "app": "Tên app",
   "iteration": 0,
+  "rubric_version": 2,
   "platforms": [
     "mobile",
     "tablet"
@@ -138,6 +139,30 @@
         "confidence": "low",
         "evidence": []
       }
+    },
+    "performance_perceived": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
+    },
+    "theming_dark_mode": {
+      "mobile": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      },
+      "tablet": {
+        "score": null,
+        "confidence": "low",
+        "evidence": []
+      }
     }
   },
   "issues": [
@@ -153,5 +178,6 @@
       "reach": 2,
       "status": "open"
     }
-  ]
+  ],
+  "rubric_gaps": []
 }

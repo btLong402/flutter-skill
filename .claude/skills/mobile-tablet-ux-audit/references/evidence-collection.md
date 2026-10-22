@@ -138,6 +138,39 @@ Với iOS, kích thước vùng chạm/nhãn accessibility được kiểm bằn
 4. Với mỗi biến thể, ghi lại ngay các lỗi phát hiện, đừng đợi cuối.
 5. **Reset thiết bị** về cài đặt gốc sau khi xong (size/density/font_scale), để không làm hỏng môi trường của người dùng.
 
+### Đo hiệu năng cảm nhận (`performance_perceived`)
+
+Chỉ chấm trên 3.0–3.5 khi đã **đo**, không phải đoán. Tên lệnh/đầu ra có thể khác chút theo phiên bản công cụ — nếu lệnh không chạy, ghi `medium`/`low` và nói rõ vì sao.
+
+```bash
+# Android — khởi động nguội (thay PKG/ACTIVITY)
+PKG=com.example.app; ACT=.MainActivity
+adb shell am force-stop $PKG
+adb shell am start -W -n $PKG/$ACT                 # xem TotalTime (ms) = cold start
+
+# Android — độ mượt khi cuộn/thao tác luồng chính
+adb shell dumpsys gfxinfo $PKG reset
+#   ... cuộn danh sách chính, chuyển màn trong 30–60 giây ...
+adb shell dumpsys gfxinfo $PKG | grep -E "Total frames|Janky frames|percentile"
+
+# Android — bộ nhớ
+adb shell dumpsys meminfo $PKG | grep -E "TOTAL|Java Heap|Native Heap"
+
+# Mạng chập chờn / offline (Wi-Fi emulator)
+adb shell svc wifi disable        # offline;  svc wifi enable để bật lại
+```
+
+- **Flutter:** `flutter run --profile` rồi mở DevTools → Performance (frame > 16ms ở 60Hz là rớt); `flutter run --profile --trace-startup` ghi thời gian tới frame đầu vào `build/start_up_info.json`.
+- **React Native:** Perf Monitor trong dev menu, React DevTools Profiler, Hermes profiler; chạy bản release để số đo có nghĩa.
+- **iOS:** Instruments → Animation Hitches / Time Profiler; Network Link Conditioner để giả lập mạng chậm; MetricKit nếu có dữ liệu thật.
+- **Compose:** Macrobenchmark (`StartupTimingMetric`, `FrameTimingMetric`) nếu dự án có sẵn.
+- **Dữ liệu cực trị:** nạp 0 / 1 / 10.000 mục, chuỗi rất dài, ảnh rất lớn; nhìn xem có treo, cuộn giật hay tràn bộ nhớ.
+- **Tablet:** lặp lại phép đo cuộn và kéo đổi kích thước/xoay trên emulator tablet, vì màn lớn dựng nhiều thứ hơn.
+
+### Chụp dark mode (`theming_dark_mode`)
+
+Chụp cùng các màn hình ở light và dark, **cả mobile lẫn tablet**, kể cả dialog, bottom sheet, thanh trạng thái, splash, màn có ảnh/logo, chart/WebView/bản đồ. Đổi theme lúc app đang chạy để kiểm tra không nháy trắng và không mất state.
+
 ---
 
 ## 5. Chế độ D — Figma / mockup
@@ -178,5 +211,7 @@ Trong scorecard, mỗi mục `evidence` là một chuỗi ngắn bắt đầu b�
 | Consistency / design system | ★★ | ★★★ | ★★ | ★★★ |
 | Content & microcopy | ★★★ | ★★ | ★★★ | ★★★ |
 | Adaptive / responsive | ★ (chỉ thấy cái được chụp) | ★★ | ★★★ | ★ |
+| Hiệu năng cảm nhận | ★ | ★★ (virtualization, ảnh, rebuild) | ★★★ (số đo thật) | ★ |
+| Theming & dark mode | ★★★ (nếu có ảnh dark) | ★★★ (token vs hardcode) | ★★★ | ★★ |
 
 ★★★ = đủ để `high`; ★★ = tối đa `medium` trừ khi bổ sung bằng chứng khác; ★ = `low` nếu đây là nguồn duy nhất.

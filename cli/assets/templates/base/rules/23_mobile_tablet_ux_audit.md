@@ -42,7 +42,7 @@ $$\text{Priority} = \frac{\text{Severity} \times \text{Reach} \times \text{Dimen
 Trong đó:
 - **Severity (Mức độ nghiêm trọng):** `blocker: 8`, `major: 4`, `minor: 2`, `polish: 1`.
 - **Reach (Phạm vi ảnh hưởng):** `3` (toàn app / luồng chính), `2` (nhiều màn hình), `1` (màn hình phụ / góc khuất).
-- **Dimension Weight (Trọng số tiêu chí):** Từ $6$ đến $14$ điểm theo Rubric 10 tiêu chí.
+- **Dimension Weight (Trọng số tiêu chí):** Từ $4$ đến $14$ điểm theo Rubric 12 tiêu chí (v2) hoặc từ $6$ đến $14$ điểm theo Rubric 10 tiêu chí (v1).
 - **Effort (Công sức sửa):** `1` (dễ, sửa token/styling), `2` (trung bình), `3` (khó, tái cấu trúc layout/state).
 
 ---
@@ -86,13 +86,13 @@ python3 scripts/score.py scorecard.v1.json --previous scorecard.v0.json
 - **PLATEAU_WARNING:** Điểm chỉ tăng $< 2.0$ điểm $\to$ Rà soát lại xem có đang giải quyết đúng nút thắt cổ chai hay không.
 
 > 📖 **Tài liệu tham khảo chuyên sâu trong skill `mobile-tablet-ux-audit`:**
-> - `references/rubric.md`: Chi tiết 10 tiêu chí, trọng số, mốc điểm 1/3/5 và checklist.
+> - `references/rubric.md`: Chi tiết 12 tiêu chí (rubric v2), trọng số, mốc điểm 1/3/5, checklist, bảng alias và rubric_gaps.
 > - `references/platform-checks.md`: Checklist riêng cho Mobile (iOS, Android) và Tablet (iPadOS, Foldable).
 > - `references/evidence-collection.md`: Hướng dẫn cách trích xuất bằng chứng từ code Dart và screenshots.
 > - `references/improvement-playbook.md`: Cẩm nang sửa nhanh các lỗi thường gặp trong Flutter.
 
-> 📡 **Phản hồi tiêu chí thiếu (Criteria Feedback):**
-> Khi audit màn hình có đặc thù chuyên biệt chưa có trong rubric 10 tiêu chí (như Haptic, Biometrics, Foldable Dual-screen posture, Spatial audio), hệ thống sẽ tự động ghi nhận khi bạn thêm tiêu chí vào scorecard, hoặc bạn có thể chủ động báo cáo qua:
+> 📡 **Phản hồi tiêu chí thiếu & Khoảng trống Rubric (Rubric Gaps & Feedback):**
+> Khi audit màn hình có đặc thù chuyên biệt chưa có trong rubric 12 tiêu chí (như Haptic, Biometrics, Foldable Dual-screen posture, Spatial audio), bạn có thể ghi nhận vào mảng `rubric_gaps` trong scorecard JSON hoặc chủ động báo cáo qua:
 > ```bash
 > python3 scripts/score.py scorecard.json --report-gap "Cần bổ sung tiêu chí phản hồi rung xúc giác (Haptic Feedback) và Motion Gestures"
 > ```

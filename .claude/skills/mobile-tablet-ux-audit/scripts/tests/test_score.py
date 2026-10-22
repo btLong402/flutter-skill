@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 # Add scripts directory to sys.path
@@ -20,6 +21,7 @@ def get_base_valid_card():
     card = {
         "app": "TestApp",
         "iteration": 1,
+        "rubric_version": 2,
         "platforms": ["mobile", "tablet"],
         "scores": {},
         "issues": []
@@ -36,9 +38,15 @@ class TestDimensionConfig(unittest.TestCase):
     """Test configuration constants and definitions."""
 
     def test_dimensions_count_and_weights(self):
-        self.assertEqual(len(score.DIMENSIONS), 10)
+        # Rubric v2 (latest) has 12 dimensions
+        self.assertEqual(len(score.DIMENSIONS), 12)
         total_weight = sum(weight for _, weight in score.DIMENSIONS.values())
         self.assertEqual(total_weight, 100)
+
+        # Rubric v1 has 10 dimensions
+        v1_dims = score.dims_for(1)
+        self.assertEqual(len(v1_dims), 10)
+        self.assertEqual(sum(w for _, w in v1_dims.values()), 100)
 
     def test_grade_thresholds(self):
         self.assertEqual(score.grade(95), "Xuất sắc")
@@ -281,9 +289,13 @@ class TestBacklogAndPrioritization(unittest.TestCase):
         self.assertEqual(len(b), 2)  # FIXED-01 excluded
         self.assertEqual(b[0]["id"], "AC-01")
         self.assertEqual(b[0]["priority"], 336.0)
-        # TY-01: (2 * 1 * 8) / 2 = 8.0
+        # TY-01 in Rubric v2: (2 * 1 * 7) / 2 = 7.0
         self.assertEqual(b[1]["id"], "TY-01")
-        self.assertEqual(b[1]["priority"], 8.0)
+        self.assertEqual(b[1]["priority"], 7.0)
+
+        # In Rubric v1 dims: typography weight is 8 -> (2 * 1 * 8) / 2 = 8.0
+        b_v1 = score.backlog(card, ["mobile", "tablet"], score.dims_for(1))
+        self.assertEqual(b_v1[1]["priority"], 8.0)
 
 
 class TestComputeAndComparison(unittest.TestCase):
@@ -414,6 +426,116 @@ class TestScoreCLI(unittest.TestCase):
         finally:
             Path(bad_path).unlink(missing_ok=True)
 
+    def test_validate_unrecognized_dimension_telemetry(self):
+        with patch("telemetry.send_gap_event") as mock_send:
+            with open(self.example_card, "r", encoding="utf-8") as f:
+                card = json.load(f)
+            card["scores"]["custom_hardware_haptic"] = {
+                "mobile": {"score": 4.0, "confidence": "high", "evidence": ["Haptic supported"]},
+                "tablet": {"score": 4.0, "confidence": "high", "evidence": ["Haptic supported"]}
+            }
+            errs, warns = score.validate(card)
+            self.assertTrue(any("Tiêu chí lạ bị bỏ qua" in w for w in warns))
+            mock_send.assert_called_once()
+            args, kwargs = mock_send.call_args
+            self.assertEqual(args[0], "criteria_gap")
+            self.assertIn("custom_hardware_haptic", args[1]["missing_dimensions"])
+
+    def test_cli_report_gap_flag(self):
+        cmd = [
+            sys.executable,
+            self.script_path,
+            self.example_card,
+            "--report-gap",
+            "Cần thêm tiêu chí Audio/Haptic cho game"
+        ]
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        self.assertEqual(res.returncode, 0)
+        self.assertIn("[Criteria Feedback]", res.stdout)
+
+
+class TestRubricV2AndFeatures(unittest.TestCase):
+    """Test Rubric v2 specific additions: aliases, rubric gaps, version detection, cross-version."""
+
+    def test_aliases_normalization(self):
+        raw_card = {
+            "app": "AliasApp",
+            "rubric_version": 2,
+            "platforms": ["mobile", "tablet"],
+            "scores": {
+                "tablet_adaptive": {
+                    "mobile": {"score": 3.0, "confidence": "high", "evidence": ["E1"]},
+                    "tablet": {"score": 3.0, "confidence": "high", "evidence": ["E1"]}
+                },
+                "dark_mode_theming": {
+                    "mobile": {"score": 4.0, "confidence": "high", "evidence": ["E1", "E2"]},
+                    "tablet": {"score": 4.0, "confidence": "high", "evidence": ["E1", "E2"]}
+                }
+            },
+            "issues": [
+                {
+                    "id": "AD-01",
+                    "dimension": "responsive_tablet",
+                    "platform": "tablet",
+                    "severity": "minor",
+                    "description": "Adaptive issue",
+                    "effort": 1,
+                    "reach": 1
+                }
+            ]
+        }
+        normalized, warns = score.normalize(raw_card)
+        self.assertIn("adaptive_responsive", normalized["scores"])
+        self.assertNotIn("tablet_adaptive", normalized["scores"])
+        self.assertIn("theming_dark_mode", normalized["scores"])
+        self.assertNotIn("dark_mode_theming", normalized["scores"])
+        self.assertEqual(normalized["issues"][0]["dimension"], "adaptive_responsive")
+        self.assertTrue(any("quy về khoá chuẩn" in w for w in warns))
+
+    def test_rubric_version_detection(self):
+        # Explicit v2
+        self.assertEqual(score.rubric_version({"rubric_version": 2})[0], 2)
+        # Explicit v1
+        self.assertEqual(score.rubric_version({"rubric_version": 1})[0], 1)
+        # Missing rubric_version with new dimensions -> infers v2
+        card_v2_infer = {"scores": {"performance_perceived": {}}}
+        ver, msg = score.rubric_version(card_v2_infer)
+        self.assertEqual(ver, 2)
+        self.assertIn("suy ra v2", msg)
+        # Missing rubric_version with 10 standard dimensions -> infers v1
+        card_v1_infer = {"scores": {"typography": {}}}
+        ver1, msg1 = score.rubric_version(card_v1_infer)
+        self.assertEqual(ver1, 1)
+        self.assertIn("coi là rubric v1", msg1)
+
+    def test_rubric_gaps_field(self):
+        card = get_base_valid_card()
+        card["rubric_gaps"] = [
+            {"name": "audio_haptics", "platform": "both", "reason": "No tactile criteria"}
+        ]
+        res = score.compute(card, tablet_weight=0.5)
+        self.assertEqual(len(res["gaps"]), 1)
+        self.assertEqual(res["gaps"][0]["name"], "audio_haptics")
+
+    def test_cross_rubric_version_comparison_not_comparable(self):
+        v1_card = get_base_valid_card()
+        v1_card["rubric_version"] = 1
+        # V1 only needs 10 dimensions
+        for d in score.V2_ONLY:
+            v1_card["scores"].pop(d, None)
+        v1_sum = score.compute(v1_card, tablet_weight=0.5)
+
+        v2_card = get_base_valid_card()
+        v2_sum = score.compute(v2_card, tablet_weight=0.5)
+
+        cmp = score.compare(v2_sum, v1_sum)
+        self.assertFalse(cmp["comparable"])
+        self.assertEqual(cmp["prev_version"], 1)
+
+        v, notes = score.verdict(v2_sum, cmp, target=85.0)
+        self.assertTrue(any("Khác phiên bản rubric" in n for n in notes))
+
 
 if __name__ == "__main__":
     unittest.main()
+

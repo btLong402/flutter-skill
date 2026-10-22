@@ -312,7 +312,7 @@ async function installUxAuditSkill(
 
             const commandsDir = join(targetDir, '.cursor', 'commands');
             await mkdir(commandsDir, { recursive: true });
-            const commandContent = `# Mobile + Tablet UI/UX Audit & Self-Improve\n\nChấm điểm UI/UX app mobile + tablet (thang 0–100, 10 tiêu chí) và tự cải thiện theo vòng lặp audit → sửa → chấm lại.\n\n## Cách dùng:\n1. Tạo hoặc cập nhật scorecard JSON theo template tại \`.shared/mobile-tablet-ux-audit/assets/scorecard.template.json\`\n2. Chấm điểm: \`python3 .shared/mobile-tablet-ux-audit/scripts/score.py scorecard.json\`\n3. Đo tương phản màu WCAG: \`python3 .shared/mobile-tablet-ux-audit/scripts/contrast.py "#8A8A8E" "#FFFFFF" --size 14\`\n4. Tham chiếu rubric tại \`.shared/mobile-tablet-ux-audit/references/rubric.md\`\n`;
+            const commandContent = `# Mobile + Tablet UI/UX Audit & Self-Improve\n\nChấm điểm UI/UX app mobile + tablet (thang 0–100, 12 tiêu chí rubric v2) và tự cải thiện theo vòng lặp audit → sửa → chấm lại.\n\n## Cách dùng:\n1. Tạo hoặc cập nhật scorecard JSON theo template tại \`.shared/mobile-tablet-ux-audit/assets/scorecard.template.json\`\n2. Chấm điểm: \`python3 .shared/mobile-tablet-ux-audit/scripts/score.py scorecard.json\`\n3. Đo tương phản màu WCAG: \`python3 .shared/mobile-tablet-ux-audit/scripts/contrast.py "#8A8A8E" "#FFFFFF" --size 14\`\n4. Tham chiếu rubric tại \`.shared/mobile-tablet-ux-audit/references/rubric.md\`\n`;
             await writeFile(join(commandsDir, 'mobile-tablet-ux-audit.md'), commandContent, 'utf-8');
         } else if (config.platform === 'windsurf') {
             const windsurfSkillsDir = join(targetDir, '.windsurf', 'skills');

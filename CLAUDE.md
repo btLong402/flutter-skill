@@ -380,7 +380,7 @@ Tùy theo **bản chất nhiệm vụ (Task Type)**, bạn cần tự động k�
 | **Chưa rõ phong cách UI** | `search.py`: `--design-system` để sinh design system chuẩn |
 | **Kiểm tra tương phản màu** | Skill `mobile-tablet-ux-audit`: `python3 contrast.py <fg> <bg>` |
 | **Audit & chấm điểm UI/UX** | Skill `mobile-tablet-ux-audit`: `python3 score.py scorecard.json` |
-| **Review Tablet / Adaptive** | Skill `mobile-tablet-ux-audit`: Rubric 10 tiêu chí cho mobile + tablet |
+| **Review Tablet / Adaptive** | Skill `mobile-tablet-ux-audit`: Rubric 12 tiêu chí (v2) cho mobile + tablet |
 
 ---
 
@@ -1748,7 +1748,7 @@ $$\text{Priority} = \frac{\text{Severity} \times \text{Reach} \times \text{Dimen
 Trong đó:
 - **Severity (Mức độ nghiêm trọng):** `blocker: 8`, `major: 4`, `minor: 2`, `polish: 1`.
 - **Reach (Phạm vi ảnh hưởng):** `3` (toàn app / luồng chính), `2` (nhiều màn hình), `1` (màn hình phụ / góc khuất).
-- **Dimension Weight (Trọng số tiêu chí):** Từ $6$ đến $14$ điểm theo Rubric 10 tiêu chí.
+- **Dimension Weight (Trọng số tiêu chí):** Từ $4$ đến $14$ điểm theo Rubric 12 tiêu chí (v2) hoặc từ $6$ đến $14$ điểm theo Rubric 10 tiêu chí (v1).
 - **Effort (Công sức sửa):** `1` (dễ, sửa token/styling), `2` (trung bình), `3` (khó, tái cấu trúc layout/state).
 
 ---

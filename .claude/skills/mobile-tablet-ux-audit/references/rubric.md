@@ -1,11 +1,13 @@
-# Rubric chấm điểm UI/UX Mobile + Tablet
+# Rubric chấm điểm UI/UX Mobile + Tablet (v2 — 12 tiêu chí)
 
 ## Mục lục
 1. Thang điểm và cách hiệu chỉnh
 2. Bảng trọng số
-3. Chi tiết 10 tiêu chí
+3. Chi tiết 12 tiêu chí
 4. Mức độ nghiêm trọng của lỗi
 5. Trần điểm (caps) và hạng
+6. Tên gọi khác (alias) và cách ghi khoảng trống rubric
+7. Lịch sử phiên bản
 
 ---
 
@@ -31,30 +33,32 @@ Mỗi tiêu chí chấm **0–5, bước 0.5**, riêng cho từng nền tảng (
 
 ---
 
-## 2. Bảng trọng số (tổng 100)
+## 2. Bảng trọng số (tổng 100, rubric v2)
 
 | Key | Tiêu chí | Trọng số |
 |---|---|---|
-| `visual_hierarchy_layout` | Thứ bậc thị giác & bố cục | 12 |
-| `typography` | Typography | 8 |
-| `color_contrast` | Màu sắc & độ tương phản | 8 |
-| `navigation_ia` | Điều hướng & kiến trúc thông tin | 12 |
-| `touch_interaction` | Tương tác chạm & công thái học | 12 |
-| `feedback_states_motion` | Phản hồi, trạng thái & chuyển động | 10 |
+| `visual_hierarchy_layout` | Thứ bậc thị giác & bố cục | 10 |
+| `typography` | Typography | 7 |
+| `color_contrast` | Màu sắc & độ tương phản | 7 |
+| `navigation_ia` | Điều hướng & kiến trúc thông tin | 11 |
+| `touch_interaction` | Tương tác chạm & công thái học | 11 |
+| `feedback_states_motion` | Phản hồi, trạng thái & chuyển động | 9 |
 | `accessibility` | Khả năng tiếp cận | 14 |
-| `consistency_design_system` | Nhất quán & design system | 8 |
-| `content_microcopy` | Nội dung & microcopy | 6 |
+| `consistency_design_system` | Nhất quán & design system | 7 |
+| `content_microcopy` | Nội dung & microcopy | 5 |
 | `adaptive_responsive` | Thích ứng đa kích thước (phone↔tablet, hướng, split view) | 10 |
+| `performance_perceived` | Hiệu năng cảm nhận & độ mượt (mới ở v2) | 5 |
+| `theming_dark_mode` | Theming & Dark mode (mới ở v2) | 4 |
 
 Điểm nền tảng = Σ (trọng số × điểm/5). Điểm tổng = trung bình có trọng số của các nền tảng (mặc định 50/50).
 
 ---
 
-## 3. Chi tiết 10 tiêu chí
+## 3. Chi tiết 12 tiêu chí
 
 Mỗi tiêu chí có: mốc 1 / 3 / 5 để neo điểm, và checklist để soi. Điểm 2 và 4 nằm giữa các mốc; điểm .5 dùng khi hai mức đều đúng một phần.
 
-### 3.1 Thứ bậc thị giác & bố cục (12) — `visual_hierarchy_layout`
+### 3.1 Thứ bậc thị giác & bố cục (10) — `visual_hierarchy_layout`
 
 - **1:** Mọi thứ cùng "độ to"; không biết nhìn đâu trước; CTA chính lẫn trong nội dung; khoảng cách lộn xộn.
 - **3:** Có một điểm nhấn chính mỗi màn hình; nhóm nội dung rõ nhưng spacing còn lệch ở vài chỗ; còn màn hình hơi chật hoặc hơi trống.
@@ -69,7 +73,7 @@ Checklist:
 - [ ] Nội dung không bị che bởi status bar, notch, home indicator, bàn phím (safe area).
 - [ ] Ảnh/icon không vỡ tỉ lệ, không bị cắt mất phần quan trọng.
 
-### 3.2 Typography (8) — `typography`
+### 3.2 Typography (7) — `typography`
 
 - **1:** Chữ quá nhỏ (<11), >5 cỡ chữ lộn xộn, dòng dày đặc không ngắt đoạn, chữ cắt/chồng.
 - **3:** Có thang cỡ chữ cơ bản; body đọc được; còn vài chỗ caption/label quá nhỏ hoặc line-height chật.
@@ -84,11 +88,11 @@ Checklist:
 - [ ] Số liệu/tiền tệ/ngày giờ căn chỉnh, dùng tabular figures khi so sánh cột.
 - [ ] Truncation có chủ đích (ellipsis + cách xem đầy đủ), không cắt ở thông tin then chốt (giá, tên).
 
-### 3.3 Màu sắc & độ tương phản (8) — `color_contrast`
+### 3.3 Màu sắc & độ tương phản (7) — `color_contrast`
 
-- **1:** Nhiều văn bản/nút không đạt contrast; dùng màu là cách duy nhất truyền tải trạng thái; dark mode hỏng.
+- **1:** Nhiều văn bản/nút không đạt contrast; dùng màu là cách duy nhất truyền tải trạng thái.
 - **3:** Text chính đạt 4.5:1; placeholder/caption/disabled còn vài chỗ yếu; có màu ngữ nghĩa nhưng chưa thật nhất quán.
-- **5:** Mọi text ≥ 4.5:1 (large text ≥ 3:1), thành phần UI/viền input/focus ≥ 3:1; palette có vai trò rõ (primary/surface/on-surface/error…); trạng thái luôn có thêm icon/chữ ngoài màu; dark mode đầy đủ (không chỉ đảo màu).
+- **5:** Mọi text ≥ 4.5:1 (large text ≥ 3:1), thành phần UI/viền input/focus ≥ 3:1; palette có vai trò rõ (primary/surface/on-surface/error…); trạng thái luôn có thêm icon/chữ ngoài màu; đạt chuẩn ở **cả hai theme** (light và dark). Chất lượng dark mode về mặt thiết kế chấm ở 3.12.
 
 Checklist (**đo bằng `scripts/contrast.py`**, không ước lượng):
 - [ ] Text thường ≥ 4.5:1; text lớn (≥ 24px, hoặc ≥ 18.66px đậm) ≥ 3:1.
@@ -96,10 +100,10 @@ Checklist (**đo bằng `scripts/contrast.py`**, không ước lượng):
 - [ ] Viền input, icon chức năng, focus indicator ≥ 3:1 so với nền kề.
 - [ ] Không chỉ dùng màu để phân biệt (đỏ/xanh → thêm icon, nhãn).
 - [ ] Số màu nhấn có kiểm soát (thường 1 accent chính + màu ngữ nghĩa).
-- [ ] Dark mode: surface phân tầng, không dùng #000 thuần cho mọi thứ, text không trắng chói; kiểm tra lại contrast.
+- [ ] Chạy lại phép đo contrast cho **từng theme** (light, dark, và high-contrast nếu có) — kết quả đạt ở theme này không suy ra cho theme kia. (Thiết kế dark mode: xem 3.12.)
 - [ ] Màu error/success/warning đạt contrast trên nền thực tế của chúng.
 
-### 3.4 Điều hướng & kiến trúc thông tin (12) — `navigation_ia`
+### 3.4 Điều hướng & kiến trúc thông tin (11) — `navigation_ia`
 
 - **1:** Không biết mình đang ở đâu; không quay lại được; tính năng quan trọng bị chôn sâu; nhãn mơ hồ.
 - **3:** Cấu trúc điều hướng chuẩn (tab/stack); biết mình đang ở đâu; còn vài chỗ vào/ra gượng hoặc nhãn chưa rõ.
@@ -116,7 +120,7 @@ Checklist:
 - [ ] Tìm kiếm có mặt khi nội dung nhiều; kết quả rỗng có hướng dẫn.
 - [ ] Onboarding/đăng nhập: không bắt đăng ký trước khi cho thấy giá trị (nếu phù hợp), có "bỏ qua".
 
-### 3.5 Tương tác chạm & công thái học (12) — `touch_interaction`
+### 3.5 Tương tác chạm & công thái học (11) — `touch_interaction`
 
 - **1:** Vùng chạm nhỏ (<32), nút sát nhau gây bấm nhầm; hành động chính ở chỗ khó với; thao tác phá hủy không có bảo vệ.
 - **3:** Hầu hết target ≥ 44/48; vài icon-button nhỏ hoặc sát nhau; có thể với được hành động chính nhưng chưa tối ưu.
@@ -133,7 +137,7 @@ Checklist:
 - [ ] Tablet: target không bị phình quá to một cách vô nghĩa; hỗ trợ hover/pointer và phím (Tab, Enter, Esc) khi dùng bàn phím/chuột.
 - [ ] Không có vùng chạm chồng lấn với cử chỉ hệ thống (mép màn hình, home indicator).
 
-### 3.6 Phản hồi, trạng thái & chuyển động (10) — `feedback_states_motion`
+### 3.6 Phản hồi, trạng thái & chuyển động (9) — `feedback_states_motion`
 
 - **1:** Bấm không biết có ăn không; màn hình trắng khi tải; lỗi im lặng hoặc chỉ "Đã xảy ra lỗi"; animation giật hoặc chặn thao tác.
 - **3:** Có loading/spinner và thông báo lỗi cơ bản; empty state còn sơ sài; chuyển động không gây hại nhưng chưa có chủ đích.
@@ -168,7 +172,7 @@ Checklist:
 - [ ] Hỗ trợ bàn phím ngoài / Full Keyboard Access / Switch Control: focus nhìn thấy được và tab theo thứ tự hợp lý (rất quan trọng trên tablet).
 - [ ] Video/audio có phụ đề/transcript khi có nội dung quan trọng.
 
-### 3.8 Nhất quán & design system (8) — `consistency_design_system`
+### 3.8 Nhất quán & design system (7) — `consistency_design_system`
 
 - **1:** Mỗi màn hình một kiểu nút/màu/khoảng cách; hành vi khác nhau cho cùng một việc.
 - **3:** Có palette/component cơ bản, đa số màn hình thống nhất; còn component "mồ côi" và giá trị hardcode.
@@ -183,7 +187,7 @@ Checklist:
 - [ ] Tôn trọng quy ước nền tảng: vị trí back, kiểu picker, dialog, share sheet, settings. Khác biệt có chủ đích và có lý do.
 - [ ] Mobile và tablet cùng một ngôn ngữ thiết kế (chỉ khác bố cục, không khác "tính cách").
 
-### 3.9 Nội dung & microcopy (6) — `content_microcopy`
+### 3.9 Nội dung & microcopy (5) — `content_microcopy`
 
 - **1:** Nhãn mơ hồ, thuật ngữ kỹ thuật, thông báo lỗi vô nghĩa; văn phong lộn xộn; chữ cứng không dịch được.
 - **3:** Nhãn nút và thông báo hiểu được; giọng điệu tạm ổn; còn vài chỗ chung chung hoặc dài dòng.
@@ -216,14 +220,54 @@ Checklist:
 - [ ] Font scale lớn + màn nhỏ (360dp) + chuỗi dài không làm vỡ layout.
 - [ ] Safe area/notch/dynamic island/gesture bar/foldable hinge được xử lý ở mọi hướng.
 
+### 3.11 Hiệu năng cảm nhận & độ mượt (5) — `performance_perceived`
+
+Chấm **cảm giác của người dùng** (đứng hình, giật, chờ lâu, treo ở dữ liệu cực trị), không phải benchmark kỹ thuật thuần túy. Đây là tiêu chí bằng chứng dựa nhiều vào đo/chạy thật; xem bảng đo ở `evidence-collection.md`.
+
+- **1:** Khởi động > 5s màn trắng; cuộn giật rõ; tương tác trễ > 300ms; treo/ANR/crash khi dữ liệu lớn, ảnh lớn hoặc mạng chậm.
+- **3:** Cold start ~2–4s có splash/skeleton; cuộn mượt với dữ liệu thường nhưng giật ở danh sách dài/ảnh nặng; vài thao tác trễ nhẹ; chưa kiểm thiết bị yếu/mạng chậm.
+- **5:** Thấy nội dung hữu ích < 2s (cache/skeleton); frame ổn định (60fps, 90/120Hz nếu màn cao), tỉ lệ janky frame thấp ở các luồng chính; phản hồi chạm < 100ms; chịu tốt dữ liệu cực trị (0 / 1 / 10.000 mục, ảnh lớn, mạng 3G/offline) và thiết bị cấu hình thấp; xoay/resize không giật.
+
+Checklist:
+- [ ] **Khởi động:** cold start và warm start đo được; có nội dung/skeleton trước khi dữ liệu mạng về; không màn trắng.
+- [ ] **Cuộn:** danh sách dài dùng virtualization/lazy (`ListView.builder`, `FlatList`/`FlashList`, `LazyColumn`, `LazyVStack`/`List`); không dựng toàn bộ item.
+- [ ] **Ảnh:** có cache, thu nhỏ đúng kích thước hiển thị (không tải ảnh 4000px để hiện 100px), placeholder khi tải, giải mã ngoài main thread.
+- [ ] **Phản hồi:** thao tác chạm đổi trạng thái < 100ms; tác vụ nặng không chạy trên main/UI thread.
+- [ ] **Dữ liệu cực trị (edge cases):** 0 mục, 1 mục, rất nhiều mục (≥ 10k), chuỗi rất dài, ảnh rất lớn, payload lớn — không treo, không tràn bộ nhớ, giao diện vẫn đúng.
+- [ ] **Mạng/thiết bị:** mạng chậm/chập chờn/offline xử lý êm (timeout hợp lý, hủy được, không khoá UI); thử trên thiết bị tầm thấp hoặc emulator hạn chế CPU/RAM nếu có.
+- [ ] **Animation:** không rớt frame khi chạy chuyển cảnh/animation; hiệu ứng nặng (blur, shadow lớn, nhiều lớp trong suốt) không phá frame rate.
+- [ ] **Rebuild thừa:** không rebuild/recompose cả màn hình cho thay đổi nhỏ (theo dõi qua profiler hoặc đọc code).
+- [ ] **Tablet:** màn lớn render nhiều pane/cột/ảnh hơn → đo lại; kéo đổi kích thước cửa sổ và xoay không giật, không tải lại dữ liệu vô cớ.
+- [ ] **Pin/nhiệt (nếu đo được):** không loop làm nóng máy, không polling dày khi nền.
+
+### 3.12 Theming & Dark mode (4) — `theming_dark_mode`
+
+Chấm **chất lượng hệ thống theme**: dark mode, khả năng đổi theme, và độ phủ trên mọi thành phần. (Contrast đo ở 3.3; ở đây chấm thiết kế và độ phủ.)
+
+- **1:** Không có dark mode, hoặc có nhưng hỏng (chữ vô hình, nền trắng chói lẫn vào, nhiều màn hardcode màu sáng); không theo cài đặt hệ thống.
+- **3:** Theo cài đặt hệ thống; đa số màn hình ổn; còn sót thành phần chưa đổi theme (dialog, bottom sheet, status/nav bar, ảnh/logo, chart, WebView, bản đồ); chưa kiểm contrast ở dark.
+- **5:** Light/Dark dùng token ngữ nghĩa (`surface`, `onSurface`, `primary`…) thay vì màu cố định; surface phân tầng theo độ cao; mọi thành phần và nội dung nhúng thích ứng; đổi theme tức thời không mất state, không nháy trắng; có tùy chọn trong app (Hệ thống / Sáng / Tối); hỗ trợ Increase Contrast/high contrast; mobile và tablet cùng một theme nhất quán.
+
+Checklist:
+- [ ] Theo `prefers-color-scheme`/chế độ hệ thống mặc định; đổi lúc đang chạy không cần khởi động lại.
+- [ ] Không dùng màu cố định cho nền/chữ ngoài token (grep hex hardcode — xem `evidence-collection.md`).
+- [ ] Dark surface không phải `#000` thuần cho mọi lớp; dùng phân tầng elevation (lớp cao sáng hơn); chữ không trắng `#FFF` chói trên nền đen — ưu tiên on-surface ~87% độ sáng.
+- [ ] Giảm độ bão hòa màu nhấn trong dark; kiểm lại màu ngữ nghĩa (error/success/warning).
+- [ ] Ảnh, logo, minh họa, icon có biến thể dark hoặc nền trung tính; ảnh sáng không chói; ảnh PNG nền trong suốt không biến mất.
+- [ ] Status bar / navigation bar / splash / launch screen / keyboard appearance đổi theo theme.
+- [ ] Thành phần nhúng: chart, bản đồ, WebView, PDF viewer, date picker hệ thống đều theo theme.
+- [ ] Skeleton/shimmer, divider, shadow, trạng thái pressed/focus/disabled đều đọc được ở cả hai theme.
+- [ ] Có tuỳ chọn theme trong Settings và nhớ lựa chọn; (Android) dynamic color nếu app chọn hỗ trợ; (iOS) tôn trọng tint/accent hệ thống ở chỗ hợp lý.
+- [ ] Cả hai theme được chụp ở **cả mobile và tablet** — không giả định dark đúng chỉ vì light đúng.
+
 ---
 
 ## 4. Mức độ nghiêm trọng của lỗi
 
 | Mức | Định nghĩa | Ví dụ |
 |---|---|---|
-| `blocker` | Chặn hoàn thành luồng chính, hoặc loại trừ cả nhóm người dùng | CTA thanh toán bị bàn phím che không cuộn được; nút không có nhãn trong flow chính với screen reader; layout tablet vỡ khiến không bấm được nút |
-| `major` | Gây sai/mất thời gian rõ rệt, nhiều người gặp | Target chính 32dp; contrast 2.5:1 ở text chính; không có trạng thái lỗi khi mất mạng |
+| `blocker` | Chặn hoàn thành luồng chính, hoặc loại trừ cả nhóm người dùng | CTA thanh toán bị bàn phím che không cuộn được; nút không có nhãn trong flow chính với screen reader; layout tablet vỡ khiến không bấm được nút; ANR/crash khi mở danh sách lớn |
+| `major` | Gây sai/mất thời gian rõ rệt, nhiều người gặp | Target chính 32dp; contrast 2.5:1 ở text chính; không có trạng thái lỗi khi mất mạng; cuộn danh sách chính rớt frame rõ; dark mode có màn chữ trùng màu nền |
 | `minor` | Gây khó chịu nhưng có cách vượt qua | Spacing lệch giữa hai màn; icon không nhất quán; caption hơi nhỏ |
 | `polish` | Tinh chỉnh, không ảnh hưởng chức năng | Easing chưa mượt; ảnh empty state chưa đẹp |
 
@@ -250,3 +294,38 @@ Lý do: một lỗi chặn hoặc một tiêu chí sụp đổ không được "
 | 70–79 | Đạt |
 | 60–69 | Cần cải thiện |
 | < 60 | Kém |
+
+---
+
+## 6. Tên gọi khác (alias) và cách ghi khoảng trống rubric
+
+Agent đôi khi gọi tiêu chí bằng tên riêng. `score.py` tự quy các tên sau về khoá chuẩn (và nhắc trong phần Cảnh báo) — nhưng hãy dùng khoá chuẩn ở bảng trọng số.
+
+| Tên hay gặp | Khoá chuẩn |
+|---|---|
+| `tablet_adaptive`, `responsive_tablet`, `responsive`, `adaptive`, `tablet_layout` | `adaptive_responsive` |
+| `consistency_standards`, `consistency`, `design_system` | `consistency_design_system` |
+| `feedback_status`, `feedback`, `states`, `motion` | `feedback_states_motion` |
+| `performance_smoothness`, `performance_edge_cases`, `performance`, `smoothness` | `performance_perceived` |
+| `dark_mode_theming`, `dark_mode`, `theming`, `theme` | `theming_dark_mode` |
+
+Khi quy nhiều tên về cùng một khoá chuẩn (ví dụ `performance_smoothness` và `performance_edge_cases`), script lấy **điểm thấp hơn** cho mỗi nền tảng để không che lỗi.
+
+**Nếu thấy một khía cạnh thực sự chưa có trong rubric:** đừng tạo khoá mới trong `scores` (nó sẽ bị bỏ qua). Hãy ghi vào mảng `rubric_gaps` của scorecard:
+
+```json
+"rubric_gaps": [
+  {"name": "tên ngắn của khía cạnh", "platform": "tablet", "reason": "vì sao không tiêu chí nào hiện có chứa nó, ví dụ cụ thể"}
+]
+```
+
+Báo cáo sẽ hiển thị mục này ở phần "Đề xuất bổ sung rubric" để người dùng quyết định có thêm vào rubric hay không. Lúc chấm vẫn xếp lỗi liên quan vào tiêu chí gần nhất.
+
+## 7. Lịch sử phiên bản
+
+| Phiên bản | Thay đổi |
+|---|---|
+| v1 | 10 tiêu chí |
+| v2 | Thêm `performance_perceived` (5) và `theming_dark_mode` (4); giảm nhẹ trọng số các tiêu chí khác để tổng giữ 100; chuyển phần đánh giá dark mode khỏi `color_contrast` sang `theming_dark_mode` (contrast từng theme vẫn đo ở 3.3); thêm bảng alias và cơ chế `rubric_gaps`. Nguồn: báo cáo khoảng trống thu thập từ agent khi chạy skill (`export.csv`). |
+
+Scorecard cũ (v1) vẫn chạy được: `score.py` nhận ra thiếu `rubric_version` và chấm theo trọng số v1. Điểm tổng giữa v1 và v2 **không so sánh trực tiếp** được; chấm lại một vòng theo v2 làm mốc mới.

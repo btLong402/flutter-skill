@@ -29,7 +29,8 @@ Nếu ngân sách ít: tối thiểu **P-S, P-L, T-P, T-L**. Ghi rõ những cá
 
 Cạnh đó, kiểm tra **cho cả hai nền tảng** (chọn ít nhất một màn quan trọng):
 - Font scale lớn nhất (Android 2.0×; iOS accessibility XXXL).
-- Dark mode.
+- Dark mode (chụp cả mobile và tablet; chấm ở `theming_dark_mode`).
+- Increase Contrast / high contrast nếu hệ điều hành hỗ trợ.
 - Ngôn ngữ chuỗi dài (tiếng Việt/Đức), hoặc pseudo-localization (+40% độ dài).
 
 ## 2. Ma trận trạng thái cần chụp
@@ -63,7 +64,7 @@ Không có đủ các trạng thái này, đừng chấm `feedback_states_motion
 - Bàn phím: input đang focus luôn nhìn thấy; nút gửi/tiếp tục không bị che; có cách đóng bàn phím.
 - Xoay ngang: nếu app cho phép, form và nội dung vẫn dùng được.
 
-**Hiệu năng cảm nhận**
+**Hiệu năng cảm nhận** (chấm ở `performance_perceived`, rubric 3.11)
 - Khởi động có splash/skeleton hợp lý, không màn hình trắng.
 - Cuộn mượt: không giật khi danh sách dài (60fps cảm nhận); ảnh lazy load có placeholder.
 
@@ -107,6 +108,8 @@ Không có đủ các trạng thái này, đừng chấm `feedback_states_motion
 - [ ] Bàn phím ảo trên tablet ngang chiếm nửa màn hình — input vẫn nhìn thấy; bàn phím nổi/tách (iPad) không làm hỏng layout.
 - [ ] Bảng/dữ liệu: dùng không gian để hiện nhiều cột hơn thay vì phóng to cột.
 - [ ] Target không phình quá mức (nút 88dp trông kỳ cục) nhưng vẫn ≥ 48dp.
+- [ ] **Hiệu năng trên màn lớn:** nhiều pane/cột/ảnh cùng lúc không làm rớt frame; kéo đổi kích thước cửa sổ và xoay mượt, không tải lại dữ liệu (xem rubric 3.11).
+- [ ] **Theme nhất quán:** sidebar/rail/popover/panel phụ đổi theo dark mode như màn chính (xem rubric 3.12).
 
 ---
 
